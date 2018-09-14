@@ -1,7 +1,7 @@
-package team2102.robot.commands;
+package team578.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import team2102.robot.Robot;
+import team578.robot.Robot;
 
 @Deprecated
 public class TestAccelCommand extends Command {
@@ -12,12 +12,12 @@ public class TestAccelCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		Robot.driveSubsystem._startTestAccel();
+//		Robot.driveSubsystem._startTestAccel();
 	}
 
 	@Override
 	protected void execute() {
-		Robot.driveSubsystem._runTestAccel();
+//		Robot.driveSubsystem._runTestAccel();
 	}
 
 	@Override
@@ -27,6 +27,6 @@ public class TestAccelCommand extends Command {
 
 	@Override
 	protected void end() {
-		Robot.driveSubsystem._endTestAccel();
+//		Robot.driveSubsystem._endTestAccel();
 	}
 }

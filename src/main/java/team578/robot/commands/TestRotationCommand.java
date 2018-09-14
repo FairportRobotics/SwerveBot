@@ -1,7 +1,7 @@
-package team2102.robot.commands;
+package team578.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import team2102.robot.Robot;
+import team578.robot.Robot;
 
 @Deprecated
 public class TestRotationCommand extends Command {
@@ -16,8 +16,8 @@ public class TestRotationCommand extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.driveSubsystem._testRotation(m_targetAngle);
-		Robot.driveSubsystem._printRotatePosition();
+//		Robot.driveSubsystem._testRotation(m_targetAngle);
+//		Robot.driveSubsystem._printRotatePosition();
 	}
 
 	@Override

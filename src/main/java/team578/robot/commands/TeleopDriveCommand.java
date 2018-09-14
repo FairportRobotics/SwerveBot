@@ -1,8 +1,8 @@
-package team2102.robot.commands;
+package team578.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
-import team2102.robot.Robot;
+import team578.robot.Robot;
 
 public class TeleopDriveCommand extends Command {
 
@@ -11,14 +11,19 @@ public class TeleopDriveCommand extends Command {
 
 	public TeleopDriveCommand() {
 		requires(Robot.driveSubsystem);
+		System.err.println(" Init Teleop TeleopDriveCommand");
 	}
 
 	@Override
 	protected void execute() {
+		System.err.println("Exec Teleop TeleopDriveCommand");
+		
 		final Joystick stick = Robot.oi.stick;
 
 		final double mag = stick.getMagnitude();
 		final double dir = stick.getDirectionDegrees();
+		
+		System.err.println(" Mag " + mag + " dir " + dir);
 
 		double headingDelta = 0.0;
 		if (stick.getRawButton(3)) {
@@ -29,11 +34,11 @@ public class TeleopDriveCommand extends Command {
 
 		Robot.driveSubsystem.m_targetHeading = (Robot.driveSubsystem.m_targetHeading + headingDelta) % 360.0;
 
-		if (mag > k_deadzone) {
+//		if (mag > k_deadzone) {
 			Robot.driveSubsystem.drive(mag * mag * mag, dir);
-		} else {
-			Robot.driveSubsystem.drive(0.0, 0.0);
-		}
+//		} else {
+//			Robot.driveSubsystem.drive(0.0, 0.0);
+//		}
 	}
 
 	@Override
@@ -43,6 +48,6 @@ public class TeleopDriveCommand extends Command {
 
 	@Override
 	protected void end() {
-		Robot.driveSubsystem.drive(0.0, 0.0);
+//		Robot.driveSubsystem.drive(0.0, 0.0);
 	}
 }

@@ -1,7 +1,7 @@
-package team2102.robot.commands;
+package team578.robot.commands;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
-import team2102.robot.Robot;
+import team578.robot.Robot;
 
 public class ResetGyroCommand extends InstantCommand {
 
@@ -12,7 +12,7 @@ public class ResetGyroCommand extends InstantCommand {
 
 	@Override
 	protected void initialize() {
-		Robot.driveSubsystem.resetHeading();
+//		Robot.driveSubsystem.resetHeading();
 	}
 
 }

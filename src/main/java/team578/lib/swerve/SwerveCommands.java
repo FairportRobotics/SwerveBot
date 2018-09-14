@@ -1,4 +1,4 @@
-package team2102.lib.swerve;
+package team578.lib.swerve;
 
 // Uses degrees for angles
 public class SwerveCommands {
@@ -22,4 +22,12 @@ public class SwerveCommands {
 
 		return components;
 	}
+
+	@Override
+	public String toString() {
+		return "SwerveCommands [speed1=" + speed1 + ", speed2=" + speed2 + ", speed3=" + speed3 + ", speed4=" + speed4
+				+ ", angle1=" + angle1 + ", angle2=" + angle2 + ", angle3=" + angle3 + ", angle4=" + angle4 + "]";
+	}
+	
+	
 }

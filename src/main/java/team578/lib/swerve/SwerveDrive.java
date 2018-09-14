@@ -1,4 +1,4 @@
-package team2102.lib.swerve;
+package team578.lib.swerve;
 
 public class SwerveDrive {
 
@@ -21,19 +21,22 @@ public class SwerveDrive {
 		final SwerveCommands commands = calcModuleCommands(forward, strafe, rotate);
 
 		// Should this be available outside this class?
-		final double max = Math.max(Math.max(Math.max(commands.speed1, commands.speed2), commands.speed3),
-				commands.speed4);
-		if (max > 1.0) {
-			commands.speed1 /= max;
-			commands.speed2 /= max;
-			commands.speed3 /= max;
-			commands.speed4 /= max;
-		}
+//		final double max = Math.max(Math.max(Math.max(commands.speed1, commands.speed2), commands.speed3),
+//				commands.speed4);
+//		if (max > 1.0) {
+//			commands.speed1 /= max;
+//			commands.speed2 /= max;
+//			commands.speed3 /= max;
+//			commands.speed4 /= max;
+//		}
 
 		driveCommands(commands);
 	}
 
 	public void driveCommands(final SwerveCommands commands) {
+		
+		System.err.println(commands);
+		
 		m_module1.setPower(commands.speed1);
 		m_module2.setPower(commands.speed2);
 		m_module3.setPower(commands.speed3);
@@ -59,16 +62,27 @@ public class SwerveDrive {
 		final double b = strafe + rotate * (m_length / m_diagonal);
 		final double c = forward - rotate * (m_width / m_diagonal);
 		final double d = forward + rotate * (m_width / m_diagonal);
+		
+		commands.speed1 = .5;
+		commands.speed2 = .5;
+		commands.speed3 = .5;
+		commands.speed4 = .5;
 
-		commands.speed1 = calcSpeed(b, d);
-		commands.speed2 = calcSpeed(b, c);
-		commands.speed3 = calcSpeed(a, c);
-		commands.speed4 = calcSpeed(a, d);
+		commands.angle1 = .5;
+		commands.angle2 = .5;
+		commands.angle3 = .5;
+		commands.angle4 = .5;
+		
 
-		commands.angle1 = calcAngle(b, d);
-		commands.angle2 = calcAngle(b, c);
-		commands.angle3 = calcAngle(a, c);
-		commands.angle4 = calcAngle(a, d);
+//		commands.speed1 = calcSpeed(b, d);
+//		commands.speed2 = calcSpeed(b, c);
+//		commands.speed3 = calcSpeed(a, c);
+//		commands.speed4 = calcSpeed(a, d);
+//
+//		commands.angle1 = calcAngle(b, d);
+//		commands.angle2 = calcAngle(b, c);
+//		commands.angle3 = calcAngle(a, c);
+//		commands.angle4 = calcAngle(a, d);
 
 		return commands;
 	}

@@ -1,6 +1,6 @@
-package team2102.lib.swerve;
+package team578.lib.swerve;
 
-import team2102.lib.SPIGyro;
+import team578.lib.SPIGyro;
 
 public class OrientedSwerveDrive {
 

@@ -1,5 +1,6 @@
-package team2102.lib.swerve;
+package team578.lib.swerve;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class SwerveModule {
@@ -36,7 +37,7 @@ public class SwerveModule {
 	}
 
 	public void setPower(final double power) {
-		// m_driveMotor.set(power);
+		 m_driveMotor.set(ControlMode.PercentOutput,power);
 	}
 
 	public double getRotatePosition() {

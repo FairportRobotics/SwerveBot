@@ -1,4 +1,4 @@
-package team2102.lib;
+package team578.lib;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SPI.Port;
