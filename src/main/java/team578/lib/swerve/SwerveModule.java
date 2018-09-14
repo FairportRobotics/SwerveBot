@@ -20,6 +20,10 @@ public class SwerveModule {
 		// m_driveMotor.changeControlMode(TalonControlMode.PercentVbus);
 		// m_driveMotor.set(0.0);
 
+		
+		/*
+		 * Will neeed PID / Analog POT for rotate
+		 */
 		m_rotateMotor = rotateMotor;
 		// m_rotateMotor.setFeedbackDevice(FeedbackDevice.AnalogPot);
 		// m_rotateMotor.changeControlMode(TalonControlMode.Position);

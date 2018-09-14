@@ -12,7 +12,7 @@ public class CalibratePotCommand extends InstantCommand {
 
 	@Override
 	protected void initialize() {
-//		Robot.driveSubsystem.calibrateRotatePos();
+		Robot.driveSubsystem.calibrateRotatePos();
 	}
 
 }

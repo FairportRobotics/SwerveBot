@@ -1,7 +1,8 @@
 plugins {
     id "java"
     id "eclipse"
-    id "edu.wpi.first.GradleRIO" version "2018.06.21"
+   // id "edu.wpi.first.GradleRIO" version "2018.06.21"
+    id "edu.wpi.first.GradleRIO" version "2019.0.0-alpha-3"
 }
 
 def ROBOT_CLASS = "team578.robot.Robot"
@@ -42,5 +43,5 @@ jar {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.7'
+    gradleVersion = '4.9'
 }

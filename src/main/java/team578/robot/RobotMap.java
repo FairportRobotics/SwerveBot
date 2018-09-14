@@ -1,4 +1,4 @@
-package team578.robot.subsystems;
+package team578.robot;
 
 public class RobotMap {
 

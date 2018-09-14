@@ -18,6 +18,7 @@ import team578.lib.SPIGyro;
 import team578.lib.swerve.OrientedSwerveDrive;
 import team578.lib.swerve.SwerveDrive;
 import team578.lib.swerve.SwerveModule;
+import team578.robot.RobotMap;
 import team578.robot.commands.TeleopDriveCommand;
 
 public class DriveSubsystem extends Subsystem {
@@ -75,6 +76,8 @@ public class DriveSubsystem extends Subsystem {
 		}
 		
 		
+		
+		// Should we use this instead?
 		WPI_TalonSRX drive = new WPI_TalonSRX(driveId);
 		drive.setSafetyEnabled(false);
 		drive.setExpiration(.25);
@@ -86,13 +89,17 @@ public class DriveSubsystem extends Subsystem {
 		return new SwerveModule(drive, new TalonSRX(rotateId), zeroPosition);
 	}
 
-//	public void calibrateRotatePos() {
-//		DriverStation.reportWarning("Calibrating potentiometers", false);
-//		m_prefs.putDouble("Rotate 1", m_module1.getRotatePosition());
-//		m_prefs.putDouble("Rotate 2", m_module2.getRotatePosition());
-//		m_prefs.putDouble("Rotate 3", m_module3.getRotatePosition());
-//		m_prefs.putDouble("Rotate 4", m_module4.getRotatePosition());
-//	}
+	
+	/*
+	 * This sets position of each rotation pot in the prefs.
+	 */
+	public void calibrateRotatePos() {
+		DriverStation.reportWarning("Calibrating potentiometers", false);
+		m_prefs.putDouble("Rotate 1", m_module1.getRotatePosition());
+		m_prefs.putDouble("Rotate 2", m_module2.getRotatePosition());
+		m_prefs.putDouble("Rotate 3", m_module3.getRotatePosition());
+		m_prefs.putDouble("Rotate 4", m_module4.getRotatePosition());
+	}
 
 //	public void resetHeading() {
 //		DriverStation.reportWarning("Resetting gyro heading", false);
