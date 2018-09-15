@@ -6,15 +6,36 @@ import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SPI.Port;
 
-public class SPIGyro {
+public class PigeonGyro {
 	
+	// https://www.ctr-electronics.com/downloads/pdf/Pigeon%20IMU%20User's%20Guide.pdf
+	
+	PigeonIMU _pigeon = new PigeonIMU(0); /* example Pigeon with device ID 0 */
+	
+
+	
+	
+
 	private final SPI m_port;
 
 	private double m_yawZero = 0;
 	private double m_pitchZero = 0;
 	private double m_rollZero = 0;
 
-	public SPIGyro(Port port) {
+	public PigeonGyro(Port port) {
+		
+		PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
+		_pigeon.getGeneralStatus(genStatus);
+		double [] ypr = new double[3];
+		_pigeon.getYawPitchRoll(ypr);
+		System.out.println("Yaw:" + ypr[0]);
+		
+		// _pigeon.SetYaw(newAngle);
+		// _pigeon.SetFusedHeading(newAngle)
+		
+		_pigeon.enterCalibrationMode(CalibrationMode.Temperature,1);
+		
+		
 		
 		m_port = new SPI(port);
 

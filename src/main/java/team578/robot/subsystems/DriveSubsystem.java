@@ -1,19 +1,11 @@
 package team578.robot.subsystems;
 
-import java.io.FileWriter;
-import java.io.IOException;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SPI.Port;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team578.lib.SPIGyro;
 import team578.lib.swerve.OrientedSwerveDrive;
 import team578.lib.swerve.SwerveDrive;
@@ -75,18 +67,7 @@ public class DriveSubsystem extends Subsystem {
 			DriverStation.reportError("Failed to get zero position from preferences for " + keyName, false);
 		}
 		
-		
-		
-		// Should we use this instead?
-		WPI_TalonSRX drive = new WPI_TalonSRX(driveId);
-		drive.setSafetyEnabled(false);
-		drive.setExpiration(.25);
-		drive.setNeutralMode(NeutralMode.Brake);
-		drive.set(ControlMode.PercentOutput, 0);
-		
-		
-
-		return new SwerveModule(drive, new TalonSRX(rotateId), zeroPosition);
+		return new SwerveModule(new WPI_TalonSRX(driveId), new WPI_TalonSRX(rotateId), zeroPosition);
 	}
 
 	
@@ -178,6 +159,64 @@ public class DriveSubsystem extends Subsystem {
 	@Override
 	public void initDefaultCommand() {
 		setDefaultCommand(new TeleopDriveCommand());
+	}
+	
+//	@Deprecated
+//	public void _startTestAccel() {
+//		try {
+//			_m_logFile = new FileWriter("/home/lvuser/log/accel.csv");
+//			_m_logFile.write("Time, Position 2\n");
+//
+//			_m_timer.start();
+//			_m_timer.reset();
+//		} catch (IOException e) {
+//			DriverStation.reportError("Failed to initialize log file", false);
+//		}
+//	}
+
+//	@Deprecated
+//	public void _runTestAccel() {
+//		m_module2.setPower(1.0);
+//
+//		if (_m_logFile != null) {
+//			try {
+//				_m_logFile.write(
+//						String.format("%f, %f\n",
+//								_m_timer.get(),
+//								m_module2.getDrivePosition()));
+//			} catch (IOException e) {
+//				DriverStation.reportError("Failed to write line to log file", false);
+//			}
+//		}
+//	}
+	
+//	@Deprecated
+//	public void _endTestAccel() {
+//		_m_timer.stop();
+//
+//		m_module2.setPower(0.0);
+//
+//		try {
+//			_m_logFile.close();
+//		} catch (IOException e) {
+//			DriverStation.reportError("Failed to flush/close log file", false);
+//		}
+//	}
+
+//	@Deprecated
+	public void printRotatePosition() {
+//		SmartDashboard.putNumber("Rotate 1", m_module1.getRotatePosition());
+//		SmartDashboard.putNumber("Rotate 2", m_module2.getRotatePosition());
+//		SmartDashboard.putNumber("Rotate 3", m_module3.getRotatePosition());
+//		SmartDashboard.putNumber("Rotate 4", m_module4.getRotatePosition());
+	}
+
+//	@Deprecated
+	public void testRotation(double targetAngle) {
+		m_module1.setAngle(targetAngle);
+		m_module2.setAngle(targetAngle);
+		m_module3.setAngle(targetAngle);
+		m_module4.setAngle(targetAngle);
 	}
 
 }
