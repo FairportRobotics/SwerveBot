@@ -16,6 +16,9 @@ public class Robot extends IterativeRobot {
 	
 	/*
 	 * Framework taken from Team 2102
+	 * https://github.com/Paradox2102/SwerveDrive
+	 * 
+	 * Theory of Operation : https://www.chiefdelphi.com/media/papers/download/1549
 	 */
 
 	public static OI oi;

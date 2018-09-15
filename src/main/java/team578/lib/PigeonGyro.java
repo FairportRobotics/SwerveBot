@@ -9,95 +9,62 @@ import edu.wpi.first.wpilibj.SPI.Port;
 public class PigeonGyro {
 	
 	// https://www.ctr-electronics.com/downloads/pdf/Pigeon%20IMU%20User's%20Guide.pdf
+	// https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/Java/PigeonStraight/src/org/usfirst/frc/team217/robot/Robot.java
+	// http://www.ctr-electronics.com/downloads/api/java/html/index.html
 	
 	PigeonIMU _pigeon = new PigeonIMU(0); /* example Pigeon with device ID 0 */
 	
-
-	
-	
-
-	private final SPI m_port;
-
 	private double m_yawZero = 0;
 	private double m_pitchZero = 0;
 	private double m_rollZero = 0;
 
 	public PigeonGyro(Port port) {
 		
-		PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
-		_pigeon.getGeneralStatus(genStatus);
 		double [] ypr = new double[3];
 		_pigeon.getYawPitchRoll(ypr);
 		System.out.println("Yaw:" + ypr[0]);
 		
 		// _pigeon.SetYaw(newAngle);
 		// _pigeon.SetFusedHeading(newAngle)
+		// _pigeon.enterCalibrationMode(CalibrationMode.Temperature,1);
 		
-		_pigeon.enterCalibrationMode(CalibrationMode.Temperature,1);
+		PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
+		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
+		double [] xyz_dps = new double [3];
+		/* grab some input data from Pigeon and gamepad*/
+		_pigeon.getGeneralStatus(genStatus);
+		_pigeon.getRawGyro(xyz_dps);
+		_pigeon.getFusedHeading(fusionStatus);
+		double currentAngle = fusionStatus.heading;
+		boolean angleIsGood = (_pigeon.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
+		double currentAngularRate = xyz_dps[2];
+		double _targetAngle = 0;
 		
-		
-		
-		m_port = new SPI(port);
+		System.out.println("------------------------------------------");
+		System.out.println("error: " + (_targetAngle - currentAngle) );
+		System.out.println("angle: "+ currentAngle);
+		System.out.println("rate: "+ currentAngularRate);
+		System.out.println("noMotionBiasCount: "+ genStatus.noMotionBiasCount);
+		System.out.println("tempCompensationCount: "+ genStatus.tempCompensationCount);
+		System.out.println( angleIsGood ? "Angle is good" : "Angle is NOT GOOD");
+		System.out.println("------------------------------------------");
 
-		m_port.setChipSelectActiveLow();
 	}
 
 	public double getYaw() {
 		return fixRange(getYawRaw() - m_yawZero);
 	}
 
-	public double getPitch() {
-		return fixRange(getPitchRaw() - m_pitchZero);
-	}
-
-	public double getRoll() {
-		return fixRange(getRollRaw() - m_rollZero);
-	}
 
 	public void resetYaw(double start) {
 		m_yawZero = getYawRaw() + start;
 	}
 
-	public void resetPitch(double start) {
-		m_pitchZero = getPitchRaw() + start;
-	}
-
-	public void resetRoll(double start) {
-		m_rollZero = getRollRaw() + start;
-	}
-
 	private double getYawRaw() {
-		return getAngle((byte) 1);
+		return 0;
 	}
 
-	private double getPitchRaw() {
-		return getAngle((byte) 2);
-	}
-
-	private double getRollRaw() {
-		return getAngle((byte) 3);
-	}
-
-	// TODO: Combine the buffers?
-	private double getAngle(byte idx) {
-		byte[] cmd1 = new byte[] { idx };
-		byte[] cmd2 = new byte[] { 0 };
-		byte[] cmd3 = new byte[] { 0 };
-		byte[] cmd4 = new byte[] { 0 };
-
-		byte[] ans1 = new byte[1];
-		byte[] ans2 = new byte[1];
-		byte[] ans3 = new byte[1];
-		byte[] ans4 = new byte[1];
-
-		m_port.transaction(cmd1, ans1, 1);
-		m_port.transaction(cmd2, ans2, 1);
-		m_port.transaction(cmd3, ans3, 1);
-		m_port.transaction(cmd4, ans4, 1);
-
-		return (ans3[0] & 0xff | (ans4[0] << 8)) / 100.0;
-	}
-
+	
 	public static double fixRange(double angle) {
 		if (angle < -180) {
 			angle += 360;

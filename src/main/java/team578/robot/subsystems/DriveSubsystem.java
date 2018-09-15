@@ -81,12 +81,17 @@ public class DriveSubsystem extends Subsystem {
 		m_prefs.putDouble("Rotate 3", m_module3.getRotatePosition());
 		m_prefs.putDouble("Rotate 4", m_module4.getRotatePosition());
 	}
+	
+	@Override
+	public void initDefaultCommand() {
+		setDefaultCommand(new TeleopDriveCommand());
+	}
 
-//	public void resetHeading() {
-//		DriverStation.reportWarning("Resetting gyro heading", false);
-//		m_gyro.resetYaw(0.0);
-//	}
-//
+	public void resetHeading() {
+		DriverStation.reportWarning("Resetting gyro heading", false);
+		m_gyro.resetYaw(0.0);
+	}
+
 	public void drive(double mag, double dir) {
 		System.err.println("Drive Mag " + mag + " dir " + dir);
 		m_orientedDrive.drive(mag, dir, m_targetHeading);
@@ -156,10 +161,7 @@ public class DriveSubsystem extends Subsystem {
 //		return finished;
 //	}
 
-	@Override
-	public void initDefaultCommand() {
-		setDefaultCommand(new TeleopDriveCommand());
-	}
+	
 	
 //	@Deprecated
 //	public void _startTestAccel() {
