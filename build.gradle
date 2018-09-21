@@ -1,29 +1,11 @@
 plugins {
     id "java"
     id "eclipse"
-   // id "edu.wpi.first.GradleRIO" version "2018.06.21"
     id "edu.wpi.first.GradleRIO" version "2019.0.0-alpha-3"
+    id "com.diffplug.gradle.spotless" version "3.14.0"
 }
 
-allprojects {
-    apply plugin: "idea"
-    apply plugin: "eclipse"
-
-    repositories {
-        mavenCentral()
-        maven {
-            url 'http://first.wpi.edu/FRC/roborio/maven/release'
-        }
-
-        maven {
-            url 'https://jitpack.io'
-        }
-    }
-}
-
-
-def TEAM = 578
-def ROBOT_CLASS = "team578.robot.Robot"
+def ROBOT_CLASS = "frc.team1778.robot.Robot"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project EmbeddedTools.
@@ -31,7 +13,7 @@ deploy {
     targets {
         target("roborio", edu.wpi.first.gradlerio.frc.RoboRIO) {
             // Team can be overridden by command line, for use with VSCode
-            team = getTeamOrDefault(TEAM)
+            team = getTeamOrDefault(1778)
         }
     }
     artifacts {
@@ -50,9 +32,12 @@ dependencies {
     compile ctre()
     compile navx()
     compile pathfinder()
-    
-    compile 'org.apache.logging.log4j:log4j-api:2.+'
-    compile 'org.apache.logging.log4j:log4j-core:2.+'
+}
+
+spotless {
+    java {
+        googleJavaFormat()
+    }
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
@@ -63,8 +48,6 @@ jar {
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_CLASS)
 }
 
-// run ./gradlew wrapper
-task wrapper(type: Wrapper) {
-    // gradleVersion = '4.9'
+wrapper {
     gradleVersion = '4.9'
 }
