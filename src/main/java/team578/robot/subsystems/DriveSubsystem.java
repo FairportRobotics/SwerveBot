@@ -1,5 +1,13 @@
 package team578.robot.subsystems;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -14,40 +22,35 @@ import team578.robot.RobotMap;
 import team578.robot.commands.TeleopDriveCommand;
 
 public class DriveSubsystem extends Subsystem {
+	
+	private static final Logger logger = LogManager.getLogger(DriveSubsystem.class);
+	
 
+	private static final double k_maxVelocity = 1.60;
+	private static final double k_maxAccel = 3.20;
 	private static final double k_correctionP = 1.0 / 180.0;
 	private static final double k_correctionD = 0.0;
-
 	private static final double k_wheelbaseLength = 0.625; // meters
 	private static final double k_wheelbaseWidth = 0.47; // meters
-
 	private static final double k_wheelDiameter = 0.1; // meters
 	private static final int k_ticksPerRev = 2560;
-
 	// TODO: Are these numbers right?
 	// Max velocity: 1400 ticks / 100 ms (~1.63 m/s)
 	// Max acceleration: 0.500 sec to top speed (~3.26 m/s/s)
 	// Max jerk: ??? (maybe find second derivative of velocity graph)
 
-	private static final double k_maxVelocity = 1.60;
-	private static final double k_maxAccel = 3.20;
-
 //	private static final Config k_config = new Config(FitMethod.HERMITE_CUBIC, Config.SAMPLES_HIGH, 1.0 / 50.0,
 //			k_maxVelocity, k_maxAccel, 60.0);
 
-	private final Preferences m_prefs = Preferences.getInstance();
-
 	private final SPIGyro m_gyro = new SPIGyro(Port.kMXP);
 
-	private final SwerveModule m_module1 = createModule(RobotMap.DRIVE_1, RobotMap.ROTATE_1, "Rotate 1");
-	private final SwerveModule m_module2 = createModule(RobotMap.DRIVE_2, RobotMap.ROTATE_2, "Rotate 2");
-	private final SwerveModule m_module3 = createModule(RobotMap.DRIVE_3, RobotMap.ROTATE_3, "Rotate 3");
-	private final SwerveModule m_module4 = createModule(RobotMap.DRIVE_4, RobotMap.ROTATE_4, "Rotate 4");
-
-	private final SwerveDrive m_drive = new SwerveDrive(m_module1, m_module2, m_module3, m_module4, k_wheelbaseLength,
-			k_wheelbaseWidth);
-
-	private final OrientedSwerveDrive m_orientedDrive = new OrientedSwerveDrive(m_drive, m_gyro, k_correctionP);
+	private final SwerveModule m_module1;
+	private final SwerveModule m_module2;
+	private final SwerveModule m_module3;
+	private final SwerveModule m_module4;
+	private final SwerveDrive m_drive;
+	private final OrientedSwerveDrive m_orientedDrive;
+	private final Preferences m_prefs = Preferences.getInstance();
 
 	public double m_targetHeading = 0.0;
 
@@ -55,9 +58,25 @@ public class DriveSubsystem extends Subsystem {
 
 //	private FileWriter _m_logFile;
 //	private Timer _m_timer = new Timer();
+	
+	
 
 	public DriveSubsystem() {
 //		SmartDashboard.putData(this);
+		
+		logger.info("Construct DriveSubsystem");
+		
+		calibrateRotatePos();
+
+		m_module1 = createModule(RobotMap.DRIVE_1, RobotMap.ROTATE_1, "Rotate 1");
+		m_module2 = createModule(RobotMap.DRIVE_2, RobotMap.ROTATE_2, "Rotate 2");
+		m_module3 = createModule(RobotMap.DRIVE_3, RobotMap.ROTATE_3, "Rotate 3");
+		m_module4 = createModule(RobotMap.DRIVE_4, RobotMap.ROTATE_4, "Rotate 4");
+
+		m_drive = new SwerveDrive(m_module1, m_module2, m_module3, m_module4, k_wheelbaseLength, k_wheelbaseWidth);
+
+		m_orientedDrive = new OrientedSwerveDrive(m_drive, m_gyro, k_correctionP);
+
 	}
 
 	private SwerveModule createModule(final int driveId, final int rotateId, final String keyName) {
@@ -66,22 +85,48 @@ public class DriveSubsystem extends Subsystem {
 		if (zeroPosition == failValue) {
 			DriverStation.reportError("Failed to get zero position from preferences for " + keyName, false);
 		}
-		
-		return new SwerveModule(new WPI_TalonSRX(driveId), new WPI_TalonSRX(rotateId), zeroPosition);
+
+		return new SwerveModule(getDriveTalon(driveId), getRotationTalon(rotateId), zeroPosition);
 	}
 
-	
+	public WPI_TalonSRX getDriveTalon(int driveID) {
+		WPI_TalonSRX t = new WPI_TalonSRX(driveID);
+
+		t.setSafetyEnabled(false);
+		t.setExpiration(.25);
+
+		t.setNeutralMode(NeutralMode.Brake);
+		
+		t.set(ControlMode.PercentOutput, 0);
+
+		t.configSelectedFeedbackSensor(FeedbackDevice.None, 0, 0);
+
+		t.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyOpen, 0);
+		t.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyOpen, 0);
+
+		return t;
+	}
+
+	public WPI_TalonSRX getRotationTalon(int driveID) {
+		WPI_TalonSRX t = getDriveTalon(driveID);
+		
+		t.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
+		
+		return t;
+	}
+
 	/*
 	 * This sets position of each rotation pot in the prefs.
 	 */
 	public void calibrateRotatePos() {
-		DriverStation.reportWarning("Calibrating potentiometers", false);
+		// DriverStation.reportWarning("Calibrating potentiometers", false);
+		logger.info("Calibrating potentiometers");
 		m_prefs.putDouble("Rotate 1", m_module1.getRotatePosition());
 		m_prefs.putDouble("Rotate 2", m_module2.getRotatePosition());
 		m_prefs.putDouble("Rotate 3", m_module3.getRotatePosition());
 		m_prefs.putDouble("Rotate 4", m_module4.getRotatePosition());
 	}
-	
+
 	@Override
 	public void initDefaultCommand() {
 		setDefaultCommand(new TeleopDriveCommand());
@@ -96,6 +141,23 @@ public class DriveSubsystem extends Subsystem {
 		System.err.println("Drive Mag " + mag + " dir " + dir);
 		m_orientedDrive.drive(mag, dir, m_targetHeading);
 	}
+
+//	@Deprecated
+	public void printRotatePosition() {
+//		SmartDashboard.putNumber("Rotate 1", m_module1.getRotatePosition());
+//		SmartDashboard.putNumber("Rotate 2", m_module2.getRotatePosition());
+//		SmartDashboard.putNumber("Rotate 3", m_module3.getRotatePosition());
+//		SmartDashboard.putNumber("Rotate 4", m_module4.getRotatePosition());
+	}
+
+//	@Deprecated
+	public void testRotation(double targetAngle) {
+		m_module1.setAngle(targetAngle);
+		m_module2.setAngle(targetAngle);
+		m_module3.setAngle(targetAngle);
+		m_module4.setAngle(targetAngle);
+	}
+
 //
 //	private void resetDistance() {
 //		m_module1.resetDrivePosition();
@@ -161,8 +223,6 @@ public class DriveSubsystem extends Subsystem {
 //		return finished;
 //	}
 
-	
-	
 //	@Deprecated
 //	public void _startTestAccel() {
 //		try {
@@ -191,7 +251,7 @@ public class DriveSubsystem extends Subsystem {
 //			}
 //		}
 //	}
-	
+
 //	@Deprecated
 //	public void _endTestAccel() {
 //		_m_timer.stop();
@@ -204,21 +264,5 @@ public class DriveSubsystem extends Subsystem {
 //			DriverStation.reportError("Failed to flush/close log file", false);
 //		}
 //	}
-
-//	@Deprecated
-	public void printRotatePosition() {
-//		SmartDashboard.putNumber("Rotate 1", m_module1.getRotatePosition());
-//		SmartDashboard.putNumber("Rotate 2", m_module2.getRotatePosition());
-//		SmartDashboard.putNumber("Rotate 3", m_module3.getRotatePosition());
-//		SmartDashboard.putNumber("Rotate 4", m_module4.getRotatePosition());
-	}
-
-//	@Deprecated
-	public void testRotation(double targetAngle) {
-		m_module1.setAngle(targetAngle);
-		m_module2.setAngle(targetAngle);
-		m_module3.setAngle(targetAngle);
-		m_module4.setAngle(targetAngle);
-	}
 
 }

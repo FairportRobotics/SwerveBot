@@ -5,6 +5,24 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "2019.0.0-alpha-3"
 }
 
+allprojects {
+    apply plugin: "idea"
+    apply plugin: "eclipse"
+
+    repositories {
+        mavenCentral()
+        maven {
+            url 'http://first.wpi.edu/FRC/roborio/maven/release'
+        }
+
+        maven {
+            url 'https://jitpack.io'
+        }
+    }
+}
+
+
+def TEAM = 578
 def ROBOT_CLASS = "team578.robot.Robot"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
@@ -13,7 +31,7 @@ deploy {
     targets {
         target("roborio", edu.wpi.first.gradlerio.frc.RoboRIO) {
             // Team can be overridden by command line, for use with VSCode
-            team = getTeamOrDefault(578)
+            team = getTeamOrDefault(TEAM)
         }
     }
     artifacts {
@@ -32,6 +50,9 @@ dependencies {
     compile ctre()
     compile navx()
     compile pathfinder()
+    
+    compile 'org.apache.logging.log4j:log4j-api:2.+'
+    compile 'org.apache.logging.log4j:log4j-core:2.+'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
