@@ -1,4 +1,4 @@
-package team578.lib.swerve;
+package team578.lib.swerve.chilly;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
