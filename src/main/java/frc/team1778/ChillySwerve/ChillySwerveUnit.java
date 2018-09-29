@@ -64,6 +64,9 @@ public class ChillySwerveUnit {
 		WPI_TalonSRX _talon = new WPI_TalonSRX(talonID);
 		_talon.setInverted(revMotor);
 
+		int kPIDLoopIdx = 0;
+		int kTimeoutMs = 10;
+		_talon.configSelectedFeedbackSensor(FeedbackDevice.Analog, kPIDLoopIdx, kTimeoutMs);
 		_talon.selectProfileSlot(PROFILE_SLOT, PIDLOOP_IDX);
 		_talon.config_kP(PROFILE_SLOT, pCoeff, TIMEOUT_MS);
 		_talon.config_kI(PROFILE_SLOT, iCoeff, TIMEOUT_MS);
