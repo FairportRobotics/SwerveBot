@@ -1,7 +1,6 @@
 package frc.team1778.ChillySwerve;
 
 import edu.wpi.first.wpilibj.Joystick;
-import frc.team1778.NetworkComm.InputOutputComm;
 import frc.team1778.Systems.NavXSensor;
 import frc.team1778.Utility.HardwareIDs;
 import jaci.pathfinder.followers.EncoderFollower;
@@ -116,14 +115,14 @@ public class ChillySwerve {
     fieldCentricDrive(fwd, str, rot);
 
     // debug only
-    InputOutputComm.putDouble(
-        InputOutputComm.LogTable.kMainLog, "ChillySwerve/FL_absAngle", frontLeft.getAbsAngle());
-    InputOutputComm.putDouble(
-        InputOutputComm.LogTable.kMainLog, "ChillySwerve/FR_absAngle", frontRight.getAbsAngle());
-    InputOutputComm.putDouble(
-        InputOutputComm.LogTable.kMainLog, "ChillySwerve/BL_absAngle", backLeft.getAbsAngle());
-    InputOutputComm.putDouble(
-        InputOutputComm.LogTable.kMainLog, "ChillySwerve/BR_absAngle", backRight.getAbsAngle());
+//    InputOutputComm.putDouble(
+//        InputOutputComm.LogTable.kMainLog, "ChillySwerve/FL_absAngle", frontLeft.getAbsAngle());
+//    InputOutputComm.putDouble(
+//        InputOutputComm.LogTable.kMainLog, "ChillySwerve/FR_absAngle", frontRight.getAbsAngle());
+//    InputOutputComm.putDouble(
+//        InputOutputComm.LogTable.kMainLog, "ChillySwerve/BL_absAngle", backLeft.getAbsAngle());
+//    InputOutputComm.putDouble(
+//        InputOutputComm.LogTable.kMainLog, "ChillySwerve/BR_absAngle", backRight.getAbsAngle());
 
     /*
     joyVal = driveGamepad.getRawAxis(HardwareIDs.LEFT_Y_AXIS);
@@ -180,15 +179,15 @@ public class ChillySwerve {
     // ws1..ws4 and wa1..wa4 are the wheel speeds and wheel angles for wheels 1 through 4
     // which are front_right, front_left, rear_left, and rear_right, respectively.
 
-    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/FL_pwr", ws2);
-    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/FR_pwr", ws1);
-    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/BL_pwr", ws3);
-    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/BR_pwr", ws4);
-
-    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/FL_angle", wa2);
-    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/FR_angle", wa1);
-    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/BL_angle", wa3);
-    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/BR_angle", wa4);
+//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/FL_pwr", ws2);
+//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/FR_pwr", ws1);
+//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/BL_pwr", ws3);
+//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/BR_pwr", ws4);
+//
+//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/FL_angle", wa2);
+//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/FR_angle", wa1);
+//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/BL_angle", wa3);
+//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/BR_angle", wa4);
 
     setDrivePower(ws2, ws1, ws3, ws4);
     setLocation(angleToLoc(wa2), angleToLoc(wa1), angleToLoc(wa3), angleToLoc(wa4));
