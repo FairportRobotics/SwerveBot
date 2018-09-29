@@ -3,6 +3,8 @@ package frc.team578.swerve;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.Joystick;
 import frc.team578.systems.PigeonGyro;
 import frc.team578.utility.HardwareIDs;
@@ -111,7 +113,7 @@ public class ChillySwerve {
 		joyVal = driveGamepad.getRawAxis(HardwareIDs.RIGHT_X_AXIS);
 		rot = (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
 
-//		logger.debug(String.format("fwd %.2f str %.2f rot %.2f", fwd, str, rot));
+		logger.debug(String.format("fwd %.2f str %.2f rot %.2f", fwd, str, rot));
 
 //		fieldCentricDrive(fwd, str, rot);
 
@@ -125,12 +127,30 @@ public class ChillySwerve {
 //    InputOutputComm.putDouble(
 //        InputOutputComm.LogTable.kMainLog, "ChillySwerve/BR_absAngle", backRight.getAbsAngle());
 
-//		logger.debug(String.format("fla %.2f fra %.2f rla %.2f rra %.2f", frontLeft.getAbsAngle(),
+//		logger.info(String.format("fla %.2f fra %.2f rla %.2f rra %.2f", frontLeft.getAbsAngle(),
 //				frontRight.getAbsAngle(), backLeft.getAbsAngle(), backRight.getAbsAngle()));
 		
-		logger.debug(String.format("fra :" + frontRight));
+//		logger.info("FL:" + frontLeft);
+//		logger.info("FR:" + frontRight);
+		logger.info("BL:" + backLeft);
+//		logger.info("BR:" + backRight);
 		
-		frontRight.setTurnPower(rot);
+		
+//		logger.debug(String.format("fra :" + frontRight));
+		
+//		frontRight.setTurnPower(rot);
+//		frontLeft.setTurnPower(rot);
+//		backLeft.setTurnPower(rot);
+//		backRight.setTurnPower(rot);
+		
+		
+		double targetEnc = 0 * 1000;
+		frontLeft.turnMotor.set(ControlMode.Position, targetEnc);
+		frontRight.turnMotor.set(ControlMode.Position, targetEnc);
+		backLeft.turnMotor.set(ControlMode.Position, targetEnc);
+//		backRight.turnMotor.set(ControlMode.Position, 1000);
+//		ChillySwerve.setAllEncPos(0);
+		
 		/*
 		 * joyVal = driveGamepad.getRawAxis(HardwareIDs.LEFT_Y_AXIS); double left =
 		 * (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
@@ -200,7 +220,7 @@ public class ChillySwerve {
 
 //		setDrivePower(ws2, ws1, ws3, ws4);
 
-//		setLocation(0, 0, 0, 0);
+//		setLocation(100, 100, 100, 100);
 
 //		setLocation(angleToLoc(wa2), angleToLoc(wa1), angleToLoc(wa3), angleToLoc(wa4));
 	}
@@ -269,11 +289,18 @@ public class ChillySwerve {
 	}
 
 	public static void setLocation(double fl, double fr, double bl, double br) {
-		logger.debug("Location Set : " + String.format("fl %.2f fr %.2f bl %.2f br %.2f", fl, fr, bl, br));
+		logger.info("Location Set : " + String.format("fl %.2f fr %.2f bl %.2f br %.2f", fl, fr, bl, br));
 		frontLeft.setTargetAngle(fl);
 		frontRight.setTargetAngle(fr);
 		backLeft.setTargetAngle(bl);
 		backRight.setTargetAngle(br);
+	}
+	
+	public static void setAllEncPos(int encVal) {
+		frontLeft.setTurnMotorTargetEnc(encVal);
+		frontRight.setTurnMotorTargetEnc(encVal);
+		backLeft.setTurnMotorTargetEnc(encVal);
+		backRight.setTurnMotorTargetEnc(encVal);
 	}
 
 	public static void setAllTurnPower(double power) {

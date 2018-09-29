@@ -10,7 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class ChillySwerveUnit {
 
 	// turn motor controller
-	private WPI_TalonSRX turnMotor;
+	public WPI_TalonSRX turnMotor;
 
 	// drive motor controller
 	private WPI_TalonSRX driveMotor;
@@ -21,17 +21,16 @@ public class ChillySwerveUnit {
 	private static final int PROFILE_SLOT = 0;
 
 	public static final boolean REVERSE_DRIVE_MOTOR = false; // motor polarity
-	public static final boolean ALIGNED_DRIVE_SENSOR = true; // encoder polarity
 
 	public static final boolean REVERSE_TURN_MOTOR = false; // motor polarity
-	public static final boolean ALIGNED_TURN_SENSOR = true; // encoder polarity
+	public static final boolean ALIGNED_TURN_SENSOR = false; // encoder polarity
 
 	// encoder variables
 	private final double ENCODER_PULSES_PER_REV = 20 * 4; 
 
 
 	// PIDF values - turn
-	private static final double turn_kP = 1.0;
+	private static final double turn_kP = 2.0;
 	private static final double turn_kI = 0.0;
 	private static final double turn_kD = 0.0;
 	private static final double turn_kF = 0.0;
@@ -59,6 +58,7 @@ public class ChillySwerveUnit {
 
 	private WPI_TalonSRX configureRotate(int talonID, boolean revMotor, double pCoeff, double iCoeff, double dCoeff,
 			double fCoeff, int iZone) {
+		
 		WPI_TalonSRX _talon = new WPI_TalonSRX(talonID);
 		_talon.setInverted(revMotor);
 
@@ -70,6 +70,12 @@ public class ChillySwerveUnit {
 		_talon.config_kD(PROFILE_SLOT, dCoeff, TIMEOUT_MS);
 		_talon.config_kF(PROFILE_SLOT, fCoeff, TIMEOUT_MS);
 		_talon.config_IntegralZone(PROFILE_SLOT, iZone, TIMEOUT_MS);
+		
+		_talon.configNominalOutputForward(0, TIMEOUT_MS);
+		_talon.configNominalOutputReverse(0, TIMEOUT_MS);
+		
+		_talon.configPeakOutputForward(1, TIMEOUT_MS);
+		_talon.configPeakOutputReverse(-1, TIMEOUT_MS);
 
 		_talon.configPeakCurrentLimit(50, TIMEOUT_MS);
 		_talon.enableCurrentLimit(true);
@@ -168,6 +174,10 @@ public class ChillySwerveUnit {
 	public void stopDrive() {
 		setDrivePower(0);
 	}
+	
+	public void setTurnMotorTargetEnc(double target) {
+		turnMotor.set(ControlMode.Position, target);
+	}
 
 	public void setBrakeMode(boolean b) {
 		if (b == true)
@@ -178,6 +188,7 @@ public class ChillySwerveUnit {
 	
 	@Override
 	public String toString() {
-		return String.format("enc:%.2f aang:%.2f tr:%d ain:%d clt:%d",getTurnEncPos(), getAbsAngle(), getTurnRotations(), getTurnMotorAnalogIn(), getTurnCLT()); 
+		return String.format("enc:%.2f aang:%.2f tr:%d ain:%d clt:%d ssp:%d",getTurnEncPos(), getAbsAngle(), 
+				getTurnRotations(), getTurnMotorAnalogIn(), getTurnCLT(), turnMotor.getSelectedSensorPosition(0) ); 
 	}
 }
