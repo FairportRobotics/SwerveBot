@@ -6,12 +6,12 @@ import org.apache.logging.log4j.Logger;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.Joystick;
+import frc.team578.robot.RobotMap;
 import frc.team578.systems.PigeonGyro;
-import frc.team578.utility.HardwareIDs;
 
-public class ChillySwerve {
+public class SwerveDrive {
 
-	private static final Logger logger = LogManager.getLogger(ChillySwerve.class);
+	private static final Logger logger = LogManager.getLogger(SwerveDrive.class);
 
 	private static final double AUTO_DRIVE_ANGLE_CORRECT_COEFF = 0.02;
 	private static final double GYRO_CORRECT_COEFF = 0.03;
@@ -21,8 +21,8 @@ public class ChillySwerve {
 	private static double headingDeg = 0.0;
 
 	// swerve units
-	private static ChillySwerveUnit frontLeft, frontRight;
-	private static ChillySwerveUnit backLeft, backRight;
+	private static SwerveDriveUnit frontLeft, frontRight;
+	private static SwerveDriveUnit backLeft, backRight;
 
 	// swerve inputs
 	private static Joystick driveGamepad;
@@ -67,13 +67,13 @@ public class ChillySwerve {
 		if (initialized)
 			return;
 
-		driveGamepad = new Joystick(HardwareIDs.CONTROL_GAMEPAD_ID);
+		driveGamepad = new Joystick(RobotMap.CONTROL_GAMEPAD_ID);
 
-		frontLeft = new ChillySwerveUnit(HardwareIDs.FRONT_LEFT_DRIVE_TALON_ID, HardwareIDs.FRONT_LEFT_ROTATE_TALON_ID);
-		frontRight = new ChillySwerveUnit(HardwareIDs.FRONT_RIGHT_DRIVE_TALON_ID,
-				HardwareIDs.FRONT_RIGHT_ROTATE_TALON_ID);
-		backLeft = new ChillySwerveUnit(HardwareIDs.BACK_LEFT_DRIVE_TALON_ID, HardwareIDs.BACK_LEFT_ROTATE_TALON_ID);
-		backRight = new ChillySwerveUnit(HardwareIDs.BACK_RIGHT_DRIVE_TALON_ID, HardwareIDs.BACK_RIGHT_ROTATE_TALON_ID);
+		frontLeft = new SwerveDriveUnit(RobotMap.FRONT_LEFT_DRIVE_TALON_ID, RobotMap.FRONT_LEFT_ROTATE_TALON_ID);
+		frontRight = new SwerveDriveUnit(RobotMap.FRONT_RIGHT_DRIVE_TALON_ID,
+				RobotMap.FRONT_RIGHT_ROTATE_TALON_ID);
+		backLeft = new SwerveDriveUnit(RobotMap.BACK_LEFT_DRIVE_TALON_ID, RobotMap.BACK_LEFT_ROTATE_TALON_ID);
+		backRight = new SwerveDriveUnit(RobotMap.BACK_RIGHT_DRIVE_TALON_ID, RobotMap.BACK_RIGHT_ROTATE_TALON_ID);
 
 		angleDeg = PigeonGyro.getAngle();
 
@@ -104,13 +104,13 @@ public class ChillySwerve {
 		double joyVal;
 
 		// get joystick inputs
-		joyVal = driveGamepad.getRawAxis(HardwareIDs.LEFT_Y_AXIS);
+		joyVal = driveGamepad.getRawAxis(RobotMap.LEFT_Y_AXIS);
 		fwd = (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
 
-		joyVal = driveGamepad.getRawAxis(HardwareIDs.LEFT_X_AXIS);
+		joyVal = driveGamepad.getRawAxis(RobotMap.LEFT_X_AXIS);
 		str = (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
 
-		joyVal = driveGamepad.getRawAxis(HardwareIDs.RIGHT_X_AXIS);
+		joyVal = driveGamepad.getRawAxis(RobotMap.RIGHT_X_AXIS);
 		rot = (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
 
 		logger.debug(String.format("fwd %.2f str %.2f rot %.2f", fwd, str, rot));

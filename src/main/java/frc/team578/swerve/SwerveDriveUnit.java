@@ -7,7 +7,7 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-public class ChillySwerveUnit {
+public class SwerveDriveUnit {
 
 	// turn motor controller
 	public WPI_TalonSRX turnMotor;
@@ -36,7 +36,7 @@ public class ChillySwerveUnit {
 	private static final double turn_kF = 0.0;
 	private static final int turn_kIZone = 18;
 
-	public ChillySwerveUnit(int driveTalonID, int turnTalonID) {
+	public SwerveDriveUnit(int driveTalonID, int turnTalonID) {
 
 		driveMotor = configureDrive(driveTalonID, REVERSE_DRIVE_MOTOR);
 

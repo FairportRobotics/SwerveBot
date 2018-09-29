@@ -2,7 +2,7 @@ package frc.team578.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import frc.team578.swerve.ChillySwerve;
+import frc.team578.swerve.SwerveDrive;
 import frc.team578.systems.PigeonGyro;
 
 public class Robot extends IterativeRobot {
@@ -15,7 +15,7 @@ public class Robot extends IterativeRobot {
     PigeonGyro.initialize();
 
     // Initialize ChillySwerve Drive controller classes
-    ChillySwerve.initialize();
+    SwerveDrive.initialize();
 
     // retrieve Driver Station instance
     ds = DriverStation.getInstance();
@@ -36,24 +36,22 @@ public class Robot extends IterativeRobot {
   @Override
   public void teleopInit() {
 
-    ChillySwerve.teleopInit();
+    SwerveDrive.teleopInit();
   }
 
   @Override
   public void teleopPeriodic() {
-    // ChillySwerve-Drive command for all controllers
-    ChillySwerve.teleopPeriodic();
+    SwerveDrive.teleopPeriodic();
   }
 
   @Override
   public void disabledInit() {
-
-    ChillySwerve.disabledInit();
+    SwerveDrive.disabledInit();
   }
 
   @Override
   public void disabledPeriodic() {
-    ChillySwerve.disabledPeriodic();
+    SwerveDrive.disabledPeriodic();
   }
 
   @Override

@@ -1,6 +1,6 @@
-package frc.team578.utility;
+package frc.team578.robot;
 
-public class HardwareIDs {
+public class RobotMap {
 
   // motor controller IDs
   public static final int FRONT_LEFT_DRIVE_TALON_ID = 1;
