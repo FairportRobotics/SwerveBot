@@ -1,4 +1,4 @@
-package frc.team1778.ChillySwerve;
+package frc.team578.swerve;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;

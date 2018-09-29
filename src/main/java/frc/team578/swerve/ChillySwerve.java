@@ -1,11 +1,11 @@
-package frc.team1778.ChillySwerve;
+package frc.team578.swerve;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import edu.wpi.first.wpilibj.Joystick;
-import frc.team1778.Systems.PigeonGyro;
-import frc.team1778.Utility.HardwareIDs;
+import frc.team578.systems.PigeonGyro;
+import frc.team578.utility.HardwareIDs;
 
 public class ChillySwerve {
 

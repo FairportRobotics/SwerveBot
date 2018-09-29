@@ -1,4 +1,4 @@
-package frc.team1778.Utility;
+package frc.team578.utility;
 
 public class LogitechDualAction {
   public static final int DPAD = 0; // GetPOV () direction for directional gamepad

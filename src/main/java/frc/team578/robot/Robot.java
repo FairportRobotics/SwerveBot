@@ -1,9 +1,9 @@
-package frc.team1778.robot;
+package frc.team578.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import frc.team1778.ChillySwerve.ChillySwerve;
-import frc.team1778.Systems.PigeonGyro;
+import frc.team578.swerve.ChillySwerve;
+import frc.team578.systems.PigeonGyro;
 
 public class Robot extends IterativeRobot {
 
