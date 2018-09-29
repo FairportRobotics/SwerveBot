@@ -3,7 +3,6 @@ package frc.team578.swerve;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
@@ -37,7 +36,7 @@ public class SwerveDriveUnit {
 
 	// PIDF values - turn
 	private static final double turn_kP = 1.0;
-	private static final double turn_kI = 0.0;
+	private static final double turn_kI = 0.455;
 	private static final double turn_kD = 0.0;
 	private static final double turn_kF = 0.0;
 	private static final int turn_kIZone = 18;
@@ -141,42 +140,42 @@ public class SwerveDriveUnit {
 		return turnMotor.getClosedLoopTarget(0);
 	}
 
-	public void setTargetAngle(double ta) {
-
-		double targetAngle = ta % 360;
-
-		double currentAngle = getAbsAngle();
-		double currentAngleMod = currentAngle % 360;
-		if (currentAngleMod < 0)
-			currentAngleMod += 360;
-
-		double delta = currentAngleMod - targetAngle;
-
-		if (delta > 180) {
-			targetAngle += 360;
-		} else if (delta < -180) {
-			targetAngle -= 360;
-		}
-
-		delta = currentAngleMod - targetAngle;
-		if (delta > 90 || delta < -90) {
-			if (delta > 90)
-				targetAngle += 180;
-			else if (delta < -90)
-				targetAngle -= 180;
-			driveMotor.setInverted(false);
-		} else {
-			driveMotor.setInverted(true);
-		}
-
-		targetAngle += currentAngle - currentAngleMod;
-
-		targetAngle *= 1024.0 / 360.0;
-		
-		logger.info(String.format("tgta:%.2f", targetAngle));
-		
-		turnMotor.set(ControlMode.Position, targetAngle);
-	}
+//	public void setTargetAngle(double ta) {
+//
+////		double targetAngle = ta % 360;
+////
+////		double currentAngle = getAbsAngle();
+////		double currentAngleMod = currentAngle % 360;
+////		if (currentAngleMod < 0)
+////			currentAngleMod += 360;
+////
+////		double delta = currentAngleMod - targetAngle;
+////
+////		if (delta > 180) {
+////			targetAngle += 360;
+////		} else if (delta < -180) {
+////			targetAngle -= 360;
+////		}
+////
+////		delta = currentAngleMod - targetAngle;
+////		if (delta > 90 || delta < -90) {
+////			if (delta > 90)
+////				targetAngle += 180;
+////			else if (delta < -90)
+////				targetAngle -= 180;
+////			driveMotor.setInverted(false);
+////		} else {
+////			driveMotor.setInverted(true);
+////		}
+////
+////		targetAngle += currentAngle - currentAngleMod;
+////
+////		targetAngle *= 1024.0 / 360.0;
+//		
+//		
+//		
+//		turnMotor.set(ControlMode.Position, encpos);
+//	}
 
 	public void stopBoth() {
 		setDrivePower(0);
