@@ -130,7 +130,7 @@ public class ChillySwerve {
 		
 		logger.debug(String.format("fra :" + frontRight));
 		
-		frontRight.setTargetAngle(0);
+		frontRight.setTurnPower(rot);
 		/*
 		 * joyVal = driveGamepad.getRawAxis(HardwareIDs.LEFT_Y_AXIS); double left =
 		 * (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
