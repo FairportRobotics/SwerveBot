@@ -14,16 +14,10 @@ allprojects {
         maven {
             url 'http://first.wpi.edu/FRC/roborio/maven/release'
         }
-
-        maven {
-            url 'https://jitpack.io'
-        }
     }
 }
 
-
-def TEAM = 578
-def ROBOT_CLASS = "team578.robot.Robot"
+def ROBOT_CLASS = "frc.team1778.robot.Robot"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project EmbeddedTools.
@@ -31,7 +25,7 @@ deploy {
     targets {
         target("roborio", edu.wpi.first.gradlerio.frc.RoboRIO) {
             // Team can be overridden by command line, for use with VSCode
-            team = getTeamOrDefault(TEAM)
+            team = getTeamOrDefault(1778)
         }
     }
     artifacts {
@@ -63,8 +57,7 @@ jar {
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_CLASS)
 }
 
-// run ./gradlew wrapper
-task wrapper(type: Wrapper) {
-    // gradleVersion = '4.9'
+// on change, run ./gradlew wrapper
+wrapper {
     gradleVersion = '4.9'
 }
