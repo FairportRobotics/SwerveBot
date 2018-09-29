@@ -111,9 +111,9 @@ public class ChillySwerve {
 		joyVal = driveGamepad.getRawAxis(HardwareIDs.RIGHT_X_AXIS);
 		rot = (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
 
-		logger.debug(String.format("fwd %.2f str %.2f rot %.2f", fwd, str, rot));
+//		logger.debug(String.format("fwd %.2f str %.2f rot %.2f", fwd, str, rot));
 
-		fieldCentricDrive(fwd, str, rot);
+//		fieldCentricDrive(fwd, str, rot);
 
 		// debug only
 //    InputOutputComm.putDouble(
@@ -125,8 +125,12 @@ public class ChillySwerve {
 //    InputOutputComm.putDouble(
 //        InputOutputComm.LogTable.kMainLog, "ChillySwerve/BR_absAngle", backRight.getAbsAngle());
 
-		logger.debug(String.format("fla %.2f fra %.2f rla %.2f rra %.2f", frontLeft.getAbsAngle(),
-				frontRight.getAbsAngle(), backLeft.getAbsAngle(), backRight.getAbsAngle()));
+//		logger.debug(String.format("fla %.2f fra %.2f rla %.2f rra %.2f", frontLeft.getAbsAngle(),
+//				frontRight.getAbsAngle(), backLeft.getAbsAngle(), backRight.getAbsAngle()));
+		
+		logger.debug(String.format("fra :" + frontRight));
+		
+		frontRight.setTargetAngle(0);
 		/*
 		 * joyVal = driveGamepad.getRawAxis(HardwareIDs.LEFT_Y_AXIS); double left =
 		 * (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
@@ -196,7 +200,7 @@ public class ChillySwerve {
 
 //		setDrivePower(ws2, ws1, ws3, ws4);
 
-		setLocation(0, 0, 0, 0);
+//		setLocation(0, 0, 0, 0);
 
 //		setLocation(angleToLoc(wa2), angleToLoc(wa1), angleToLoc(wa3), angleToLoc(wa4));
 	}

@@ -27,7 +27,7 @@ public class ChillySwerveUnit {
 	public static final boolean ALIGNED_TURN_SENSOR = true; // encoder polarity
 
 	// encoder variables
-	private final double ENCODER_PULSES_PER_REV = 20 * 4; // am-3314a encoders
+	private final double ENCODER_PULSES_PER_REV = 20 * 4; 
 
 
 	// PIDF values - turn
@@ -73,6 +73,8 @@ public class ChillySwerveUnit {
 
 		_talon.configPeakCurrentLimit(50, TIMEOUT_MS);
 		_talon.enableCurrentLimit(true);
+		
+		
 
 		return _talon;
 	}
@@ -114,6 +116,14 @@ public class ChillySwerveUnit {
 
 	public void setTurnPower(double percentVal) {
 		turnMotor.set(ControlMode.PercentOutput, percentVal);
+	}
+	
+	public int getTurnMotorAnalogIn() {
+		return turnMotor.getSensorCollection().getAnalogIn();
+	}
+	
+	public int getTurnCLT() {
+		return turnMotor.getClosedLoopTarget(0);
 	}
 
 	public void setTargetAngle(double targetAngle) {
@@ -164,5 +174,10 @@ public class ChillySwerveUnit {
 			driveMotor.setNeutralMode(NeutralMode.Brake);
 		else
 			driveMotor.setNeutralMode(NeutralMode.Coast);
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("enc:%.2f aang:%.2f tr:%d ain:%d clt:%.2f",getTurnEncPos(), getAbsAngle(), getTurnRotations(), getTurnMotorAnalogIn(), getTurnCLT()); 
 	}
 }
