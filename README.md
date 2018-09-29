@@ -1,22 +1,22 @@
-#Jack Jack
+# Jack Jack
 
 ![The Jack Jack of Parr](misc/Jack-Jack.png)
 
-#R&#179;'s First Swervebot
+# R&#179;'s First Swervebot
 
-##Features
+## Features
 
 - Swerves
 - Drives
 
-##Notes
+## Notes
 
 - Requires single Logitech F310 controller at port 0
 - Left joystick is forward, backwards and strafe
 - Right joystick is cc/ccw rotation (? Field Oriented ?)
 
 
-##Super Helpful Links
+## Super Helpful Links
 
 - [pdf of operations theory](https://www.chiefdelphi.com/media/papers/download/3028) : https://www.chiefdelphi.com/media/papers/download/3028
 
