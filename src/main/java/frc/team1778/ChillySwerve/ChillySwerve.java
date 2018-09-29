@@ -1,7 +1,7 @@
 package frc.team1778.ChillySwerve;
 
 import edu.wpi.first.wpilibj.Joystick;
-import frc.team1778.Systems.NavXSensor;
+import frc.team1778.Systems.PigeonGyro;
 import frc.team1778.Utility.HardwareIDs;
 
 public class ChillySwerve {
@@ -73,7 +73,7 @@ public class ChillySwerve {
         new ChillySwerveUnit(
             HardwareIDs.BACK_RIGHT_DRIVE_TALON_ID, HardwareIDs.BACK_RIGHT_ROTATE_TALON_ID);
 
-    angleDeg = NavXSensor.getAngle();
+    angleDeg = PigeonGyro.getAngle();
 
     initialized = true;
   }
@@ -83,7 +83,7 @@ public class ChillySwerve {
     reset();
 
     if (resetGyro) {
-      NavXSensor.reset();
+      PigeonGyro.reset();
       initialAngle = 0.0;
     } else
       // initialAngle = NavXSensor.getAngle();
@@ -206,7 +206,7 @@ public class ChillySwerve {
 
   public static void fieldCentricDrive(double fwd, double str, double rot) {
 
-    double angleRad = NavXSensor.getAngle() * (Math.PI / 180d);
+    double angleRad = PigeonGyro.getAngle() * (Math.PI / 180d);
 
     double temp = (fwd * Math.cos(angleRad)) + (str * Math.sin(angleRad));
     str = (-fwd * Math.sin(angleRad)) + (str * Math.cos(angleRad));
@@ -289,7 +289,7 @@ public class ChillySwerve {
   public static void autoGyroStraight(double speed, double angleDeg) {
     // autonomous operation of drive straight in a direction relative to field POV - uses gyro
 
-    double gyroAngle = NavXSensor.getAngle();
+    double gyroAngle = PigeonGyro.getAngle();
 
     // subtract the initial angle offset, if any
     gyroAngle -= initialAngle;

@@ -3,7 +3,6 @@ package frc.team1778.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import frc.team1778.ChillySwerve.ChillySwerve;
-import frc.team1778.Systems.NavXSensor;
 import frc.team1778.Systems.PigeonGyro;
 
 public class Robot extends IterativeRobot {
@@ -13,7 +12,7 @@ public class Robot extends IterativeRobot {
   @Override
   public void robotInit() {
     // Initialize robot subsystems
-    NavXSensor.initialize();
+    PigeonGyro.initialize();
 
     // Initialize ChillySwerve Drive controller classes
     ChillySwerve.initialize();
@@ -68,7 +67,7 @@ public class Robot extends IterativeRobot {
     // double gyroAngle = NavXSensor.getYaw();  // -180 deg to +180 deg
 //    double gyroAngle = NavXSensor.getAngle(); // continuous angle (can be larger than 360 deg)
 	  
-	  double gyroAngle = PigeonGyro.getYaw();
+	  double gyroAngle = PigeonGyro.getAngle();
 
     // System.out.println("getGyroAngle:  Gyro angle = " + gyroAngle);
 

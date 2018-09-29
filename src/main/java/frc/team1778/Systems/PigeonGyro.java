@@ -82,26 +82,32 @@ public class PigeonGyro {
 		System.out.println(angleIsGood ? "Angle is good" : "Angle is NOT GOOD");
 		System.out.println("------------------------------------------");
 	}
-
-	public static double getYaw() {
-		return fixRange(getYawRaw() - m_yawZero);
+	
+	public static double getAngle() {
+		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
+		double currentAngle = fusionStatus.heading;
+		return currentAngle;
 	}
 
-	public static void resetYaw(double start) {
-		m_yawZero = getYawRaw() + start;
-	}
-
-	private static double getYawRaw() {
-		return 0;
-	}
-
-	public static double fixRange(double angle) {
-		if (angle < -180) {
-			angle += 360;
-		} else if (angle > 180) {
-			angle -= 360;
-		}
-
-		return angle;
-	}
+//	public static double getYaw() {
+//		return fixRange(getYawRaw() - m_yawZero);
+//	}
+//
+//	public static void resetYaw(double start) {
+//		m_yawZero = getYawRaw() + start;
+//	}
+//
+//	private static double getYawRaw() {
+//		return 0;
+//	}
+//
+//	public static double fixRange(double angle) {
+//		if (angle < -180) {
+//			angle += 360;
+//		} else if (angle > 180) {
+//			angle -= 360;
+//		}
+//
+//		return angle;
+//	}
 }
