@@ -1,5 +1,8 @@
 package frc.team578.swerve;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -9,6 +12,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class SwerveDriveUnit {
+	
+	private static final Logger logger = LogManager.getLogger(SwerveDriveUnit.class);
 
 	// turn motor controller
 	public WPI_TalonSRX turnMotor;
@@ -27,11 +32,11 @@ public class SwerveDriveUnit {
 	public static final boolean ALIGNED_TURN_SENSOR = false; // encoder polarity
 
 	// encoder variables
-	private final double ENCODER_PULSES_PER_REV = 20 * 4; 
+//	private final double ENCODER_PULSES_PER_REV = 20 * 4; 
 
 
 	// PIDF values - turn
-	private static final double turn_kP = 2.0;
+	private static final double turn_kP = 1.0;
 	private static final double turn_kI = 0.0;
 	private static final double turn_kD = 0.0;
 	private static final double turn_kF = 0.0;
@@ -82,8 +87,6 @@ public class SwerveDriveUnit {
 
 		_talon.configPeakCurrentLimit(50, TIMEOUT_MS);
 		_talon.enableCurrentLimit(true);
-		
-		
 
 		return _talon;
 	}
@@ -118,9 +121,9 @@ public class SwerveDriveUnit {
 		turnMotor.setSelectedSensorPosition(d, PIDLOOP_IDX, TIMEOUT_MS);
 	}
 
-	public int getTurnRotations() {
-		return (int) (turnMotor.getSelectedSensorPosition(0) / ENCODER_PULSES_PER_REV);
-	}
+//	public int getTurnRotations() {
+//		return (int) (turnMotor.getSelectedSensorPosition(0) / ENCODER_PULSES_PER_REV);
+//	}
 
 	public void setDrivePower(double percentVal) {
 		driveMotor.set(ControlMode.PercentOutput, percentVal);
@@ -138,9 +141,9 @@ public class SwerveDriveUnit {
 		return turnMotor.getClosedLoopTarget(0);
 	}
 
-	public void setTargetAngle(double targetAngle) {
+	public void setTargetAngle(double ta) {
 
-		targetAngle %= 360;
+		double targetAngle = ta % 360;
 
 		double currentAngle = getAbsAngle();
 		double currentAngleMod = currentAngle % 360;
@@ -169,6 +172,9 @@ public class SwerveDriveUnit {
 		targetAngle += currentAngle - currentAngleMod;
 
 		targetAngle *= 1024.0 / 360.0;
+		
+		logger.info(String.format("tgta:%.2f", targetAngle));
+		
 		turnMotor.set(ControlMode.Position, targetAngle);
 	}
 
@@ -194,7 +200,7 @@ public class SwerveDriveUnit {
 	
 	@Override
 	public String toString() {
-		return String.format("enc:%.2f aang:%.2f tr:%d ain:%d clt:%d ssp:%d",getTurnEncPos(), getAbsAngle(), 
-				getTurnRotations(), getTurnMotorAnalogIn(), getTurnCLT(), turnMotor.getSelectedSensorPosition(0) ); 
+		return String.format("enc:%.2f aang:%.2f ain:%d clt:%d ssp:%d",getTurnEncPos(), getAbsAngle(), 
+				getTurnMotorAnalogIn(), getTurnCLT(), turnMotor.getSelectedSensorPosition(0) ); 
 	}
 }
