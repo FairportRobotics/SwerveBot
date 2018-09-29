@@ -194,8 +194,10 @@ public class ChillySwerve {
 //    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/BL_angle", wa3);
 //    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/BR_angle", wa4);
 
-		setDrivePower(ws2, ws1, ws3, ws4);
-	
+//		setDrivePower(ws2, ws1, ws3, ws4);
+
+		setLocation(0, 0, 0, 0);
+
 //		setLocation(angleToLoc(wa2), angleToLoc(wa1), angleToLoc(wa3), angleToLoc(wa4));
 	}
 
@@ -263,6 +265,7 @@ public class ChillySwerve {
 	}
 
 	public static void setLocation(double fl, double fr, double bl, double br) {
+		logger.debug("Location Set : " + String.format("fl %.2f fr %.2f bl %.2f br %.2f", fl, fr, bl, br));
 		frontLeft.setTargetAngle(fl);
 		frontRight.setTargetAngle(fr);
 		backLeft.setTargetAngle(bl);
