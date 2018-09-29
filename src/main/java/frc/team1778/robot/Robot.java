@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
   @Override
   public void autonomousPeriodic() {
     // debug only (read position sensors)
-    getGyroAngle();
+    PigeonGyro.printStats();
   }
 
   @Override
@@ -62,21 +62,21 @@ public class Robot extends IterativeRobot {
   @Override
   public void testPeriodic() {}
 
-  private double getGyroAngle() {
-    // double gyroAngle = 0.0;
-    // double gyroAngle = NavXSensor.getYaw();  // -180 deg to +180 deg
-//    double gyroAngle = NavXSensor.getAngle(); // continuous angle (can be larger than 360 deg)
-	  
-	  double gyroAngle = PigeonGyro.getAngle();
-
-    // System.out.println("getGyroAngle:  Gyro angle = " + gyroAngle);
-
-    // send output data for test & debug
-    // InputOutputComm.putBoolean(InputOutputComm.LogTable.kMainLog,"Auto/IMU_Connected",navX.isConnected());
-    // InputOutputComm.putBoolean(InputOutputComm.LogTable.kMainLog,"Auto/IMU_Calibrating",navX.isCalibrating());
-
-    // System.out.println("gyroAngle = " + gyroAngle);
-
-    return gyroAngle;
-  }
+//  private double getGyroAngle() {
+//    // double gyroAngle = 0.0;
+//    // double gyroAngle = NavXSensor.getYaw();  // -180 deg to +180 deg
+////    double gyroAngle = NavXSensor.getAngle(); // continuous angle (can be larger than 360 deg)
+//	  
+//	  double gyroAngle = PigeonGyro.getAngle();
+//
+//    // System.out.println("getGyroAngle:  Gyro angle = " + gyroAngle);
+//
+//    // send output data for test & debug
+//    // InputOutputComm.putBoolean(InputOutputComm.LogTable.kMainLog,"Auto/IMU_Connected",navX.isConnected());
+//    // InputOutputComm.putBoolean(InputOutputComm.LogTable.kMainLog,"Auto/IMU_Calibrating",navX.isCalibrating());
+//
+//    // System.out.println("gyroAngle = " + gyroAngle);
+//
+//    return gyroAngle;
+//  }
 }

@@ -41,7 +41,7 @@ public class PigeonGyro {
 		System.out.println("Pigeon initialize called...");
 
 		try {
-			_pigeon = new PigeonIMU(0);
+			_pigeon = new PigeonIMU(5);
 		} catch (RuntimeException e) {
 			System.err.println("Error : " + e.getMessage());
 			throw e;
@@ -65,22 +65,20 @@ public class PigeonGyro {
 	}
 
 	public static void printStats() {
-		PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
-		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
-		double[] xyz_dps = new double[3];
-		double currentAngle = fusionStatus.heading;
-		boolean angleIsGood = (_pigeon.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
-		double currentAngularRate = xyz_dps[2];
-		double _targetAngle = 0;
+//		PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
+//		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
+//		double[] xyz_dps = new double[3];
+		double currentAngle = _pigeon.getFusedHeading();
+//		boolean angleIsGood = (_pigeon.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
+//		double currentAngularRate = xyz_dps[2];
+//		double _targetAngle = 0;
 
-		System.out.println("------------------------------------------");
-		System.out.println("error: " + (_targetAngle - currentAngle));
-		System.out.println("angle: " + currentAngle);
-		System.out.println("rate: " + currentAngularRate);
-		System.out.println("noMotionBiasCount: " + genStatus.noMotionBiasCount);
-		System.out.println("tempCompensationCount: " + genStatus.tempCompensationCount);
-		System.out.println(angleIsGood ? "Angle is good" : "Angle is NOT GOOD");
-		System.out.println("------------------------------------------");
+//		System.out.println("error: " + (_targetAngle - currentAngle));
+		System.out.println("gyro angle: " + currentAngle);
+//		System.out.println("rate: " + currentAngularRate);
+//		System.out.println("noMotionBiasCount: " + genStatus.noMotionBiasCount);
+//		System.out.println("tempCompensationCount: " + genStatus.tempCompensationCount);
+//		System.out.println(angleIsGood ? "Angle is good" : "Angle is NOT GOOD");
 	}
 	
 	public static double getAngle() {
