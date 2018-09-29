@@ -4,10 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import frc.team1778.Systems.NavXSensor;
-import jaci.pathfinder.Pathfinder;
-import jaci.pathfinder.Trajectory;
-import jaci.pathfinder.followers.EncoderFollower;
 
 public class ChillySwerveUnit {
 
@@ -170,26 +166,6 @@ public class ChillySwerveUnit {
 
     targetAngle *= 1024.0 / 360.0;
     turnMotor.set(ControlMode.Position, targetAngle);
-  }
-
-  public void drivePath(EncoderFollower follower) {
-
-    if (!follower.isFinished()) {
-
-      Trajectory.Segment seg = follower.getSegment();
-      double fakeDistance = seg.position;
-      double speedx = follower.calculate((int) fakeDistance);
-      double heading = follower.getHeading();
-
-      // System.out.printf("%f\t%f\t%f\t%f\t%f\n",
-      //		speed, speedx, dis, err, fakeDistance);
-      setDrivePower(speedx);
-
-      double gyroAngle = NavXSensor.getAngle();
-      gyroAngle = Math.IEEEremainder(gyroAngle, 360);
-
-      setTargetAngle(Pathfinder.r2d(heading) + gyroAngle);
-    }
   }
 
   public void stopBoth() {

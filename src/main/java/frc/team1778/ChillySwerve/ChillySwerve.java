@@ -3,7 +3,6 @@ package frc.team1778.ChillySwerve;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.team1778.Systems.NavXSensor;
 import frc.team1778.Utility.HardwareIDs;
-import jaci.pathfinder.followers.EncoderFollower;
 
 public class ChillySwerve {
 
@@ -203,15 +202,6 @@ public class ChillySwerve {
       setDriveBrakeMode(false);
       swerveDrive(fwd, str, rot);
     }
-  }
-
-  // mode used with Pathfinder
-  public static void directDrive(
-      EncoderFollower fl, EncoderFollower fr, EncoderFollower bl, EncoderFollower br) {
-    frontLeft.drivePath(fl);
-    frontRight.drivePath(fr);
-    backLeft.drivePath(bl);
-    backRight.drivePath(br);
   }
 
   public static void fieldCentricDrive(double fwd, double str, double rot) {
