@@ -1,5 +1,6 @@
 package frc.team578.swerve;
 
+import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
@@ -63,6 +64,8 @@ public class SwerveDriveUnit {
 		_talon.setInverted(revMotor);
 
 		_talon.configSelectedFeedbackSensor(FeedbackDevice.Analog, PIDLOOP_IDX, TIMEOUT_MS);
+		// _talon.configSetParameter(ParamEnum.eFeedbackNotContinuous, 1, 0, 0, 0); // wrap the position (1023 -> 0)
+		
 		_talon.setSensorPhase(ALIGNED_TURN_SENSOR);
 		_talon.selectProfileSlot(PROFILE_SLOT, PIDLOOP_IDX);
 		_talon.config_kP(PROFILE_SLOT, pCoeff, TIMEOUT_MS);
@@ -97,9 +100,12 @@ public class SwerveDriveUnit {
 	public double getTurnEncPos() {
 		return turnMotor.getSelectedSensorPosition(0);
 	}
+	
+	public double getTurnAngle() {
+		return (turnMotor.getSensorCollection().getAnalogIn() / 5.0) * 360.0;
+	}
 
 	public double getAbsAngle() {
-
 		// returns absolute angle of wheel in degrees (may wrap beyond 360 deg)
 		return (double) turnMotor.getSensorCollection().getAnalogIn() * (360.0 / 1024.0);
 	}

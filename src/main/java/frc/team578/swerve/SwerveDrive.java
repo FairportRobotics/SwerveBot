@@ -35,8 +35,8 @@ public class SwerveDrive {
 
 	// robot dimension ratios (units don't matter, just be consistent with all
 	// three)
-	private static final double l = 21; // drive base length
-	private static final double w = 21; // drive base width
+	private static final double l = .625; // drive base length
+	private static final double w = .47; // drive base width
 	private static final double r = Math.sqrt((l * l) + (w * w)); // diagonal drive base length
 
 	// gyro angle
@@ -70,8 +70,7 @@ public class SwerveDrive {
 		driveGamepad = new Joystick(RobotMap.CONTROL_GAMEPAD_ID);
 
 		frontLeft = new SwerveDriveUnit(RobotMap.FRONT_LEFT_DRIVE_TALON_ID, RobotMap.FRONT_LEFT_ROTATE_TALON_ID);
-		frontRight = new SwerveDriveUnit(RobotMap.FRONT_RIGHT_DRIVE_TALON_ID,
-				RobotMap.FRONT_RIGHT_ROTATE_TALON_ID);
+		frontRight = new SwerveDriveUnit(RobotMap.FRONT_RIGHT_DRIVE_TALON_ID, RobotMap.FRONT_RIGHT_ROTATE_TALON_ID);
 		backLeft = new SwerveDriveUnit(RobotMap.BACK_LEFT_DRIVE_TALON_ID, RobotMap.BACK_LEFT_ROTATE_TALON_ID);
 		backRight = new SwerveDriveUnit(RobotMap.BACK_RIGHT_DRIVE_TALON_ID, RobotMap.BACK_RIGHT_ROTATE_TALON_ID);
 
@@ -115,7 +114,11 @@ public class SwerveDrive {
 
 		logger.debug(String.format("fwd %.2f str %.2f rot %.2f", fwd, str, rot));
 
-//		fieldCentricDrive(fwd, str, rot);
+		// Uses Pigeon
+		// fieldCentricDrive(fwd, str, rot);
+
+		// cw/ccw rotational from joystick
+		// humanDrive(fwd, str, rot);
 
 		// debug only
 //    InputOutputComm.putDouble(
@@ -129,28 +132,29 @@ public class SwerveDrive {
 
 //		logger.info(String.format("fla %.2f fra %.2f rla %.2f rra %.2f", frontLeft.getAbsAngle(),
 //				frontRight.getAbsAngle(), backLeft.getAbsAngle(), backRight.getAbsAngle()));
-		
+
 //		logger.info("FL:" + frontLeft);
 //		logger.info("FR:" + frontRight);
-		logger.info("BL:" + backLeft);
+//		logger.info("BL:" + backLeft);
 //		logger.info("BR:" + backRight);
-		
-		
+
 //		logger.debug(String.format("fra :" + frontRight));
+
+		frontRight.setTurnPower(rot);
+		logger.info(String.format("pwp:%2.f", frontRight.turnMotor.getSensorCollection().getPulseWidthPosition()));
 		
-//		frontRight.setTurnPower(rot);
+		
 //		frontLeft.setTurnPower(rot);
 //		backLeft.setTurnPower(rot);
 //		backRight.setTurnPower(rot);
-		
-		
-		double targetEnc = 0 * 1000;
-		frontLeft.turnMotor.set(ControlMode.Position, targetEnc);
-		frontRight.turnMotor.set(ControlMode.Position, targetEnc);
-		backLeft.turnMotor.set(ControlMode.Position, targetEnc);
+
+//		double targetEnc = 0 * 1000;
+//		frontLeft.turnMotor.set(ControlMode.Position, targetEnc);
+//		frontRight.turnMotor.set(ControlMode.Position, targetEnc);
+//		backLeft.turnMotor.set(ControlMode.Position, targetEnc);
 //		backRight.turnMotor.set(ControlMode.Position, 1000);
 //		ChillySwerve.setAllEncPos(0);
-		
+
 		/*
 		 * joyVal = driveGamepad.getRawAxis(HardwareIDs.LEFT_Y_AXIS); double left =
 		 * (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
@@ -169,25 +173,25 @@ public class SwerveDrive {
 	public static void disabledPeriodic() {
 	}
 
-	private static double angleToLoc(double angle) {
-		if (angle < 0) {
-			return .5d + ((180d - Math.abs(angle)) / 360d);
-		} else {
-			return angle / 360d;
-		}
-	}
-
 	public static void swerveDrive(double fwd, double str, double rot) {
+
+		// ws1..ws4 and wa1..wa4 - wheels 1 through 4
+		// which are front_right, front_left, rear_left, and rear_right, respectively.
+		// ether's spreadsheet is helpful for testing values here.
+		
+		
 		double a = str - (rot * (l / r));
 		double b = str + (rot * (l / r));
 		double c = fwd - (rot * (w / r));
 		double d = fwd + (rot * (w / r));
 
-		double ws1 = Math.sqrt((b * b) + (c * c));
-		double ws2 = Math.sqrt((b * b) + (d * d));
-		double ws3 = Math.sqrt((a * a) + (d * d));
-		double ws4 = Math.sqrt((a * a) + (c * c));
+		// Speed
+		double ws1 = Math.sqrt((b * b) + (c * c)); // fr
+		double ws2 = Math.sqrt((b * b) + (d * d)); // fl
+		double ws3 = Math.sqrt((a * a) + (d * d)); // rl
+		double ws4 = Math.sqrt((a * a) + (c * c)); // rr
 
+		// Angle
 		double wa1 = Math.atan2(b, c) * 180 / Math.PI;
 		double wa2 = Math.atan2(b, d) * 180 / Math.PI;
 		double wa3 = Math.atan2(a, d) * 180 / Math.PI;
@@ -204,19 +208,10 @@ public class SwerveDrive {
 			ws4 /= max;
 		}
 
-		// ws1..ws4 and wa1..wa4 are the wheel speeds and wheel angles for wheels 1
-		// through 4
-		// which are front_right, front_left, rear_left, and rear_right, respectively.
-
-//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/FL_pwr", ws2);
-//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/FR_pwr", ws1);
-//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/BL_pwr", ws3);
-//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/BR_pwr", ws4);
-//
-//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/FL_angle", wa2);
-//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/FR_angle", wa1);
-//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/BL_angle", wa3);
-//    InputOutputComm.putDouble(InputOutputComm.LogTable.kMainLog, "ChillySwerve/BR_angle", wa4);
+		logger.info(String.format("ws1:%.2f, ws2:%.2f, ws3:%.2f, ws4:%.2f", ws1,ws2,ws3,ws4));
+		logger.info(String.format("wa1:%.2f, wa2:%.2f, wa3:%.2f, wsa:%.2f", wa1,wa2,wa3,wa4));
+		
+		logger.info(String.format("lwa1:%.2f, lwa2:%.2f, lwa3:%.2f, lwa4:%.2f, ", angleToLoc(wa1), angleToLoc(wa2), angleToLoc(wa3), angleToLoc(wa4)));
 
 //		setDrivePower(ws2, ws1, ws3, ws4);
 
@@ -246,6 +241,14 @@ public class SwerveDrive {
 		str = (-fwd * Math.sin(angleRad)) + (str * Math.cos(angleRad));
 		fwd = temp;
 		humanDrive(fwd, str, rot);
+	}
+	
+	private static double angleToLoc(double angle) {
+		if (angle < 0) {
+			return .5d + ((180d - Math.abs(angle)) / 360d);
+		} else {
+			return angle / 360d;
+		}
 	}
 
 	public static void resetAllEnc() {
@@ -295,7 +298,7 @@ public class SwerveDrive {
 		backLeft.setTargetAngle(bl);
 		backRight.setTargetAngle(br);
 	}
-	
+
 	public static void setAllEncPos(int encVal) {
 		frontLeft.setTurnMotorTargetEnc(encVal);
 		frontRight.setTurnMotorTargetEnc(encVal);
@@ -313,5 +316,10 @@ public class SwerveDrive {
 
 	public static void setAllLocation(double loc) {
 		setLocation(loc, loc, loc, loc);
+	}
+
+	public static void main(String[] args) {
+		// SwerveDrive.swerveDrive(0.5, 0.5, 0.5);
+		SwerveDrive.swerveDrive(-0.5, -0.5, -0.5);
 	}
 }
