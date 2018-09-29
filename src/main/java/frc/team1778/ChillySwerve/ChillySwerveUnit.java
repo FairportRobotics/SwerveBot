@@ -181,6 +181,6 @@ public class ChillySwerveUnit {
 	
 	@Override
 	public String toString() {
-		return String.format("enc:%.2f aang:%.2f tr:%d ain:%d clt:%.2f",getTurnEncPos(), getAbsAngle(), getTurnRotations(), getTurnMotorAnalogIn(), getTurnCLT()); 
+		return String.format("enc:%.2f aang:%.2f tr:%d ain:%d clt:%d",getTurnEncPos(), getAbsAngle(), getTurnRotations(), getTurnMotorAnalogIn(), getTurnCLT()); 
 	}
 }
