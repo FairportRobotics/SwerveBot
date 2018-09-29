@@ -1,7 +1,20 @@
 plugins {
     id "java"
     id "eclipse"
+   // id "edu.wpi.first.GradleRIO" version "2018.06.21"
     id "edu.wpi.first.GradleRIO" version "2019.0.0-alpha-3"
+}
+
+allprojects {
+    apply plugin: "idea"
+    apply plugin: "eclipse"
+
+    repositories {
+        mavenCentral()
+        maven {
+            url 'http://first.wpi.edu/FRC/roborio/maven/release'
+        }
+    }
 }
 
 def ROBOT_CLASS = "frc.team1778.robot.Robot"
@@ -31,6 +44,9 @@ dependencies {
     compile ctre()
     compile navx()
     compile pathfinder()
+    
+    compile 'org.apache.logging.log4j:log4j-api:2.+'
+    compile 'org.apache.logging.log4j:log4j-core:2.+'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
@@ -41,6 +57,7 @@ jar {
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_CLASS)
 }
 
+// on change, run ./gradlew wrapper
 wrapper {
     gradleVersion = '4.9'
 }
