@@ -20,6 +20,7 @@
 - Back right rotation encoder is not working (bad connection?)
 - Encoder seems not that accurate (i.e. adjusting with power level jumps in value)
 - How to set everything up when initializing (i.e. 0 is forward? on init, where are the wheels?)
+- Put encoders on the drive wheels (for motion profiling)
 - Field oriented vs human oriented drive
 - Understand the encoder settings a little better
 - Original code for angle -> enc pos seemed more complex
