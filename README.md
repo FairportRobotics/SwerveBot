@@ -23,6 +23,7 @@
 - Field oriented vs human oriented drive
 - Understand the encoder settings a little better
 - Original code for angle -> enc pos seemed more complex
+- Do some shuffleboard stuff
 
 
 ## Super Helpful Links
