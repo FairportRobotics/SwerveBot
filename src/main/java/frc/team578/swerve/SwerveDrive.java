@@ -121,6 +121,10 @@ public class SwerveDrive {
 
 		// cw/ccw rotational from joystick
 		humanDrive(fwd, str, rot);
+		
+		
+		SwerveDrive.updateDashboard();
+		
 
 		// debug only
 		// InputOutputComm.putDouble(
@@ -330,11 +334,18 @@ public class SwerveDrive {
 		backRight.setTurnMotorTargetEnc(br);
 	}
 
-	public static void setAllEncPos(int encVal) {
+	public static void setTurnMotorTargetEnc(int encVal) {
 		frontLeft.setTurnMotorTargetEnc(encVal);
 		frontRight.setTurnMotorTargetEnc(encVal);
 		backLeft.setTurnMotorTargetEnc(encVal);
 		backRight.setTurnMotorTargetEnc(encVal);
+	}
+	
+	public static void resetAllTurnEncodersToZero() {
+		frontLeft.resetTurnEnc();
+		frontRight.resetTurnEnc();
+		backLeft.resetTurnEnc();
+		backLeft.resetTurnEnc();
 	}
 
 	public static void setAllTurnPower(double power) {
