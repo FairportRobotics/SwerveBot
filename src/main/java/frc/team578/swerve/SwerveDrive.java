@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team578.robot.RobotMap;
 import frc.team578.systems.PigeonGyro;
 
@@ -113,7 +114,7 @@ public class SwerveDrive {
 		joyVal = driveGamepad.getRawAxis(RobotMap.RIGHT_X_AXIS);
 		rot = (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
 
-		logger.debug(String.format("fwd %.2f str %.2f rot %.2f", fwd, str, rot));
+//		logger.debug(String.format("fwd %.2f str %.2f rot %.2f", fwd, str, rot));
 
 		// Uses Pigeon
 		// fieldCentricDrive(fwd, str, rot);
@@ -140,13 +141,13 @@ public class SwerveDrive {
 		// frontRight.getAbsAngle(), backLeft.getAbsAngle(),
 		// backRight.getAbsAngle()));
 		
-		 logger.info(String.format("flep(%.2f,%d) frep(%.2f,%d) rlep(%.2f,%d) rrep(%.2f,%d)",
-				 frontLeft.getTurnEncPos(),frontLeft.getTurnCLT(),
-				 frontRight.getTurnEncPos(), frontRight.getTurnCLT(), 
-				 backLeft.getTurnEncPos(),backLeft.getTurnCLT(),
-				 backRight.getTurnEncPos(),backRight.getTurnCLT()
-				 )
-				 );
+//		 logger.info(String.format("flep(%.2f,%d) frep(%.2f,%d) rlep(%.2f,%d) rrep(%.2f,%d)",
+//				 frontLeft.getTurnEncPos(),frontLeft.getTurnCLT(),
+//				 frontRight.getTurnEncPos(), frontRight.getTurnCLT(), 
+//				 backLeft.getTurnEncPos(),backLeft.getTurnCLT(),
+//				 backRight.getTurnEncPos(),backRight.getTurnCLT()
+//				 )
+//				 );
 
 		// logger.info("FL:" + frontLeft);
 //		logger.info("FR:" + frontRight);
@@ -346,6 +347,31 @@ public class SwerveDrive {
 
 	public static void setAllLocation(double loc) {
 		setTargetEncPos(loc, loc, loc, loc);
+	}
+	
+	public static void updateDashboard() {
+		SmartDashboard.putNumber("FL Enc Pos", frontLeft.getTurnEncPos());
+		SmartDashboard.putNumber("FR Enc Pos", frontRight.getTurnEncPos());
+		SmartDashboard.putNumber("BL Enc Pos", backLeft.getTurnEncPos());
+		SmartDashboard.putNumber("BR Enc Pos", backRight.getTurnEncPos());
+		
+		
+		SmartDashboard.putNumber("FL CLT", frontLeft.getTurnCLT());
+		SmartDashboard.putNumber("FR CLT", frontRight.getTurnCLT());
+		SmartDashboard.putNumber("BL CLT", backLeft.getTurnCLT());
+		SmartDashboard.putNumber("BR CLT", backRight.getTurnCLT());
+		
+		
+		SmartDashboard.putNumber("Foward", fwd);
+		SmartDashboard.putNumber("Strafe", str);
+		SmartDashboard.putNumber("Rotate", rot);
+		
+		SmartDashboard.putString("FL", frontLeft.toString());
+		SmartDashboard.putString("FR", frontRight.toString());
+		SmartDashboard.putString("BL", backLeft.toString());
+		SmartDashboard.putString("BR", backRight.toString());
+		
+		
 	}
 
 }
