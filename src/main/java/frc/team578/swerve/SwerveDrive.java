@@ -70,8 +70,6 @@ public class SwerveDrive {
 //		if (initialized)
 //			return;
 
-	
-
 		frontLeft = new SwerveDriveUnit(RobotMap.FRONT_LEFT_DRIVE_TALON_ID, RobotMap.FRONT_LEFT_ROTATE_TALON_ID);
 		frontRight = new SwerveDriveUnit(RobotMap.FRONT_RIGHT_DRIVE_TALON_ID, RobotMap.FRONT_RIGHT_ROTATE_TALON_ID);
 		backLeft = new SwerveDriveUnit(RobotMap.BACK_LEFT_DRIVE_TALON_ID, RobotMap.BACK_LEFT_ROTATE_TALON_ID);
@@ -121,15 +119,14 @@ public class SwerveDrive {
 		// fieldCentricDrive(fwd, str, rot);
 
 		// cw/ccw rotational from joystick
-//		humanDrive(fwd, str, rot);
-		
-		
+		humanDrive(fwd, str, rot);
+
 		SwerveDrive.updateDashboard();
-		
-		frontLeft.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
-		frontRight.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
-		backLeft.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
-		backRight.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
+
+//		frontLeft.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
+//		frontRight.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
+//		backLeft.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
+//		backRight.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
 
 		// debug only
 		// InputOutputComm.putDouble(
@@ -149,7 +146,7 @@ public class SwerveDrive {
 		// frontLeft.getAbsAngle(),
 		// frontRight.getAbsAngle(), backLeft.getAbsAngle(),
 		// backRight.getAbsAngle()));
-		
+
 //		 logger.info(String.format("flep(%.2f,%d) frep(%.2f,%d) rlep(%.2f,%d) rrep(%.2f,%d)",
 //				 frontLeft.getTurnEncPos(),frontLeft.getTurnCLT(),
 //				 frontRight.getTurnEncPos(), frontRight.getTurnCLT(), 
@@ -181,11 +178,11 @@ public class SwerveDrive {
 		// ChillySwerve.setAllEncPos(0);
 
 		/*
-		 * joyVal = driveGamepad.getRawAxis(HardwareIDs.LEFT_Y_AXIS); double
-		 * left = (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
+		 * joyVal = driveGamepad.getRawAxis(HardwareIDs.LEFT_Y_AXIS); double left =
+		 * (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
 		 * 
-		 * joyVal = driveGamepad.getRawAxis(HardwareIDs.RIGHT_Y_AXIS); double
-		 * right = (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
+		 * joyVal = driveGamepad.getRawAxis(HardwareIDs.RIGHT_Y_AXIS); double right =
+		 * (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
 		 * 
 		 * tankDrive(-left, -right);
 		 */
@@ -235,29 +232,59 @@ public class SwerveDrive {
 
 		logger.info(String.format("ws1:%.2f, ws2:%.2f, ws3:%.2f, ws4:%.2f", ws1, ws2, ws3, ws4));
 		logger.info(String.format("wa1:%.2f, wa2:%.2f, wa3:%.2f, wsa:%.2f", wa1, wa2, wa3, wa4));
-
-		double loc1 = angleToEncPos(wa1);
-		double loc2 = angleToEncPos(wa2);
-		double loc3 = angleToEncPos(wa3);
-		double loc4 = angleToEncPos(wa4);
-
-		logger.info(String.format("lwa1:%.2f, lwa2:%.2f, lwa3:%.2f, lwa4:%.2f, ", loc1, loc2, loc3, loc4));
+		
+		SmartDashboard.putNumber("ws1", ws1);
+		SmartDashboard.putNumber("ws2", ws2);
+		SmartDashboard.putNumber("ws3", ws3);
+		SmartDashboard.putNumber("ws4", ws4);
 
 		setDrivePower(ws2, ws1, ws3, ws4);
 		
-		setTargetEncPos(angleToEncPos(wa2), angleToEncPos(wa1), angleToEncPos(wa3), angleToEncPos(wa4));
+		SmartDashboard.putNumber("wa1", wa1);
+		SmartDashboard.putNumber("wa2", wa2);
+		SmartDashboard.putNumber("wa3", wa3);
+		SmartDashboard.putNumber("wa4", wa4);
+		
+		
+		double loc1 = angleToLoc(wa1);
+		double loc2 = angleToLoc(wa2);
+		double loc3 = angleToLoc(wa3);
+		double loc4 = angleToLoc(wa4);
+		
+		SmartDashboard.putNumber("loc1", loc1);
+		SmartDashboard.putNumber("loc2", loc2);
+		SmartDashboard.putNumber("loc3", loc3);
+		SmartDashboard.putNumber("loc4", loc4);
+
+		setTargetEncPos(angleToLoc(wa2), angleToLoc(wa1), angleToLoc(wa3), angleToLoc(wa4));
+		
+//		SmartDashboard.putNumber("FL AbsAng", frontLeft.getAbsAngle());
+//		SmartDashboard.putNumber("FR AbsAng", frontRight.getAbsAngle());
+//		SmartDashboard.putNumber("BL AbsAng", backLeft.getAbsAngle());
+//		SmartDashboard.putNumber("BR AbsAng", backRight.getAbsAngle());
+		
+
+		
+//		setTargetEncPos(angleToEncPos(wa2), angleToEncPos(wa1), angleToEncPos(wa3), angleToEncPos(wa4));
+		
+//		logger.info(String.format("lwa1:%.2f, lwa2:%.2f, lwa3:%.2f, lwa4:%.2f, ", loc1, loc2, loc3, loc4));
+	}
+
+	private static double angleToLoc(double angle) {
+		if (angle < 0) {
+			return .5d + ((180d - Math.abs(angle)) / 360d);
+		} else {
+			return angle / 360d;
+		}
 	}
 
 	private static double angleToEncPos(double angle) {
 		if (angle < 0) {
 			angle = 360 + angle;
-			// return .5d + ((180d - Math.abs(angle)) / 360d);
 		}
 
-		// set to some position increment of 1024
 		double encpos = angle * (1024 / 360.0);
-		
-		// Error : a:-53.06 enc:-150.9
+
 		if (encpos < 0) {
 			logger.error(String.format("Error : a:%.2f enc:%.2f", angle, encpos));
 			throw new RuntimeException();
@@ -333,10 +360,18 @@ public class SwerveDrive {
 
 	public static void setTargetEncPos(double fl, double fr, double bl, double br) {
 		logger.info("Location Set : " + String.format("fl %.2f fr %.2f bl %.2f br %.2f", fl, fr, bl, br));
-		frontLeft.setTurnMotorTargetEnc(fl);
-		frontRight.setTurnMotorTargetEnc(fr);
-		backLeft.setTurnMotorTargetEnc(bl);
-		backRight.setTurnMotorTargetEnc(br);
+	
+		
+		frontLeft.setTargetAngle(fl);
+		frontRight.setTargetAngle(fr);
+		backLeft.setTargetAngle(bl);
+		backRight.setTargetAngle(br);
+		
+		
+//		frontLeft.setTurnMotorTargetEnc(fl);
+//		frontRight.setTurnMotorTargetEnc(fr);
+//		backLeft.setTurnMotorTargetEnc(bl);
+//		backRight.setTurnMotorTargetEnc(br);
 	}
 
 	public static void setTurnMotorTargetEnc(int encVal) {
@@ -345,7 +380,7 @@ public class SwerveDrive {
 		backLeft.setTurnMotorTargetEnc(encVal);
 		backRight.setTurnMotorTargetEnc(encVal);
 	}
-	
+
 	public static void resetAllTurnEncodersToZero() {
 		frontLeft.resetTurnEnc();
 		frontRight.resetTurnEnc();
@@ -364,34 +399,32 @@ public class SwerveDrive {
 	public static void setAllLocation(double loc) {
 		setTargetEncPos(loc, loc, loc, loc);
 	}
-	
+
 	public static void updateDashboard() {
 		SmartDashboard.putNumber("FL Enc Pos", frontLeft.getTurnEncPos());
 		SmartDashboard.putNumber("FR Enc Pos", frontRight.getTurnEncPos());
 		SmartDashboard.putNumber("BL Enc Pos", backLeft.getTurnEncPos());
 		SmartDashboard.putNumber("BR Enc Pos", backRight.getTurnEncPos());
-		
-		
+
 		SmartDashboard.putNumber("FL CLT", frontLeft.getTurnCLT());
 		SmartDashboard.putNumber("FR CLT", frontRight.getTurnCLT());
 		SmartDashboard.putNumber("BL CLT", backLeft.getTurnCLT());
 		SmartDashboard.putNumber("BR CLT", backRight.getTurnCLT());
-		
+
 		SmartDashboard.putNumber("FL AbsAng", frontLeft.getAbsAngle());
 		SmartDashboard.putNumber("FR AbsAng", frontRight.getAbsAngle());
 		SmartDashboard.putNumber("BL AbsAng", backLeft.getAbsAngle());
 		SmartDashboard.putNumber("BR AbsAng", backRight.getAbsAngle());
-		
-		
+
 		SmartDashboard.putNumber("Foward", fwd);
 		SmartDashboard.putNumber("Strafe", str);
 		SmartDashboard.putNumber("Rotate", rot);
-		
+
 		SmartDashboard.putString("FL", frontLeft.toString());
 		SmartDashboard.putString("FR", frontRight.toString());
 		SmartDashboard.putString("BL", backLeft.toString());
 		SmartDashboard.putString("BR", backRight.toString());
-		
+
 		SmartDashboard.putNumber("Inc", IncTurnTargetCommand.val);
 	}
 

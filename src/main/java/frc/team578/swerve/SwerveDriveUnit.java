@@ -141,42 +141,40 @@ public class SwerveDriveUnit {
 		return turnMotor.getClosedLoopTarget(0);
 	}
 
-//	public void setTargetAngle(double ta) {
-//
-////		double targetAngle = ta % 360;
-////
-////		double currentAngle = getAbsAngle();
-////		double currentAngleMod = currentAngle % 360;
-////		if (currentAngleMod < 0)
-////			currentAngleMod += 360;
-////
-////		double delta = currentAngleMod - targetAngle;
-////
-////		if (delta > 180) {
-////			targetAngle += 360;
-////		} else if (delta < -180) {
-////			targetAngle -= 360;
-////		}
-////
-////		delta = currentAngleMod - targetAngle;
-////		if (delta > 90 || delta < -90) {
-////			if (delta > 90)
-////				targetAngle += 180;
-////			else if (delta < -90)
-////				targetAngle -= 180;
-////			driveMotor.setInverted(false);
-////		} else {
-////			driveMotor.setInverted(true);
-////		}
-////
-////		targetAngle += currentAngle - currentAngleMod;
-////
-////		targetAngle *= 1024.0 / 360.0;
-//		
-//		
-//		
-//		turnMotor.set(ControlMode.Position, encpos);
-//	}
+	public void setTargetAngle(double ta) {
+
+		double targetAngle = ta % 360;
+
+		double currentAngle = getAbsAngle();
+		double currentAngleMod = currentAngle % 360;
+		if (currentAngleMod < 0)
+			currentAngleMod += 360;
+
+		double delta = currentAngleMod - targetAngle;
+
+		if (delta > 180) {
+			targetAngle += 360;
+		} else if (delta < -180) {
+			targetAngle -= 360;
+		}
+
+		delta = currentAngleMod - targetAngle;
+		if (delta > 90 || delta < -90) {
+			if (delta > 90)
+				targetAngle += 180;
+			else if (delta < -90)
+				targetAngle -= 180;
+			driveMotor.setInverted(false);
+		} else {
+			driveMotor.setInverted(true);
+		}
+
+		targetAngle += currentAngle - currentAngleMod;
+
+		targetAngle *= 1024.0 / 360.0;
+		
+		turnMotor.set(ControlMode.Position, targetAngle);
+	}
 
 	public void stopBoth() {
 		setDrivePower(0);
