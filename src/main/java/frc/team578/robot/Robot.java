@@ -18,6 +18,8 @@ public class Robot extends IterativeRobot {
 	public static PowerDistributionPanel pdp;
 	public static Joystick driveGamepad;
 	public static JoystickButton bx;
+	public static JoystickButton ba;
+	public static JoystickButton bb;
 
 	@Override
 	public void robotInit() {
@@ -31,8 +33,15 @@ public class Robot extends IterativeRobot {
 		ds = DriverStation.getInstance();
 
 		driveGamepad = new Joystick(RobotMap.CONTROL_GAMEPAD_ID);
-		bx = new JoystickButton(driveGamepad, 1);
+
+		bx = new JoystickButton(driveGamepad, RobotMap.X);
 		bx.whenPressed(new IncTurnTargetCommand());
+		
+		ba = new JoystickButton(driveGamepad, RobotMap.A);
+		ba.whenPressed(new IncTurnTargetCommand(1000));
+		
+		bb = new JoystickButton(driveGamepad, RobotMap.B);
+		bb.whenPressed(new IncTurnTargetCommand(-100));
 
 		pdp = new PowerDistributionPanel(0);
 	}

@@ -4,16 +4,29 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class IncTurnTargetCommand extends Command {
 	
-	public static int val = 512;
+	public int val = 0;
+	public int inc = 1;
+	public int mul = 256;
+	public boolean fixed = false;
 	boolean finished = false;
 	
 	public IncTurnTargetCommand() {
 	}
 	
+	public IncTurnTargetCommand(int val) {
+		this.val = val;
+		this.fixed = true;
+	}
+
 	@Override
 	protected void execute() {
-		val = (val + 256) % 1024;
+		if (!fixed) {
+			val = (mul * inc++) % 1024;
+		}
+		
 		SwerveDrive.setTurnMotorTargetEnc(val);
+		
+		
 		finished = true;
 	}
 

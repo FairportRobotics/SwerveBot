@@ -30,4 +30,8 @@ public class RobotMap {
   public static final int LEFT_Y_AXIS = 1;
   public static final int RIGHT_X_AXIS = 2;
   public static final int RIGHT_Y_AXIS = 3;
+  public static final int A = 1; // Bottom Button
+  public static final int B = 2; // Right Button
+  public static final int X = 3; // Left button
+  public static final int Y = 4; // Top Button
 }

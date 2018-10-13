@@ -3,6 +3,7 @@ package frc.team578.swerve;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
@@ -31,11 +32,11 @@ public class SwerveDriveUnit {
 
 
 	// PIDF values - turn
-	private static final double turn_kP = 19;
+	private static final double turn_kP = 18;
 	private static final double turn_kI = 0.0;
-	private static final double turn_kD = 0.1;
+	private static final double turn_kD = 0.001;
 	private static final double turn_kF = 0.0;
-	private static final int turn_kIZone = 18;
+	private static final int turn_kIZone = 0;
 
 	public SwerveDriveUnit(String name, int driveTalonID, int turnTalonID, boolean reverseDrive, boolean reverseTurn) {
 
@@ -63,12 +64,13 @@ public class SwerveDriveUnit {
 			double fCoeff, int iZone) {
 		
 		WPI_TalonSRX _talon = new WPI_TalonSRX(talonID);
-		_talon.setInverted(revMotor);
+		
+		
 
 		_talon.configSelectedFeedbackSensor(FeedbackDevice.Analog, PIDLOOP_IDX, TIMEOUT_MS);
-//		 _talon.configSetParameter(ParamEnum.eFeedbackNotContinuous, 1, 0, 0, 0); // wrap the position (1023 -> 0)
+		_talon.configSetParameter(ParamEnum.eFeedbackNotContinuous, 0, 0, 0, 0); // wrap the position (1023 -> 0)
 		
-		_talon.setSensorPhase(ALIGNED_TURN_SENSOR);
+		
 		_talon.selectProfileSlot(PROFILE_SLOT, PIDLOOP_IDX);
 		_talon.config_kP(PROFILE_SLOT, pCoeff, TIMEOUT_MS);
 		_talon.config_kI(PROFILE_SLOT, iCoeff, TIMEOUT_MS);
@@ -81,6 +83,9 @@ public class SwerveDriveUnit {
 		
 		_talon.configPeakOutputForward(1, TIMEOUT_MS);
 		_talon.configPeakOutputReverse(-1, TIMEOUT_MS);
+		
+		_talon.setInverted(revMotor);
+		_talon.setSensorPhase(ALIGNED_TURN_SENSOR);
 
 //		_talon.configPeakCurrentLimit(50, TIMEOUT_MS);
 //		_talon.enableCurrentLimit(true);
@@ -114,6 +119,10 @@ public class SwerveDriveUnit {
 		return turnMotor.getSensorCollection().getAnalogIn();
 	}
 	
+	public int getTurnMotorAnalogInRaw() {
+		return turnMotor.getSensorCollection().getAnalogInRaw();
+	}
+	
 	public int getTurnCLT(int id) {
 		return turnMotor.getClosedLoopTarget(id);
 	}
@@ -124,6 +133,33 @@ public class SwerveDriveUnit {
 	
 	public double calculateTargetEncoderPos(double targetAngle) {
 		return targetAngle * (1024.0/360.0);
+	}
+	
+	public static double calculateBetterTargetEncoderPos(double currentPos, double targetAngle) {
+		double targetPos = targetAngle * (1024.0/360.0);
+		double cwDistanceFromTarget = (Math.abs((currentPos - 1024) % 1024) + targetPos) % 1024;
+		double ccwDistanceFromTarget = (1024 - cwDistanceFromTarget) % 1024;
+		
+		System.err.println(targetPos);
+		System.err.println(cwDistanceFromTarget);
+		System.err.println(ccwDistanceFromTarget);
+		
+		boolean turnCW = false;
+		double shortestDistance = 0;
+		if (cwDistanceFromTarget <= ccwDistanceFromTarget) {
+			turnCW = true;
+			shortestDistance = cwDistanceFromTarget;
+		} else {
+			turnCW = false;
+			shortestDistance = ccwDistanceFromTarget;
+		}
+		
+		return shortestDistance;
+	}
+	
+	public static void main(String[] args) {
+		double sd = calculateBetterTargetEncoderPos(1023, 0);
+		System.err.println(sd);
 	}
 
 	public double calculateFancyTargetEncoderPos(double targetAngle) {
@@ -170,6 +206,8 @@ public class SwerveDriveUnit {
 		setDrivePower(0);
 	}
 	
+	// Will tell the talon to make current swerve position be 0
+	// Use to to calibrate wheel position with the talon encoder
 	public void resetTurnEnc() {
 		turnMotor.setSelectedSensorPosition(0, PIDLOOP_IDX, TIMEOUT_MS);
 	}
@@ -199,7 +237,7 @@ public class SwerveDriveUnit {
 	
 	@Override
 	public String toString() {
-		return String.format("enc:%.2f aang:%.2f ain:%d clt:%d ssp:%d",getTurnEncPos(), getAbsAngle(), 
-				getTurnMotorAnalogIn(), getTurnCLT(0), turnMotor.getSelectedSensorPosition(0) ); 
+		return String.format("enc:%.2f aang:%.2f ain:%d ainr:%d clt:%d ssp:%d",getTurnEncPos(), getAbsAngle(), 
+				getTurnMotorAnalogIn(), getTurnMotorAnalogInRaw(), getTurnCLT(0), turnMotor.getSelectedSensorPosition(0) ); 
 	}
 }

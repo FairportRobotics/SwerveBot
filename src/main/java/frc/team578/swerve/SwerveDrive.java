@@ -379,8 +379,6 @@ public class SwerveDrive {
 		SmartDashboard.putString("BL", backLeft.toString());
 		SmartDashboard.putString("BR", backRight.toString());
 
-		SmartDashboard.putNumber("Inc", IncTurnTargetCommand.val);
-
 	}
 
 }
