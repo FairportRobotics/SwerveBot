@@ -26,6 +26,7 @@
 - Understand the encoder settings a little better
 - Do the reverse motor instead of rotating the wheel fancy trick
 - Get more shuffleboard items displayed.
+- Tank is just power to left and right with 0 heading.
 
 - Make field oriented work
 
