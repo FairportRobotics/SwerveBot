@@ -17,6 +17,7 @@
 
 ## Needs Work
 
+- [PDP cannot see the canbus](http://www.ctr-electronics.com/downloads/pdf/PDP%20User's%20Guide.pdf)
 - The wheels seem to get off of zero pretty often.
 - Don't rotate all the way around on 1000 -> 0
 - How to set everything up when initializing (i.e. 0 is forward? on init, where are the wheels?)
