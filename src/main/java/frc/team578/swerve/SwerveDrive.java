@@ -4,7 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.team578.robot.Robot;
 import frc.team578.robot.RobotMap;
 import frc.team578.systems.PigeonGyro;
 
@@ -24,7 +26,6 @@ public class SwerveDrive {
 	private static SwerveDriveUnit backLeft, backRight;
 
 	// swerve inputs
-	private static Joystick driveGamepad;
 	private static final double JOYSTICK_DEADZONE = 0.1;
 
 	// drive values
@@ -66,10 +67,10 @@ public class SwerveDrive {
 	}
 
 	public static void initialize() {
-		if (initialized)
-			return;
+//		if (initialized)
+//			return;
 
-		driveGamepad = new Joystick(RobotMap.CONTROL_GAMEPAD_ID);
+	
 
 		frontLeft = new SwerveDriveUnit(RobotMap.FRONT_LEFT_DRIVE_TALON_ID, RobotMap.FRONT_LEFT_ROTATE_TALON_ID);
 		frontRight = new SwerveDriveUnit(RobotMap.FRONT_RIGHT_DRIVE_TALON_ID, RobotMap.FRONT_RIGHT_ROTATE_TALON_ID);
@@ -78,7 +79,7 @@ public class SwerveDrive {
 
 		angleDeg = PigeonGyro.getAngle();
 
-		initialized = true;
+//		initialized = true;
 	}
 
 	public static void autoInit(boolean resetGyro, double headingDeg, boolean magicMotion) {
@@ -105,13 +106,13 @@ public class SwerveDrive {
 		double joyVal;
 
 		// get joystick inputs
-		joyVal = driveGamepad.getRawAxis(RobotMap.LEFT_Y_AXIS);
+		joyVal = Robot.driveGamepad.getRawAxis(RobotMap.LEFT_Y_AXIS);
 		fwd = (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
 
-		joyVal = driveGamepad.getRawAxis(RobotMap.LEFT_X_AXIS);
+		joyVal = Robot.driveGamepad.getRawAxis(RobotMap.LEFT_X_AXIS);
 		str = (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
 
-		joyVal = driveGamepad.getRawAxis(RobotMap.RIGHT_X_AXIS);
+		joyVal = Robot.driveGamepad.getRawAxis(RobotMap.RIGHT_X_AXIS);
 		rot = (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
 
 //		logger.debug(String.format("fwd %.2f str %.2f rot %.2f", fwd, str, rot));
@@ -120,11 +121,15 @@ public class SwerveDrive {
 		// fieldCentricDrive(fwd, str, rot);
 
 		// cw/ccw rotational from joystick
-		humanDrive(fwd, str, rot);
+//		humanDrive(fwd, str, rot);
 		
 		
 		SwerveDrive.updateDashboard();
 		
+		frontLeft.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
+		frontRight.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
+		backLeft.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
+		backRight.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
 
 		// debug only
 		// InputOutputComm.putDouble(
@@ -372,6 +377,11 @@ public class SwerveDrive {
 		SmartDashboard.putNumber("BL CLT", backLeft.getTurnCLT());
 		SmartDashboard.putNumber("BR CLT", backRight.getTurnCLT());
 		
+		SmartDashboard.putNumber("FL AbsAng", frontLeft.getAbsAngle());
+		SmartDashboard.putNumber("FR AbsAng", frontRight.getAbsAngle());
+		SmartDashboard.putNumber("BL AbsAng", backLeft.getAbsAngle());
+		SmartDashboard.putNumber("BR AbsAng", backRight.getAbsAngle());
+		
 		
 		SmartDashboard.putNumber("Foward", fwd);
 		SmartDashboard.putNumber("Strafe", str);
@@ -382,7 +392,7 @@ public class SwerveDrive {
 		SmartDashboard.putString("BL", backLeft.toString());
 		SmartDashboard.putString("BR", backRight.toString());
 		
-		
+		SmartDashboard.putNumber("Inc", IncTurnTargetCommand.val);
 	}
 
 }

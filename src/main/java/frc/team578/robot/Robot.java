@@ -2,12 +2,19 @@ package frc.team578.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.team578.swerve.IncTurnTargetCommand;
 import frc.team578.swerve.SwerveDrive;
 import frc.team578.systems.PigeonGyro;
 
 public class Robot extends IterativeRobot {
 
   protected DriverStation ds;
+  
+	public static Joystick driveGamepad;
+	public static JoystickButton bx;
 
   @Override
   public void robotInit() {
@@ -19,6 +26,10 @@ public class Robot extends IterativeRobot {
 
     // retrieve Driver Station instance
     ds = DriverStation.getInstance();
+    
+	driveGamepad = new Joystick(RobotMap.CONTROL_GAMEPAD_ID);
+	bx = new JoystickButton(driveGamepad,1);
+	bx.whenPressed(new IncTurnTargetCommand());
 
   }
 
@@ -35,13 +46,13 @@ public class Robot extends IterativeRobot {
 
   @Override
   public void teleopInit() {
-
     SwerveDrive.teleopInit();
   }
 
   @Override
   public void teleopPeriodic() {
     SwerveDrive.teleopPeriodic();
+    Scheduler.getInstance().run();
   }
 
   @Override
@@ -60,7 +71,9 @@ public class Robot extends IterativeRobot {
   }
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+	  SwerveDrive.updateDashboard();
+  }
 
 //  private double getGyroAngle() {
 //    // double gyroAngle = 0.0;
