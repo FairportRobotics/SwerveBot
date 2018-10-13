@@ -14,7 +14,7 @@ public class SwerveDriveUnit {
 	
 	private static final Logger logger = LogManager.getLogger(SwerveDriveUnit.class);
 
-	private static String name;
+	private String name;
 	
 	// turn motor controller
 	public WPI_TalonSRX turnMotor;
@@ -27,13 +27,7 @@ public class SwerveDriveUnit {
 	private static final int PIDLOOP_IDX = 0; // set to zero if primary loop
 	private static final int PROFILE_SLOT = 0;
 
-	public static final boolean REVERSE_DRIVE_MOTOR = false; // motor polarity
-
-	public static final boolean REVERSE_TURN_MOTOR = false; // motor polarity
 	public static final boolean ALIGNED_TURN_SENSOR = false; // encoder polarity
-
-	// encoder variables
-//	private final double ENCODER_PULSES_PER_REV = 20 * 4; 
 
 
 	// PIDF values - turn
@@ -43,11 +37,11 @@ public class SwerveDriveUnit {
 	private static final double turn_kF = 0.0;
 	private static final int turn_kIZone = 18;
 
-	public SwerveDriveUnit(String name, int driveTalonID, int turnTalonID) {
+	public SwerveDriveUnit(String name, int driveTalonID, int turnTalonID, boolean reverseDrive, boolean reverseTurn) {
 
-		driveMotor = configureDrive(driveTalonID, REVERSE_DRIVE_MOTOR);
+		driveMotor = configureDrive(driveTalonID, reverseDrive);
 
-		turnMotor = configureRotate(turnTalonID, REVERSE_TURN_MOTOR, turn_kP, turn_kI, turn_kD, turn_kF, turn_kIZone);
+		turnMotor = configureRotate(turnTalonID, reverseTurn, turn_kP, turn_kI, turn_kD, turn_kF, turn_kIZone);
 		
 		this.name = name;
 
@@ -85,11 +79,11 @@ public class SwerveDriveUnit {
 		_talon.configNominalOutputForward(0, TIMEOUT_MS);
 		_talon.configNominalOutputReverse(0, TIMEOUT_MS);
 		
-		_talon.configPeakOutputForward(.5, TIMEOUT_MS);
-		_talon.configPeakOutputReverse(-.5, TIMEOUT_MS);
+		_talon.configPeakOutputForward(1, TIMEOUT_MS);
+		_talon.configPeakOutputReverse(-1, TIMEOUT_MS);
 
-		_talon.configPeakCurrentLimit(50, TIMEOUT_MS);
-		_talon.enableCurrentLimit(true);
+//		_talon.configPeakCurrentLimit(50, TIMEOUT_MS);
+//		_talon.enableCurrentLimit(true);
 
 		return _talon;
 	}
@@ -107,9 +101,9 @@ public class SwerveDriveUnit {
 		return turnMotor.getSelectedSensorPosition(0);
 	}
 	
-	public double getTurnAngle() {
-		return (turnMotor.getSensorCollection().getAnalogIn() / 5.0) * 360.0;
-	}
+//	public double getTurnAngle() {
+//		return (turnMotor.getSensorCollection().getAnalogIn() / 5.0) * 360.0;
+//	}
 
 	public double getAbsAngle() {
 		// returns absolute angle of wheel in degrees (may wrap beyond 360 deg)
@@ -197,6 +191,10 @@ public class SwerveDriveUnit {
 			driveMotor.setNeutralMode(NeutralMode.Brake);
 		else
 			driveMotor.setNeutralMode(NeutralMode.Coast);
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	@Override

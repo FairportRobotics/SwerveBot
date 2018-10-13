@@ -3,10 +3,6 @@ package frc.team578.swerve;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team578.robot.Robot;
 import frc.team578.robot.RobotMap;
@@ -49,7 +45,6 @@ public class SwerveDrive {
 
 	// offsets
 	private static boolean initialized = false;
-	private static boolean offsetSet = false;
 	public static final double FL_ABS_ZERO = 0.0;
 	public static final double FR_ABS_ZERO = 0.0;
 	public static final double BL_ABS_ZERO = 0.0;
@@ -72,10 +67,20 @@ public class SwerveDrive {
 		if (initialized)
 			return;
 
-		frontLeft = new SwerveDriveUnit("frontLeft",RobotMap.FRONT_LEFT_DRIVE_TALON_ID, RobotMap.FRONT_LEFT_ROTATE_TALON_ID);
-		frontRight = new SwerveDriveUnit("frontRight",RobotMap.FRONT_RIGHT_DRIVE_TALON_ID, RobotMap.FRONT_RIGHT_ROTATE_TALON_ID);
-		backLeft = new SwerveDriveUnit("backLeft",RobotMap.BACK_LEFT_DRIVE_TALON_ID, RobotMap.BACK_LEFT_ROTATE_TALON_ID);
-		backRight = new SwerveDriveUnit("backRight",RobotMap.BACK_RIGHT_DRIVE_TALON_ID, RobotMap.BACK_RIGHT_ROTATE_TALON_ID);
+		frontLeft = new SwerveDriveUnit("frontLeft", RobotMap.FRONT_LEFT_DRIVE_TALON_ID,
+				RobotMap.FRONT_LEFT_ROTATE_TALON_ID, RobotMap.FRONT_LEFT_REVERSE_DRIVE,
+				RobotMap.FRONT_LEFT_REVERSE_TURN);
+
+		frontRight = new SwerveDriveUnit("frontRight", RobotMap.FRONT_RIGHT_DRIVE_TALON_ID,
+				RobotMap.FRONT_RIGHT_ROTATE_TALON_ID, RobotMap.FRONT_RIGHT_REVERSE_DRIVE,
+				RobotMap.FRONT_RIGHT_REVERSE_TURN);
+
+		backLeft = new SwerveDriveUnit("backLeft", RobotMap.BACK_LEFT_DRIVE_TALON_ID,
+				RobotMap.BACK_LEFT_ROTATE_TALON_ID, RobotMap.BACK_LEFT_REVERSE_DRIVE, RobotMap.BACK_LEFT_REVERSE_TURN);
+
+		backRight = new SwerveDriveUnit("backRight", RobotMap.BACK_RIGHT_DRIVE_TALON_ID,
+				RobotMap.BACK_RIGHT_ROTATE_TALON_ID, RobotMap.BACK_RIGHT_REVERSE_DRIVE,
+				RobotMap.BACK_RIGHT_REVERSE_TURN);
 
 		angleDeg = PigeonGyro.getAngle();
 
@@ -123,74 +128,14 @@ public class SwerveDrive {
 		// Uses Pigeon
 		// fieldCentricDrive(fwd, str, rot);
 
+		// Manually fwd/backwards
+//		SwerveDrive.setAllDrivePower(fwd);
+
 		// cw/ccw rotational from joystick
-		humanDrive(fwd, str, rot);
+		manualRotateDrive(fwd, str, rot);
 
 		SwerveDrive.updateDashboard();
 
-//		frontLeft.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
-//		frontRight.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
-//		backLeft.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
-//		backRight.setTurnMotorTargetEnc(IncTurnTargetCommand.val);
-
-		// debug only
-		// InputOutputComm.putDouble(
-		// InputOutputComm.LogTable.kMainLog, "ChillySwerve/FL_absAngle",
-		// frontLeft.getAbsAngle());
-		// InputOutputComm.putDouble(
-		// InputOutputComm.LogTable.kMainLog, "ChillySwerve/FR_absAngle",
-		// frontRight.getAbsAngle());
-		// InputOutputComm.putDouble(
-		// InputOutputComm.LogTable.kMainLog, "ChillySwerve/BL_absAngle",
-		// backLeft.getAbsAngle());
-		// InputOutputComm.putDouble(
-		// InputOutputComm.LogTable.kMainLog, "ChillySwerve/BR_absAngle",
-		// backRight.getAbsAngle());
-
-		// logger.info(String.format("fla %.2f fra %.2f rla %.2f rra %.2f",
-		// frontLeft.getAbsAngle(),
-		// frontRight.getAbsAngle(), backLeft.getAbsAngle(),
-		// backRight.getAbsAngle()));
-
-//		 logger.info(String.format("flep(%.2f,%d) frep(%.2f,%d) rlep(%.2f,%d) rrep(%.2f,%d)",
-//				 frontLeft.getTurnEncPos(),frontLeft.getTurnCLT(),
-//				 frontRight.getTurnEncPos(), frontRight.getTurnCLT(), 
-//				 backLeft.getTurnEncPos(),backLeft.getTurnCLT(),
-//				 backRight.getTurnEncPos(),backRight.getTurnCLT()
-//				 )
-//				 );
-
-		// logger.info("FL:" + frontLeft);
-//		logger.info("FR:" + frontRight);
-		// logger.info("BL:" + backLeft);
-		// logger.info("BR:" + backRight);
-
-		// logger.debug(String.format("fra :" + frontRight));
-
-		// frontRight.setTurnPower(rot);
-		// logger.info(String.format("pwp:%2.f",
-		// frontRight.turnMotor.getSensorCollection().getPulseWidthPosition()));
-
-		// frontLeft.setTurnPower(rot);
-		// backLeft.setTurnPower(rot);
-		// backRight.setTurnPower(rot);
-
-		// double targetEnc = 0 * 1000;
-		// frontLeft.turnMotor.set(ControlMode.Position, targetEnc);
-		// frontRight.turnMotor.set(ControlMode.Position, targetEnc);
-		// backLeft.turnMotor.set(ControlMode.Position, targetEnc);
-		// backRight.turnMotor.set(ControlMode.Position, 1000);
-		// ChillySwerve.setAllEncPos(0);
-
-		/*
-		 * joyVal = driveGamepad.getRawAxis(HardwareIDs.LEFT_Y_AXIS); double left =
-		 * (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
-		 * 
-		 * joyVal = driveGamepad.getRawAxis(HardwareIDs.RIGHT_Y_AXIS); double right =
-		 * (Math.abs(joyVal) > JOYSTICK_DEADZONE) ? joyVal : 0.0;
-		 * 
-		 * tankDrive(-left, -right);
-		 */
 	}
 
 	public static void disabledInit() {
@@ -261,22 +206,11 @@ public class SwerveDrive {
 		SmartDashboard.putNumber("na4", na4);
 
 		setTurnAngle(na2, na1, na3, na4);
-		
-//		setTargetEncPos(angleToLoc(wa2), angleToLoc(wa1), angleToLoc(wa3), angleToLoc(wa4));
 
-//		SmartDashboard.putNumber("FL AbsAng", frontLeft.getAbsAngle());
-//		SmartDashboard.putNumber("FR AbsAng", frontRight.getAbsAngle());
-//		SmartDashboard.putNumber("BL AbsAng", backLeft.getAbsAngle());
-//		SmartDashboard.putNumber("BR AbsAng", backRight.getAbsAngle());
-
-//		setTargetEncPos(angleToEncPos(wa2), angleToEncPos(wa1), angleToEncPos(wa3), angleToEncPos(wa4));
-
-//		logger.info(String.format("lwa1:%.2f, lwa2:%.2f, lwa3:%.2f, lwa4:%.2f, ", loc1, loc2, loc3, loc4));
 	}
 
 	private static double normalizeAngle(double angle) {
-		
-		
+
 		// What part of the compass?
 		double mul = 0;
 		if (angle < 0) {
@@ -284,12 +218,12 @@ public class SwerveDrive {
 		} else {
 			mul = angle / 360d;
 		}
-		
+
 		return 360d * mul;
-		
+
 	}
 
-	public static void humanDrive(double fwd, double str, double rot) {
+	public static void manualRotateDrive(double fwd, double str, double rot) {
 		if (Math.abs(rot) < 0.01)
 			rot = 0;
 
@@ -309,7 +243,7 @@ public class SwerveDrive {
 		double temp = (fwd * Math.cos(angleRad)) + (str * Math.sin(angleRad));
 		str = (-fwd * Math.sin(angleRad)) + (str * Math.cos(angleRad));
 		fwd = temp;
-		humanDrive(fwd, str, rot);
+		manualRotateDrive(fwd, str, rot);
 	}
 
 	public static void resetAllEnc() {
@@ -353,13 +287,14 @@ public class SwerveDrive {
 	}
 
 	public static void setTurnAngle(double flAngle, double frAngle, double blAngle, double brAngle) {
-		logger.info("Location Set : " + String.format("fl %.2f fr %.2f bl %.2f br %.2f", flAngle, frAngle, blAngle, brAngle));
-		
+		logger.info("Location Set : "
+				+ String.format("fl %.2f fr %.2f bl %.2f br %.2f", flAngle, frAngle, blAngle, brAngle));
+
 		double fltpos = frontLeft.calculateTargetEncoderPos(flAngle);
 		double frtpos = frontRight.calculateTargetEncoderPos(frAngle);
 		double bltpos = backLeft.calculateTargetEncoderPos(blAngle);
 		double brtpos = backRight.calculateTargetEncoderPos(brAngle);
-		
+
 //		double flta = frontLeft.calculateFancyTargetEncoderPos(flAngle);
 //		double frta = frontRight.calculateFancyTargetEncoderPos(frAngle);
 //		double blta = backLeft.calculateFancyTargetEncoderPos(blAngle);
@@ -388,7 +323,6 @@ public class SwerveDrive {
 		backRight.setTurnMotorTargetEnc(encVal);
 	}
 
-	
 	// Will tell the talon to make current swerve position be 0
 	// Use to to calibrate wheel position with the talon encoder
 	public static void resetAllTurnEncoders() {
@@ -420,7 +354,7 @@ public class SwerveDrive {
 		SmartDashboard.putNumber("FR CLT", frontRight.getTurnCLT(0));
 		SmartDashboard.putNumber("BL CLT", backLeft.getTurnCLT(0));
 		SmartDashboard.putNumber("BR CLT", backRight.getTurnCLT(0));
-		
+
 		SmartDashboard.putNumber("FL CLTERR", frontLeft.getTurnCLTError(0));
 		SmartDashboard.putNumber("FR CLTERR", frontRight.getTurnCLTError(0));
 		SmartDashboard.putNumber("BL CLTERR", backLeft.getTurnCLTError(0));

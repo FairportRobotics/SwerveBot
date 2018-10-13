@@ -12,6 +12,17 @@ public class RobotMap {
   public static final int FRONT_RIGHT_ROTATE_TALON_ID = 12;
   public static final int BACK_LEFT_ROTATE_TALON_ID = 13;
   public static final int BACK_RIGHT_ROTATE_TALON_ID = 14;
+  
+  public static final boolean FRONT_LEFT_REVERSE_DRIVE = true;
+  public static final boolean FRONT_RIGHT_REVERSE_DRIVE = false;
+  public static final boolean BACK_LEFT_REVERSE_DRIVE = true;
+  public static final boolean BACK_RIGHT_REVERSE_DRIVE = true;
+  
+  public static final boolean FRONT_LEFT_REVERSE_TURN = false;
+  public static final boolean FRONT_RIGHT_REVERSE_TURN = false;
+  public static final boolean BACK_LEFT_REVERSE_TURN = false;
+  public static final boolean BACK_RIGHT_REVERSE_TURN = false;
+  
 
   // swerve controller joystick IDs
   public static final int CONTROL_GAMEPAD_ID = 0;
@@ -19,12 +30,4 @@ public class RobotMap {
   public static final int LEFT_Y_AXIS = 1;
   public static final int RIGHT_X_AXIS = 2;
   public static final int RIGHT_Y_AXIS = 3;
-
-  // encoder variables
-  public static final int ENCODER_PULSES_PER_REV = 256 * 4; // 63R  - on the competition bot motors
-  public static final double WHEEL_DIAMETER_INCHES = 5.9;
-  public static final double INCHES_PER_REV =(WHEEL_DIAMETER_INCHES * 3.14159); // 5.9-in diameter wheel (worn)
-
-  public static final double INCHES_PER_ENCODER_PULSE = INCHES_PER_REV / ENCODER_PULSES_PER_REV;
-  public static final double RPM_TO_UNIT_PER_100MS = ENCODER_PULSES_PER_REV / (60 * 10);
 }
