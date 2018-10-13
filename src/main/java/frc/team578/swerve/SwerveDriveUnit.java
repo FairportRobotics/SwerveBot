@@ -14,6 +14,8 @@ public class SwerveDriveUnit {
 	
 	private static final Logger logger = LogManager.getLogger(SwerveDriveUnit.class);
 
+	private static String name;
+	
 	// turn motor controller
 	public WPI_TalonSRX turnMotor;
 
@@ -41,11 +43,13 @@ public class SwerveDriveUnit {
 	private static final double turn_kF = 0.0;
 	private static final int turn_kIZone = 18;
 
-	public SwerveDriveUnit(int driveTalonID, int turnTalonID) {
+	public SwerveDriveUnit(String name, int driveTalonID, int turnTalonID) {
 
 		driveMotor = configureDrive(driveTalonID, REVERSE_DRIVE_MOTOR);
 
 		turnMotor = configureRotate(turnTalonID, REVERSE_TURN_MOTOR, turn_kP, turn_kI, turn_kD, turn_kF, turn_kIZone);
+		
+		this.name = name;
 
 		initialize();
 	}
@@ -116,45 +120,51 @@ public class SwerveDriveUnit {
 		return turnMotor.getSensorCollection().getAnalogIn();
 	}
 	
-	public int getTurnCLT() {
-		return turnMotor.getClosedLoopTarget(0);
+	public int getTurnCLT(int id) {
+		return turnMotor.getClosedLoopTarget(id);
+	}
+	
+	public int getTurnCLTError(int id) {
+		return turnMotor.getClosedLoopError(id);
+	}
+	
+	public double calculateTargetEncoderPos(double targetAngle) {
+		return targetAngle * (1024.0/360.0);
 	}
 
-	public double getTargetAngle(double ta) {
+	public double calculateFancyTargetEncoderPos(double targetAngle) {
 		
-		double targetAngle = ta % 360;
+		double taTemp = targetAngle % 360;
 
 		double currentAngle = getAbsAngle();
 		double currentAngleMod = currentAngle % 360;
 		if (currentAngleMod < 0)
 			currentAngleMod += 360;
 
-		double delta = currentAngleMod - targetAngle;
+		double delta = currentAngleMod - taTemp;
 
 		if (delta > 180) {
-			targetAngle += 360;
+			taTemp += 360;
 		} else if (delta < -180) {
-			targetAngle -= 360;
+			taTemp -= 360;
 		}
 
-		delta = currentAngleMod - targetAngle;
+		delta = currentAngleMod - taTemp;
 		if (delta > 90 || delta < -90) {
 			if (delta > 90)
-				targetAngle += 180;
+				taTemp += 180;
 			else if (delta < -90)
-				targetAngle -= 180;
+				taTemp -= 180;
 			driveMotor.setInverted(false);
 		} else {
 			driveMotor.setInverted(true);
 		}
 
-		targetAngle += currentAngle - currentAngleMod;
+		taTemp += currentAngle - currentAngleMod;
 
-		targetAngle *= 1024.0 / 360.0;
+		double encPos = taTemp * (1024.0 / 360.0);
 		
-		return targetAngle;
-		
-		// turnMotor.set(ControlMode.Position, targetAngle);
+		return encPos;
 	}
 
 	public void stopBoth() {
@@ -171,15 +181,15 @@ public class SwerveDriveUnit {
 	}
 
 	public void setDrivePower(double percentVal) {
-//		driveMotor.set(ControlMode.PercentOutput, percentVal);
-	}
-
-	public void setTurnPower(double percentVal) {
-		turnMotor.set(ControlMode.PercentOutput, percentVal);
+		driveMotor.set(ControlMode.PercentOutput, percentVal);
 	}
 	
 	public void setTurnMotorTargetEnc(double target) {
-//		turnMotor.set(ControlMode.Position, target);
+		turnMotor.set(ControlMode.Position, target);
+	}
+	
+	public void setTurnPower(double percentVal) {
+		turnMotor.set(ControlMode.PercentOutput, percentVal);
 	}
 
 	public void setBrakeMode(boolean b) {
@@ -192,6 +202,6 @@ public class SwerveDriveUnit {
 	@Override
 	public String toString() {
 		return String.format("enc:%.2f aang:%.2f ain:%d clt:%d ssp:%d",getTurnEncPos(), getAbsAngle(), 
-				getTurnMotorAnalogIn(), getTurnCLT(), turnMotor.getSelectedSensorPosition(0) ); 
+				getTurnMotorAnalogIn(), getTurnCLT(0), turnMotor.getSelectedSensorPosition(0) ); 
 	}
 }

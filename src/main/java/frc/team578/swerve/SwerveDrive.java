@@ -61,7 +61,7 @@ public class SwerveDrive {
 		initialize();
 
 		// orient all wheels forward
-		setAllLocation(0);
+		setAllTurnAngles(0);
 
 		// zero out all drive & turn motors
 		setAllDrivePower(0);
@@ -72,10 +72,10 @@ public class SwerveDrive {
 		if (initialized)
 			return;
 
-		frontLeft = new SwerveDriveUnit(RobotMap.FRONT_LEFT_DRIVE_TALON_ID, RobotMap.FRONT_LEFT_ROTATE_TALON_ID);
-		frontRight = new SwerveDriveUnit(RobotMap.FRONT_RIGHT_DRIVE_TALON_ID, RobotMap.FRONT_RIGHT_ROTATE_TALON_ID);
-		backLeft = new SwerveDriveUnit(RobotMap.BACK_LEFT_DRIVE_TALON_ID, RobotMap.BACK_LEFT_ROTATE_TALON_ID);
-		backRight = new SwerveDriveUnit(RobotMap.BACK_RIGHT_DRIVE_TALON_ID, RobotMap.BACK_RIGHT_ROTATE_TALON_ID);
+		frontLeft = new SwerveDriveUnit("frontLeft",RobotMap.FRONT_LEFT_DRIVE_TALON_ID, RobotMap.FRONT_LEFT_ROTATE_TALON_ID);
+		frontRight = new SwerveDriveUnit("frontRight",RobotMap.FRONT_RIGHT_DRIVE_TALON_ID, RobotMap.FRONT_RIGHT_ROTATE_TALON_ID);
+		backLeft = new SwerveDriveUnit("backLeft",RobotMap.BACK_LEFT_DRIVE_TALON_ID, RobotMap.BACK_LEFT_ROTATE_TALON_ID);
+		backRight = new SwerveDriveUnit("backRight",RobotMap.BACK_RIGHT_DRIVE_TALON_ID, RobotMap.BACK_RIGHT_ROTATE_TALON_ID);
 
 		angleDeg = PigeonGyro.getAngle();
 
@@ -250,17 +250,17 @@ public class SwerveDrive {
 		SmartDashboard.putNumber("wa3", wa3);
 		SmartDashboard.putNumber("wa4", wa4);
 
-		double loc1 = angleToLoc(wa1);
-		double loc2 = angleToLoc(wa2);
-		double loc3 = angleToLoc(wa3);
-		double loc4 = angleToLoc(wa4);
+		double na1 = normalizeAngle(wa1);
+		double na2 = normalizeAngle(wa2);
+		double na3 = normalizeAngle(wa3);
+		double na4 = normalizeAngle(wa4);
 
-		SmartDashboard.putNumber("loc1", loc1);
-		SmartDashboard.putNumber("loc2", loc2);
-		SmartDashboard.putNumber("loc3", loc3);
-		SmartDashboard.putNumber("loc4", loc4);
+		SmartDashboard.putNumber("na1", na1);
+		SmartDashboard.putNumber("na2", na2);
+		SmartDashboard.putNumber("na3", na3);
+		SmartDashboard.putNumber("na4", na4);
 
-		setTargetEncPos(wa2, wa1, wa3, wa4);
+		setTurnAngle(na2, na1, na3, na4);
 		
 //		setTargetEncPos(angleToLoc(wa2), angleToLoc(wa1), angleToLoc(wa3), angleToLoc(wa4));
 
@@ -274,35 +274,19 @@ public class SwerveDrive {
 //		logger.info(String.format("lwa1:%.2f, lwa2:%.2f, lwa3:%.2f, lwa4:%.2f, ", loc1, loc2, loc3, loc4));
 	}
 
-	private static double angleToLoc(double angle) {
+	private static double normalizeAngle(double angle) {
 		
+		
+		// What part of the compass?
 		double mul = 0;
-		
 		if (angle < 0) {
 			mul = .5d + ((180d - Math.abs(angle)) / 360d);
 		} else {
 			mul = angle / 360d;
 		}
 		
-		return 360 * mul;
+		return 360d * mul;
 		
-	}
-
-	private static double angleToEncPos(double angle) {
-		if (angle < 0) {
-			angle = 360 + angle;
-		}
-
-		double encpos = angle * (1024 / 360.0);
-
-		if (encpos < 0) {
-			logger.error(String.format("Error : a:%.2f enc:%.2f", angle, encpos));
-			throw new RuntimeException();
-		}
-
-		logger.info(String.format("encpos:%.2f", encpos));
-
-		return encpos;
 	}
 
 	public static void humanDrive(double fwd, double str, double rot) {
@@ -368,23 +352,28 @@ public class SwerveDrive {
 		backRight.setTurnPower(br);
 	}
 
-	public static void setTargetEncPos(double fl, double fr, double bl, double br) {
-		logger.info("Location Set : " + String.format("fl %.2f fr %.2f bl %.2f br %.2f", fl, fr, bl, br));
+	public static void setTurnAngle(double flAngle, double frAngle, double blAngle, double brAngle) {
+		logger.info("Location Set : " + String.format("fl %.2f fr %.2f bl %.2f br %.2f", flAngle, frAngle, blAngle, brAngle));
+		
+		double fltpos = frontLeft.calculateTargetEncoderPos(flAngle);
+		double frtpos = frontRight.calculateTargetEncoderPos(frAngle);
+		double bltpos = backLeft.calculateTargetEncoderPos(blAngle);
+		double brtpos = backRight.calculateTargetEncoderPos(brAngle);
+		
+//		double flta = frontLeft.calculateFancyTargetEncoderPos(flAngle);
+//		double frta = frontRight.calculateFancyTargetEncoderPos(frAngle);
+//		double blta = backLeft.calculateFancyTargetEncoderPos(blAngle);
+//		double brta = backRight.calculateFancyTargetEncoderPos(brAngle);
 
-		double flta = frontLeft.getTargetAngle(fl);
-		double frta = frontRight.getTargetAngle(fr);
-		double blta = backLeft.getTargetAngle(bl);
-		double brta = backRight.getTargetAngle(br);
+		SmartDashboard.putNumber("FL TPOS", fltpos);
+		SmartDashboard.putNumber("FR TPOS", frtpos);
+		SmartDashboard.putNumber("BL TPOS", bltpos);
+		SmartDashboard.putNumber("BR TPOS", brtpos);
 
-		SmartDashboard.putNumber("FL TA", flta);
-		SmartDashboard.putNumber("FR TA", frta);
-		SmartDashboard.putNumber("BL TA", blta);
-		SmartDashboard.putNumber("BR TA", brta);
-
-		frontLeft.setTurnMotorTargetEnc(flta);
-		frontRight.setTurnMotorTargetEnc(frta);
-		backLeft.setTurnMotorTargetEnc(blta);
-		backRight.setTurnMotorTargetEnc(brta);
+		frontLeft.setTurnMotorTargetEnc(fltpos);
+		frontRight.setTurnMotorTargetEnc(frtpos);
+		backLeft.setTurnMotorTargetEnc(bltpos);
+		backRight.setTurnMotorTargetEnc(brtpos);
 
 //		frontLeft.setTurnMotorTargetEnc(fl);
 //		frontRight.setTurnMotorTargetEnc(fr);
@@ -399,7 +388,10 @@ public class SwerveDrive {
 		backRight.setTurnMotorTargetEnc(encVal);
 	}
 
-	public static void resetAllTurnEncodersToZero() {
+	
+	// Will tell the talon to make current swerve position be 0
+	// Use to to calibrate wheel position with the talon encoder
+	public static void resetAllTurnEncoders() {
 		frontLeft.resetTurnEnc();
 		frontRight.resetTurnEnc();
 		backLeft.resetTurnEnc();
@@ -414,8 +406,8 @@ public class SwerveDrive {
 		setDrivePower(power, power, power, power);
 	}
 
-	public static void setAllLocation(double loc) {
-		setTargetEncPos(loc, loc, loc, loc);
+	public static void setAllTurnAngles(double angle) {
+		setTurnAngle(angle, angle, angle, angle);
 	}
 
 	public static void updateDashboard() {
@@ -424,10 +416,15 @@ public class SwerveDrive {
 		SmartDashboard.putNumber("BL Enc Pos", backLeft.getTurnEncPos());
 		SmartDashboard.putNumber("BR Enc Pos", backRight.getTurnEncPos());
 
-		SmartDashboard.putNumber("FL CLT", frontLeft.getTurnCLT());
-		SmartDashboard.putNumber("FR CLT", frontRight.getTurnCLT());
-		SmartDashboard.putNumber("BL CLT", backLeft.getTurnCLT());
-		SmartDashboard.putNumber("BR CLT", backRight.getTurnCLT());
+		SmartDashboard.putNumber("FL CLT", frontLeft.getTurnCLT(0));
+		SmartDashboard.putNumber("FR CLT", frontRight.getTurnCLT(0));
+		SmartDashboard.putNumber("BL CLT", backLeft.getTurnCLT(0));
+		SmartDashboard.putNumber("BR CLT", backRight.getTurnCLT(0));
+		
+		SmartDashboard.putNumber("FL CLTERR", frontLeft.getTurnCLTError(0));
+		SmartDashboard.putNumber("FR CLTERR", frontRight.getTurnCLTError(0));
+		SmartDashboard.putNumber("BL CLTERR", backLeft.getTurnCLTError(0));
+		SmartDashboard.putNumber("BR CLTERR", backRight.getTurnCLTError(0));
 
 		SmartDashboard.putNumber("FL AbsAng", frontLeft.getAbsAngle());
 		SmartDashboard.putNumber("FR AbsAng", frontRight.getAbsAngle());

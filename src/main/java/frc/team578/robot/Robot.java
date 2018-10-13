@@ -56,8 +56,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		SwerveDrive.teleopPeriodic();
-//		Scheduler.getInstance().run();
 		SmartDashboard.putData(pdp);
+		Scheduler.getInstance().run();
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void testInit() {
-		SwerveDrive.resetAllTurnEncodersToZero();
+		SwerveDrive.resetAllTurnEncoders();
 	}
 
 	@Override

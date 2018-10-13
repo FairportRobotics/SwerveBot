@@ -186,6 +186,50 @@
               "_source0": "network_table:///SmartDashboard/Foward",
               "_title": "SmartDashboard/Foward"
             }
+          },
+          "1,5": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/BR CLTERR",
+              "_title": "SmartDashboard/BR CLTERR"
+            }
+          },
+          "0,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/FL CLTERR",
+              "_title": "SmartDashboard/FL CLTERR"
+            }
+          },
+          "1,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/FR CLTERR",
+              "_title": "SmartDashboard/FR CLTERR"
+            }
+          },
+          "0,5": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/BL CLTERR",
+              "_title": "SmartDashboard/BL CLTERR"
+            }
           }
         }
       }
@@ -288,94 +332,6 @@
               "_title": "SmartDashboard/ws4"
             }
           },
-          "0,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/loc1",
-              "_title": "SmartDashboard/loc1"
-            }
-          },
-          "1,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/loc2",
-              "_title": "SmartDashboard/loc2"
-            }
-          },
-          "2,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/loc3",
-              "_title": "SmartDashboard/loc3"
-            }
-          },
-          "3,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/loc4",
-              "_title": "SmartDashboard/loc4"
-            }
-          },
-          "5,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/BL TA",
-              "_title": "SmartDashboard/BL TA"
-            }
-          },
-          "6,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/BR TA",
-              "_title": "SmartDashboard/BR TA"
-            }
-          },
-          "5,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/FL TA",
-              "_title": "SmartDashboard/FL TA"
-            }
-          },
-          "6,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/FR TA",
-              "_title": "SmartDashboard/FR TA"
-            }
-          },
           "4,3": {
             "size": [
               1,
@@ -407,6 +363,94 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Rotate",
               "_title": "SmartDashboard/Rotate"
+            }
+          },
+          "1,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/FR TPOS",
+              "_title": "SmartDashboard/FR TPOS"
+            }
+          },
+          "0,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/FL TPOS",
+              "_title": "SmartDashboard/FL TPOS"
+            }
+          },
+          "1,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/BR TPOS",
+              "_title": "SmartDashboard/BR TPOS"
+            }
+          },
+          "0,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/BL TPOS",
+              "_title": "SmartDashboard/BL TPOS"
+            }
+          },
+          "0,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/na1",
+              "_title": "SmartDashboard/na1"
+            }
+          },
+          "1,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/na2",
+              "_title": "SmartDashboard/na2"
+            }
+          },
+          "2,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/na3",
+              "_title": "SmartDashboard/na3"
+            }
+          },
+          "3,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/na4",
+              "_title": "SmartDashboard/na4"
             }
           }
         }
