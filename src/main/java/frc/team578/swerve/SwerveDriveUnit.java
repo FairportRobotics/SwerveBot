@@ -36,9 +36,9 @@ public class SwerveDriveUnit {
 
 
 	// PIDF values - turn
-	private static final double turn_kP = 15;
+	private static final double turn_kP = 19;
 	private static final double turn_kI = 0.0;
-	private static final double turn_kD = 0.0;
+	private static final double turn_kD = 0.1;
 	private static final double turn_kF = 0.0;
 	private static final int turn_kIZone = 18;
 
@@ -69,7 +69,7 @@ public class SwerveDriveUnit {
 		_talon.setInverted(revMotor);
 
 		_talon.configSelectedFeedbackSensor(FeedbackDevice.Analog, PIDLOOP_IDX, TIMEOUT_MS);
-		 _talon.configSetParameter(ParamEnum.eFeedbackNotContinuous, 0, 0, 0, 0); // wrap the position (1023 -> 0)
+//		 _talon.configSetParameter(ParamEnum.eFeedbackNotContinuous, 0, 0, 0, 0); // wrap the position (1023 -> 0)
 		
 		_talon.setSensorPhase(ALIGNED_TURN_SENSOR);
 		_talon.selectProfileSlot(PROFILE_SLOT, PIDLOOP_IDX);
