@@ -3,7 +3,6 @@ package frc.team578.swerve;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
@@ -69,7 +68,7 @@ public class SwerveDriveUnit {
 		_talon.setInverted(revMotor);
 
 		_talon.configSelectedFeedbackSensor(FeedbackDevice.Analog, PIDLOOP_IDX, TIMEOUT_MS);
-//		 _talon.configSetParameter(ParamEnum.eFeedbackNotContinuous, 0, 0, 0, 0); // wrap the position (1023 -> 0)
+//		 _talon.configSetParameter(ParamEnum.eFeedbackNotContinuous, 1, 0, 0, 0); // wrap the position (1023 -> 0)
 		
 		_talon.setSensorPhase(ALIGNED_TURN_SENSOR);
 		_talon.selectProfileSlot(PROFILE_SLOT, PIDLOOP_IDX);
@@ -82,8 +81,8 @@ public class SwerveDriveUnit {
 		_talon.configNominalOutputForward(0, TIMEOUT_MS);
 		_talon.configNominalOutputReverse(0, TIMEOUT_MS);
 		
-		_talon.configPeakOutputForward(1, TIMEOUT_MS);
-		_talon.configPeakOutputReverse(-1, TIMEOUT_MS);
+		_talon.configPeakOutputForward(.5, TIMEOUT_MS);
+		_talon.configPeakOutputReverse(-.5, TIMEOUT_MS);
 
 		_talon.configPeakCurrentLimit(50, TIMEOUT_MS);
 		_talon.enableCurrentLimit(true);
@@ -112,26 +111,6 @@ public class SwerveDriveUnit {
 		// returns absolute angle of wheel in degrees (may wrap beyond 360 deg)
 		return (double) turnMotor.getSensorCollection().getAnalogIn() * (360.0 / 1024.0);
 	}
-
-	public void resetTurnEnc() {
-		turnMotor.setSelectedSensorPosition(0, PIDLOOP_IDX, TIMEOUT_MS);
-	}
-
-	public void setEncPos(int d) {
-		turnMotor.setSelectedSensorPosition(d, PIDLOOP_IDX, TIMEOUT_MS);
-	}
-
-//	public int getTurnRotations() {
-//		return (int) (turnMotor.getSelectedSensorPosition(0) / ENCODER_PULSES_PER_REV);
-//	}
-
-	public void setDrivePower(double percentVal) {
-		driveMotor.set(ControlMode.PercentOutput, percentVal);
-	}
-
-	public void setTurnPower(double percentVal) {
-		turnMotor.set(ControlMode.PercentOutput, percentVal);
-	}
 	
 	public int getTurnMotorAnalogIn() {
 		return turnMotor.getSensorCollection().getAnalogIn();
@@ -141,8 +120,8 @@ public class SwerveDriveUnit {
 		return turnMotor.getClosedLoopTarget(0);
 	}
 
-	public void setTargetAngle(double ta) {
-
+	public double getTargetAngle(double ta) {
+		
 		double targetAngle = ta % 360;
 
 		double currentAngle = getAbsAngle();
@@ -173,7 +152,9 @@ public class SwerveDriveUnit {
 
 		targetAngle *= 1024.0 / 360.0;
 		
-		turnMotor.set(ControlMode.Position, targetAngle);
+		return targetAngle;
+		
+		// turnMotor.set(ControlMode.Position, targetAngle);
 	}
 
 	public void stopBoth() {
@@ -185,8 +166,20 @@ public class SwerveDriveUnit {
 		setDrivePower(0);
 	}
 	
+	public void resetTurnEnc() {
+		turnMotor.setSelectedSensorPosition(0, PIDLOOP_IDX, TIMEOUT_MS);
+	}
+
+	public void setDrivePower(double percentVal) {
+//		driveMotor.set(ControlMode.PercentOutput, percentVal);
+	}
+
+	public void setTurnPower(double percentVal) {
+		turnMotor.set(ControlMode.PercentOutput, percentVal);
+	}
+	
 	public void setTurnMotorTargetEnc(double target) {
-		turnMotor.set(ControlMode.Position, target);
+//		turnMotor.set(ControlMode.Position, target);
 	}
 
 	public void setBrakeMode(boolean b) {

@@ -8,13 +8,12 @@ public class IncTurnTargetCommand extends Command {
 	boolean finished = false;
 	
 	public IncTurnTargetCommand() {
-		System.err.println("INC TURN");
 	}
 	
 	@Override
 	protected void execute() {
 		val = (val + 256) % 1024;
-		System.err.println("New VAL -> " + val);
+		SwerveDrive.setTurnMotorTargetEnc(val);
 		finished = true;
 	}
 

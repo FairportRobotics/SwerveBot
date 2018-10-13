@@ -3,77 +3,82 @@ package frc.team578.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team578.swerve.IncTurnTargetCommand;
 import frc.team578.swerve.SwerveDrive;
 import frc.team578.systems.PigeonGyro;
 
 public class Robot extends IterativeRobot {
 
-  protected DriverStation ds;
-  
+	protected DriverStation ds;
+
+	public static PowerDistributionPanel pdp;
 	public static Joystick driveGamepad;
 	public static JoystickButton bx;
 
-  @Override
-  public void robotInit() {
-    // Initialize robot subsystems
-    PigeonGyro.initialize();
+	@Override
+	public void robotInit() {
+		// Initialize robot subsystems
+		PigeonGyro.initialize();
 
-    // Initialize  Drive controller classes
-    SwerveDrive.initialize();
+		// Initialize Drive controller classes
+		SwerveDrive.initialize();
 
-    // retrieve Driver Station instance
-    ds = DriverStation.getInstance();
-    
-	driveGamepad = new Joystick(RobotMap.CONTROL_GAMEPAD_ID);
-	bx = new JoystickButton(driveGamepad,1);
-	bx.whenPressed(new IncTurnTargetCommand());
+		// retrieve Driver Station instance
+		ds = DriverStation.getInstance();
 
-  }
+		driveGamepad = new Joystick(RobotMap.CONTROL_GAMEPAD_ID);
+		bx = new JoystickButton(driveGamepad, 1);
+		bx.whenPressed(new IncTurnTargetCommand());
 
-  @Override
-  public void autonomousInit() {
-  }
+		pdp = new PowerDistributionPanel(0);
+	}
 
-  /** This function is called periodically during autonomous */
-  @Override
-  public void autonomousPeriodic() {
-    // debug only (read position sensors)
-    PigeonGyro.printStats();
-  }
+	@Override
+	public void autonomousInit() {
+	}
 
-  @Override
-  public void teleopInit() {
-    SwerveDrive.teleopInit();
-  }
+	/** This function is called periodically during autonomous */
+	@Override
+	public void autonomousPeriodic() {
+		// debug only (read position sensors)
+		PigeonGyro.printStats();
+	}
 
-  @Override
-  public void teleopPeriodic() {
-    SwerveDrive.teleopPeriodic();
-    Scheduler.getInstance().run();
-  }
+	@Override
+	public void teleopInit() {
+		SwerveDrive.teleopInit();
+	}
 
-  @Override
-  public void disabledInit() {
-    SwerveDrive.disabledInit();
-  }
+	@Override
+	public void teleopPeriodic() {
+		SwerveDrive.teleopPeriodic();
+//		Scheduler.getInstance().run();
+		SmartDashboard.putData(pdp);
+	}
 
-  @Override
-  public void disabledPeriodic() {
-    SwerveDrive.disabledPeriodic();
-  }
+	@Override
+	public void disabledInit() {
+		SwerveDrive.disabledInit();
+	}
 
-  @Override
-  public void testInit() {
-	  SwerveDrive.resetAllTurnEncodersToZero();
-  }
+	@Override
+	public void disabledPeriodic() {
+		SwerveDrive.disabledPeriodic();
+	}
 
-  @Override
-  public void testPeriodic() {
-	  SwerveDrive.updateDashboard();
-  }
+	@Override
+	public void testInit() {
+		SwerveDrive.resetAllTurnEncodersToZero();
+	}
+
+	@Override
+	public void testPeriodic() {
+		SwerveDrive.updateDashboard();
+	}
 
 //  private double getGyroAngle() {
 //    // double gyroAngle = 0.0;
