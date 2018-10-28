@@ -38,3 +38,5 @@
 - [spreadsheet of operations](https://www.chiefdelphi.com/media/papers/download/3104) : https://www.chiefdelphi.com/media/papers/download/3104
 
 - [general guide](https://jacobmisirian.gitbooks.io/frc-swerve-drive-programming/content/) : https://jacobmisirian.gitbooks.io/frc-swerve-drive-programming/content/
+
+- [Example Reference](https://github.com/FRC4048/Swerve-Drive-Library-Java)
