@@ -122,6 +122,7 @@ public class SwerveDrive {
 
 		// The joystick forward is negative for some reason.
 		fwd *= -1;
+//		str *= -1;
 
 //		logger.debug(String.format("fwd %.2f str %.2f rot %.2f", fwd, str, rot));
 
@@ -329,7 +330,7 @@ public class SwerveDrive {
 		frontLeft.resetTurnEnc();
 		frontRight.resetTurnEnc();
 		backLeft.resetTurnEnc();
-		backLeft.resetTurnEnc();
+		backRight.resetTurnEnc();
 	}
 
 	public static void setAllTurnPower(double power) {

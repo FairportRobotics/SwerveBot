@@ -132,7 +132,7 @@ public class SwerveDriveUnit {
 	}
 	
 	public double calculateTargetEncoderPos(double targetAngle) {
-		return targetAngle * (1024.0/360.0);
+		return 1024 - (targetAngle * (1024.0/360.0));
 	}
 	
 	public static double calculateBetterTargetEncoderPos(double currentPos, double targetAngle) {
