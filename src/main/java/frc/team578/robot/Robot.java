@@ -7,9 +7,12 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.team578.swerve.IncTurnTargetCommand;
-import frc.team578.swerve.SwerveDrive;
+import frc.team578.robot.commands.IncTurnTargetCommand;
+//import frc.team578.swerve.old.SwerveDriveOld;
+//import frc.team578.swerve.old.IncTurnTargetCommand;
+//import frc.team578.swerve.old.SwerveDrive;
 import frc.team578.systems.PigeonGyro;
+import frc.team578.systems.SwerveDriveSubsystem;
 
 public class Robot extends IterativeRobot {
 
@@ -21,13 +24,17 @@ public class Robot extends IterativeRobot {
 	public static JoystickButton ba;
 	public static JoystickButton bb;
 
+	public static SwerveDriveSubsystem sds;
+
 	@Override
 	public void robotInit() {
 		// Initialize robot subsystems
+
+		// Gyro
 		PigeonGyro.initialize();
 
 		// Initialize Drive controller classes
-		SwerveDrive.initialize();
+		sds = SwerveDriveSubsystem.create();
 
 		// retrieve Driver Station instance
 		ds = DriverStation.getInstance();
@@ -36,10 +43,10 @@ public class Robot extends IterativeRobot {
 
 		bx = new JoystickButton(driveGamepad, RobotMap.X);
 		bx.whenPressed(new IncTurnTargetCommand());
-		
+
 		ba = new JoystickButton(driveGamepad, RobotMap.A);
 		ba.whenPressed(new IncTurnTargetCommand(1000));
-		
+
 		bb = new JoystickButton(driveGamepad, RobotMap.B);
 		bb.whenPressed(new IncTurnTargetCommand(-100));
 
@@ -59,34 +66,38 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		SwerveDrive.teleopInit();
+		PigeonGyro.reset();
+		sds.teleopInit();
 	}
 
 	@Override
 	public void teleopPeriodic() {
-		SwerveDrive.teleopPeriodic();
-		SmartDashboard.putData(pdp);
+		sds.teleopPeriodic();
+		sds.updateDashboard();
+		
+		SmartDashboard.putNumber("GyroAngle", PigeonGyro.getAngle());
+		
 		Scheduler.getInstance().run();
 	}
 
 	@Override
 	public void disabledInit() {
-		SwerveDrive.disabledInit();
+		sds.disabledInit();
 	}
 
 	@Override
 	public void disabledPeriodic() {
-		SwerveDrive.disabledPeriodic();
+		sds.disabledPeriodic();
 	}
 
 	@Override
 	public void testInit() {
-		SwerveDrive.resetAllTurnEncoders();
+		sds.resetAllTurnEncoders();
 	}
 
 	@Override
 	public void testPeriodic() {
-		SwerveDrive.updateDashboard();
+		sds.updateDashboard();
 	}
 
 //  private double getGyroAngle() {

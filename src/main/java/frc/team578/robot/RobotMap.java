@@ -1,5 +1,7 @@
 package frc.team578.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 public class RobotMap {
 
   // motor controller IDs
@@ -34,4 +36,5 @@ public class RobotMap {
   public static final int B = 2; // Right Button
   public static final int X = 3; // Left button
   public static final int Y = 4; // Top Button
+  
 }

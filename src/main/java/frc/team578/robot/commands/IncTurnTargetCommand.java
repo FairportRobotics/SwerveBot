@@ -1,6 +1,7 @@
-package frc.team578.swerve;
+package frc.team578.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.team578.robot.Robot;
 
 public class IncTurnTargetCommand extends Command {
 	
@@ -24,8 +25,7 @@ public class IncTurnTargetCommand extends Command {
 			val = (mul * inc++) % 1024;
 		}
 		
-		SwerveDrive.setTurnMotorTargetEnc(val);
-		
+		Robot.sds.setTurnMotorTargetEnc(val);
 		
 		finished = true;
 	}
