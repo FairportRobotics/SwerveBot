@@ -13,26 +13,27 @@ import frc.team578.robot.Robot;
 import frc.team578.robot.RobotMap;
 import frc.team578.swerve.drive.CanTalonSwerveEnclosure;
 import frc.team578.swerve.drive.SwerveDrive;
+import frc.team578.swerve.math.CentricMode;
 
 public class SwerveDriveSubsystem extends Subsystem {
 
 	private static final SwerveDriveSubsystem sds = new SwerveDriveSubsystem();
 
-	public WPI_TalonSRX frontLeftDriveTalon;
-	public WPI_TalonSRX frontLeftSwerveTalon;
-	public WPI_TalonSRX frontRightDriveTalon;
-	public WPI_TalonSRX frontRightSwerveTalon;
-	public WPI_TalonSRX backLeftDriveTalon;
-	public WPI_TalonSRX backRightDriveTalon;
-	public WPI_TalonSRX backLeftSwerveTalon;
-	public WPI_TalonSRX backRightSwerveTalon;
+	private WPI_TalonSRX frontLeftDriveTalon;
+	private WPI_TalonSRX frontLeftSwerveTalon;
+	private WPI_TalonSRX frontRightDriveTalon;
+	private WPI_TalonSRX frontRightSwerveTalon;
+	private WPI_TalonSRX backLeftDriveTalon;
+	private WPI_TalonSRX backRightDriveTalon;
+	private WPI_TalonSRX backLeftSwerveTalon;
+	private WPI_TalonSRX backRightSwerveTalon;
 
-	public CanTalonSwerveEnclosure frontLeft;
-	public CanTalonSwerveEnclosure frontRight;
-	public CanTalonSwerveEnclosure backLeft;
-	public CanTalonSwerveEnclosure backRight;
+	private CanTalonSwerveEnclosure frontLeft;
+	private CanTalonSwerveEnclosure frontRight;
+	private CanTalonSwerveEnclosure backLeft;
+	private CanTalonSwerveEnclosure backRight;
 
-	public SwerveDrive swerveDrive;
+	private SwerveDrive swerveDrive;
 
 	// TODO : SET
 	public final double GEAR_RATIO = (1988d / 1.2);
@@ -95,10 +96,10 @@ public class SwerveDriveSubsystem extends Subsystem {
 					sds.GEAR_RATIO);
 			sds.frontRight = new CanTalonSwerveEnclosure("front right", sds.frontRightDriveTalon,
 					sds.frontRightSwerveTalon, sds.GEAR_RATIO);
-			sds.backLeft = new CanTalonSwerveEnclosure("back left", sds.backLeftDriveTalon, sds.backLeftDriveTalon,
+			sds.backLeft = new CanTalonSwerveEnclosure("back left", sds.backLeftDriveTalon, sds.backLeftSwerveTalon,
 					sds.GEAR_RATIO);
-			sds.backRight = new CanTalonSwerveEnclosure("back right", sds.backRightSwerveTalon,
-					sds.backRightSwerveTalon, sds.GEAR_RATIO);
+			sds.backRight = new CanTalonSwerveEnclosure("back right", sds.backRightDriveTalon, sds.backRightSwerveTalon,
+					sds.GEAR_RATIO);
 
 			sds.swerveDrive = new SwerveDrive(sds.frontLeft, sds.frontRight, sds.backLeft, sds.backRight, sds.W, sds.L);
 
@@ -225,13 +226,11 @@ public class SwerveDriveSubsystem extends Subsystem {
 		sds.frontRight.stop();
 		sds.backLeft.stop();
 		sds.backRight.stop();
-		
+
 	}
 
 	private void setAllTurnPower(int i) {
 	}
-	
-	
 
 	private void setAllDrivePower(int i) {
 		sds.frontLeft.setSpeed(i);
@@ -252,5 +251,13 @@ public class SwerveDriveSubsystem extends Subsystem {
 		sds.backLeft.setEncPosition(0);
 		sds.backRight.setEncPosition(0);
 
+	}
+
+	public void flipCentricMode() {
+		if (swerveDrive.getCentricMode() == CentricMode.FIELD) {
+			swerveDrive.setCentricMode(CentricMode.ROBOT);
+		} else {
+			swerveDrive.setCentricMode(CentricMode.FIELD);
+		}
 	}
 }

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team578.robot.commands.IncTurnTargetCommand;
+import frc.team578.robot.commands.FlipDriveModeCommand;
 //import frc.team578.swerve.old.SwerveDriveOld;
 //import frc.team578.swerve.old.IncTurnTargetCommand;
 //import frc.team578.swerve.old.SwerveDrive;
@@ -23,6 +24,7 @@ public class Robot extends IterativeRobot {
 	public static JoystickButton bx;
 	public static JoystickButton ba;
 	public static JoystickButton bb;
+	public static JoystickButton by;
 
 	public static SwerveDriveSubsystem sds;
 
@@ -50,6 +52,9 @@ public class Robot extends IterativeRobot {
 		bb = new JoystickButton(driveGamepad, RobotMap.B);
 		bb.whenPressed(new IncTurnTargetCommand(-100));
 
+		by = new JoystickButton(driveGamepad, RobotMap.Y);
+		by.whenPressed(new FlipDriveModeCommand());
+		
 		pdp = new PowerDistributionPanel(0);
 	}
 
