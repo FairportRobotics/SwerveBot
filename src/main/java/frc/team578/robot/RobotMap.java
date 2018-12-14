@@ -20,10 +20,10 @@ public class RobotMap {
   public static final boolean BACK_LEFT_REVERSE_DRIVE = true;
   public static final boolean BACK_RIGHT_REVERSE_DRIVE = false;
   
-  public static final boolean FRONT_LEFT_REVERSE_TURN = false;
-  public static final boolean FRONT_RIGHT_REVERSE_TURN = false;
-  public static final boolean BACK_LEFT_REVERSE_TURN = false;
-  public static final boolean BACK_RIGHT_REVERSE_TURN = false;
+  public static final boolean FRONT_LEFT_REVERSE_TURN = true;
+  public static final boolean FRONT_RIGHT_REVERSE_TURN = true;
+  public static final boolean BACK_LEFT_REVERSE_TURN = true;
+  public static final boolean BACK_RIGHT_REVERSE_TURN = true;
   
 
   // swerve controller joystick IDs

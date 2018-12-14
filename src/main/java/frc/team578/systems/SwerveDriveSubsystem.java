@@ -36,7 +36,7 @@ public class SwerveDriveSubsystem extends Subsystem {
 	private SwerveDrive swerveDrive;
 
 	// TODO : SET
-	public final double GEAR_RATIO = (1988d / 1.2);
+	public final double MAX_ENC_VAL = 1024;
 	private final double L = .625;
 	private final double W = .47;
 
@@ -93,13 +93,13 @@ public class SwerveDriveSubsystem extends Subsystem {
 					sds.turn_kIZone);
 
 			sds.frontLeft = new CanTalonSwerveEnclosure("front left", sds.frontLeftDriveTalon, sds.frontLeftSwerveTalon,
-					sds.GEAR_RATIO);
+					sds.MAX_ENC_VAL);
 			sds.frontRight = new CanTalonSwerveEnclosure("front right", sds.frontRightDriveTalon,
-					sds.frontRightSwerveTalon, sds.GEAR_RATIO);
+					sds.frontRightSwerveTalon, sds.MAX_ENC_VAL);
 			sds.backLeft = new CanTalonSwerveEnclosure("back left", sds.backLeftDriveTalon, sds.backLeftSwerveTalon,
-					sds.GEAR_RATIO);
+					sds.MAX_ENC_VAL);
 			sds.backRight = new CanTalonSwerveEnclosure("back right", sds.backRightDriveTalon, sds.backRightSwerveTalon,
-					sds.GEAR_RATIO);
+					sds.MAX_ENC_VAL);
 
 			sds.swerveDrive = new SwerveDrive(sds.frontLeft, sds.frontRight, sds.backLeft, sds.backRight, sds.W, sds.L);
 
