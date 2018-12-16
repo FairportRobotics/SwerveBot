@@ -2,6 +2,9 @@ package frc.team578.systems;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.team578.robot.RobotMap;
+
 public class PigeonGyro {
 
 	// https://www.ctr-electronics.com/downloads/pdf/Pigeon%20IMU%20User's%20Guide.pdf
@@ -38,10 +41,10 @@ public class PigeonGyro {
 		if (initialized)
 			return;
 
-		System.out.println("Pigeon initialize called...");
+		System.out.println("Pigeon initialize");
 
 		try {
-			_pigeon = new PigeonIMU(5);
+			_pigeon = new PigeonIMU(RobotMap.PIGEON_IMU_ID);
 		} catch (RuntimeException e) {
 			System.err.println("Error : " + e.getMessage());
 			throw e;
@@ -50,6 +53,8 @@ public class PigeonGyro {
 		reset();
 
 		initialized = true;
+		
+		PigeonGyro.updateDashboard();
 	}
 
 	public static void reset() {
@@ -59,53 +64,25 @@ public class PigeonGyro {
 
 			final int kTimeoutMs = 30;
 			_pigeon.setFusedHeading(0.0, kTimeoutMs);
-
-			printStats();
 		}
 	}
 
-	public static void printStats() {
-//		PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
-//		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
-//		double[] xyz_dps = new double[3];
-		double currentAngle = _pigeon.getFusedHeading();
-//		boolean angleIsGood = (_pigeon.getState() == PigeonIMU.PigeonState.Ready) ? true : false;
-//		double currentAngularRate = xyz_dps[2];
-//		double _targetAngle = 0;
-
-//		System.out.println("error: " + (_targetAngle - currentAngle));
-		System.out.println("gyro angle: " + currentAngle);
-//		System.out.println("rate: " + currentAngularRate);
-//		System.out.println("noMotionBiasCount: " + genStatus.noMotionBiasCount);
-//		System.out.println("tempCompensationCount: " + genStatus.tempCompensationCount);
-//		System.out.println(angleIsGood ? "Angle is good" : "Angle is NOT GOOD");
+	public static void updateDashboard() {
+		
+		SmartDashboard.putNumber("pigeon getAngle", PigeonGyro.getAngle());
+		SmartDashboard.putNumber("pigeon fusedHeading", _pigeon.getFusedHeading());
+		SmartDashboard.putNumber("pigeon absCompHeading", _pigeon.getAbsoluteCompassHeading());
+		SmartDashboard.putNumber("pigeon compHeading", _pigeon.getCompassHeading());
+		SmartDashboard.putNumber("pigeon state", _pigeon.getState().value);
 	}
 	
 	public static double getAngle() {
-		PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
-		double currentAngle = fusionStatus.heading;
-		return currentAngle;
+		return _pigeon.getFusedHeading();
+		
+//		return _pigeon.getAbsoluteCompassHeading();
+		
+//		PigeonIMU.FusionStatus fusionStatus = .FusionStatus();
+//		double currentAngle = fusionStatus.heading;
+//		return currentAngle;
 	}
-
-//	public static double getYaw() {
-//		return fixRange(getYawRaw() - m_yawZero);
-//	}
-//
-//	public static void resetYaw(double start) {
-//		m_yawZero = getYawRaw() + start;
-//	}
-//
-//	private static double getYawRaw() {
-//		return 0;
-//	}
-//
-//	public static double fixRange(double angle) {
-//		if (angle < -180) {
-//			angle += 360;
-//		} else if (angle > 180) {
-//			angle -= 360;
-//		}
-//
-//		return angle;
-//	}
 }

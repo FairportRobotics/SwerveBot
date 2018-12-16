@@ -1,7 +1,5 @@
 package frc.team578.robot;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 public class RobotMap {
 
   // motor controller IDs
@@ -14,6 +12,8 @@ public class RobotMap {
   public static final int FRONT_RIGHT_ROTATE_TALON_ID = 12;
   public static final int BACK_LEFT_ROTATE_TALON_ID = 13;
   public static final int BACK_RIGHT_ROTATE_TALON_ID = 14;
+  
+  public static final int PIGEON_IMU_ID = 5;
   
   public static final boolean FRONT_LEFT_REVERSE_DRIVE = true;
   public static final boolean FRONT_RIGHT_REVERSE_DRIVE = false;

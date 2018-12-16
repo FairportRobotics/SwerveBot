@@ -110,42 +110,42 @@ public class SwerveDriveSubsystem extends Subsystem {
 	}
 
 	private WPI_TalonSRX configureDrive(int talonID, boolean revMotor) {
-		WPI_TalonSRX _talon = new WPI_TalonSRX(talonID);
-		_talon.setInverted(revMotor);
-		_talon.configSelectedFeedbackSensor(FeedbackDevice.None, 0, 0);
-		_talon.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyOpen, 0);
-		_talon.set(ControlMode.PercentOutput, 0);
-		return _talon;
+		WPI_TalonSRX talon = new WPI_TalonSRX(talonID);
+		talon.setInverted(revMotor);
+		talon.configSelectedFeedbackSensor(FeedbackDevice.None, 0, 0);
+		talon.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyOpen, 0);
+		talon.set(ControlMode.PercentOutput, 0);
+		return talon;
 	}
 
 	private WPI_TalonSRX configureRotate(int talonID, boolean revMotor, double pCoeff, double iCoeff, double dCoeff,
 			double fCoeff, int iZone) {
 
-		WPI_TalonSRX _talon = new WPI_TalonSRX(talonID);
+		WPI_TalonSRX talon = new WPI_TalonSRX(talonID);
 
-		_talon.configSelectedFeedbackSensor(FeedbackDevice.Analog, PIDLOOP_IDX, TIMEOUT_MS);
-		_talon.configSetParameter(ParamEnum.eFeedbackNotContinuous, 0, 0, 0, 0); // wrap the position (1023 -> 0)
+		talon.configSelectedFeedbackSensor(FeedbackDevice.Analog, PIDLOOP_IDX, TIMEOUT_MS);
+		talon.configSetParameter(ParamEnum.eFeedbackNotContinuous, 0, 0, 0, 0); // wrap the position (1023 -> 0)
 
-		_talon.selectProfileSlot(PROFILE_SLOT, PIDLOOP_IDX);
-		_talon.config_kP(PROFILE_SLOT, pCoeff, TIMEOUT_MS);
-		_talon.config_kI(PROFILE_SLOT, iCoeff, TIMEOUT_MS);
-		_talon.config_kD(PROFILE_SLOT, dCoeff, TIMEOUT_MS);
-		_talon.config_kF(PROFILE_SLOT, fCoeff, TIMEOUT_MS);
-		_talon.config_IntegralZone(PROFILE_SLOT, iZone, TIMEOUT_MS);
+		talon.selectProfileSlot(PROFILE_SLOT, PIDLOOP_IDX);
+		talon.config_kP(PROFILE_SLOT, pCoeff, TIMEOUT_MS);
+		talon.config_kI(PROFILE_SLOT, iCoeff, TIMEOUT_MS);
+		talon.config_kD(PROFILE_SLOT, dCoeff, TIMEOUT_MS);
+		talon.config_kF(PROFILE_SLOT, fCoeff, TIMEOUT_MS);
+		talon.config_IntegralZone(PROFILE_SLOT, iZone, TIMEOUT_MS);
 
-		_talon.configNominalOutputForward(0, TIMEOUT_MS);
-		_talon.configNominalOutputReverse(0, TIMEOUT_MS);
+		talon.configNominalOutputForward(0, TIMEOUT_MS);
+		talon.configNominalOutputReverse(0, TIMEOUT_MS);
 
-		_talon.configPeakOutputForward(1, TIMEOUT_MS);
-		_talon.configPeakOutputReverse(-1, TIMEOUT_MS);
+		talon.configPeakOutputForward(1, TIMEOUT_MS);
+		talon.configPeakOutputReverse(-1, TIMEOUT_MS);
 
-		_talon.setInverted(revMotor);
-		_talon.setSensorPhase(ALIGNED_TURN_SENSOR);
+		talon.setInverted(revMotor);
+		talon.setSensorPhase(ALIGNED_TURN_SENSOR);
 
 //		_talon.configPeakCurrentLimit(50, TIMEOUT_MS);
 //		_talon.enableCurrentLimit(true);
 
-		return _talon;
+		return talon;
 	}
 
 	public void setTurnMotorTargetEnc(int encVal) {
@@ -207,6 +207,8 @@ public class SwerveDriveSubsystem extends Subsystem {
 		SmartDashboard.putString("FR", frontRight.toString());
 		SmartDashboard.putString("BL", backLeft.toString());
 		SmartDashboard.putString("BR", backRight.toString());
+		
+		SmartDashboard.putString("DriveMode", this.swerveDrive.getCentricMode().toString());
 
 	}
 
