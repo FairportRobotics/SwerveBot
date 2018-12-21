@@ -3,14 +3,10 @@ package frc.team578.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.team578.robot.commands.FlipDriveModeCommand;
 import frc.team578.robot.commands.IncTurnTargetCommand;
-//import frc.team578.swerve.old.SwerveDriveOld;
-//import frc.team578.swerve.old.IncTurnTargetCommand;
-//import frc.team578.swerve.old.SwerveDrive;
 import frc.team578.systems.PigeonGyro;
 import frc.team578.systems.SwerveDriveSubsystem;
 
@@ -18,7 +14,7 @@ public class Robot extends IterativeRobot {
 
 	protected DriverStation ds;
 
-	public static PowerDistributionPanel pdp;
+//	public static PowerDistributionPanel pdp;
 	public static Joystick driveGamepad;
 	public static JoystickButton bx;
 	public static JoystickButton ba;
@@ -54,7 +50,7 @@ public class Robot extends IterativeRobot {
 		by = new JoystickButton(driveGamepad, RobotMap.Y);
 		by.whenPressed(new FlipDriveModeCommand());
 		
-		pdp = new PowerDistributionPanel(0);
+//		pdp = new PowerDistributionPanel(0);
 	}
 
 	@Override

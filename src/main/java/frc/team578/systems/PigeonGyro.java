@@ -13,27 +13,6 @@ public class PigeonGyro {
 
 	private static PigeonIMU _pigeon;
 
-	private static double m_yawZero = 0;
-	private static double m_pitchZero = 0;
-	private static double m_rollZero = 0;
-
-//	public PigeonGyro(Port port) {
-
-//		double[] ypr = new double[3];
-//		_pigeon.getYawPitchRoll(ypr);
-//		System.out.println("Yaw:" + ypr[0]);
-
-	// _pigeon.SetYaw(newAngle);
-	// _pigeon.SetFusedHeading(newAngle)
-	// _pigeon.enterCalibrationMode(CalibrationMode.Temperature,1);
-
-	/* grab some input data from Pigeon and gamepad */
-//		_pigeon.getGeneralStatus(genStatus);
-//		_pigeon.getRawGyro(xyz_dps);
-//		_pigeon.getFusedHeading(fusionStatus);
-
-//	}
-
 	private static boolean initialized = false;
 
 	public static void initialize() {
@@ -69,7 +48,7 @@ public class PigeonGyro {
 
 	public static void updateDashboard() {
 		
-		SmartDashboard.putNumber("pigeon getAngle", PigeonGyro.getAngle());
+		SmartDashboard.putNumber("pigeon getAngle", getAngle());
 		SmartDashboard.putNumber("pigeon fusedHeading", _pigeon.getFusedHeading());
 		SmartDashboard.putNumber("pigeon absCompHeading", _pigeon.getAbsoluteCompassHeading());
 		SmartDashboard.putNumber("pigeon compHeading", _pigeon.getCompassHeading());
@@ -77,12 +56,9 @@ public class PigeonGyro {
 	}
 	
 	public static double getAngle() {
-		return _pigeon.getFusedHeading();
+		return Math.abs(_pigeon.getFusedHeading() % 360);
 		
 //		return _pigeon.getAbsoluteCompassHeading();
 		
-//		PigeonIMU.FusionStatus fusionStatus = .FusionStatus();
-//		double currentAngle = fusionStatus.heading;
-//		return currentAngle;
 	}
 }
