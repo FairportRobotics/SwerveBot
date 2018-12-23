@@ -18,17 +18,11 @@
 ## Needs Work
 
 - [PDP cannot see the canbus](http://www.ctr-electronics.com/downloads/pdf/PDP%20User's%20Guide.pdf)
-- The wheels seem to get off of zero pretty often.
-- Don't rotate all the way around on 1000 -> 0
-- How to set everything up when initializing (i.e. 0 is forward? on init, where are the wheels?)
-- Put encoders on the drive wheels (for motion profiling)
-- Field oriented vs human oriented drive
-- Understand the encoder settings a little better
-- Do the reverse motor instead of rotating the wheel fancy trick
+- Motion Profiling
+	- [Example 1](https://github.com/Team319/frc319-2018/blob/master/src/org/usfirst/frc/team319/robot/commands/FollowTrajectory.java)
+	- [Example 2](https://github.com/CrossTheRoadElec/FRC-Examples-STEAMWORKS/blob/master/JAVA_MotionProfileExample/src/org/usfirst/frc/team3539/robot/MotionProfileExample.java)
 - Get more shuffleboard items displayed.
 - Tank is just power to left and right with 0 heading.
-
-- Make field oriented work
 
 
 ## Super Helpful Links
