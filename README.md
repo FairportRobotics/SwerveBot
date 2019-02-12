@@ -36,3 +36,5 @@
 - [Example Reference](https://github.com/FRC4048/Swerve-Drive-Library-Java)
 
 - Read this : https://github.com/Team4256/4256-17-Rockefeller/blob/master/src/com/cyborgcats/reusable/Phoenix/Talon.java
+
+- Or this : https://github.com/bob80333/swerve-drive
