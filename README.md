@@ -38,3 +38,5 @@
 - Read this : https://github.com/Team4256/4256-17-Rockefeller/blob/master/src/com/cyborgcats/reusable/Phoenix/Talon.java
 
 - Or this : https://github.com/bob80333/swerve-drive
+
+- And wow...I mean wow : https://www.strykeforce.org/resources/
