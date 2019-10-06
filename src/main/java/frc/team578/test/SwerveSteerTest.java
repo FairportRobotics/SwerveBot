@@ -1,12 +1,12 @@
-package frc.team578.robot.test;
+package frc.team578.test;
 
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.team578.robot.subsystems.swerve.SwerveConstants;
-import frc.team578.robot.utils.PIDFinished;
+import frc.team578.subsystems.swerve.SwerveConstants;
+import frc.team578.utils.PIDFinished;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

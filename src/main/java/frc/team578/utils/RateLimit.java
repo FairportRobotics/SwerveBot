@@ -1,4 +1,4 @@
-package frc.team578.robot.utils;
+package frc.team578.utils;
 
 /** Applies rate limit to joystick input. */
 public class RateLimit {

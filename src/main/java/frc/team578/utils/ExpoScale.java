@@ -1,4 +1,4 @@
-package frc.team578.robot.utils;
+package frc.team578.utils;
 
 /** Applies exponential scaling and deadband to joystick inputs */
 public class ExpoScale {

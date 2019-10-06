@@ -1,4 +1,4 @@
-package frc.team578.robot.subsystems.swerve.math;
+package frc.team578.subsystems.swerve.math;
 
 /**
  * SwerveDirective is the instruction for drive control action. Use the values from this class to set the angle and speed of

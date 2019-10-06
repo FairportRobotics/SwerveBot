@@ -1,4 +1,4 @@
-package frc.team578.robot.utils;
+package frc.team578.utils;
 
 import java.util.function.Predicate;
 import java.util.function.Supplier;

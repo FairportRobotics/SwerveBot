@@ -1,4 +1,4 @@
-package frc.team578.robot.commands;
+package frc.team578.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.apache.logging.log4j.LogManager;

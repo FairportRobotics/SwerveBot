@@ -1,9 +1,9 @@
-package frc.team578.robot.subsystems.swerve;
+package frc.team578.subsystems.swerve;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.team578.robot.subsystems.interfaces.UpdateDashboard;
+import frc.team578.subsystems.interfaces.UpdateDashboard;
 
 public class TalonSwerveEnclosure implements UpdateDashboard {
 

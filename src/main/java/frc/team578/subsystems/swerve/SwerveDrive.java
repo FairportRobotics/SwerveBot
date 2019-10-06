@@ -1,11 +1,11 @@
-package frc.team578.robot.subsystems.swerve;
+package frc.team578.subsystems.swerve;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import frc.team578.robot.RobotMap;
-import frc.team578.robot.subsystems.interfaces.UpdateDashboard;
-import frc.team578.robot.subsystems.swerve.math.CentricMode;
-import frc.team578.robot.subsystems.swerve.math.SwerveDirective;
-import frc.team578.robot.subsystems.swerve.math.SwerveMath;
+import frc.team578.RobotMap;
+import frc.team578.subsystems.interfaces.UpdateDashboard;
+import frc.team578.subsystems.swerve.math.CentricMode;
+import frc.team578.subsystems.swerve.math.SwerveDirective;
+import frc.team578.subsystems.swerve.math.SwerveMath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,7 +24,7 @@ public class SwerveDrive implements UpdateDashboard {
     private final TalonSwerveEnclosure swerveEnclosureFL;
     private final TalonSwerveEnclosure swerveEnclosureBL;
     private final TalonSwerveEnclosure swerveEnclosureBR;
-    private final frc.team578.robot.subsystems.swerve.math.SwerveMath swerveMath;
+    private final frc.team578.subsystems.swerve.math.SwerveMath swerveMath;
 
 
     public SwerveDrive(TalonSwerveEnclosure swerveEnclosureFL, TalonSwerveEnclosure swerveEnclosureFR,

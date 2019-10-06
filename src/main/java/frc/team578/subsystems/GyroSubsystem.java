@@ -1,15 +1,13 @@
-package frc.team578.robot.subsystems;
+package frc.team578.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.team578.robot.subsystems.interfaces.Initializable;
-import frc.team578.robot.subsystems.interfaces.UpdateDashboard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class GyroSubsystem extends Subsystem implements Initializable, UpdateDashboard {
+public class GyroSubsystem extends Subsystem implements frc.team578.subsystems.interfaces.Initializable, frc.team578.subsystems.interfaces.UpdateDashboard {
 
     private static final Logger log = LogManager.getLogger(GyroSubsystem.class);
 

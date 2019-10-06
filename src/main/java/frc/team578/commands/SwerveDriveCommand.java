@@ -1,8 +1,8 @@
-package frc.team578.robot.commands;
+package frc.team578.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.team578.robot.Robot;
+import frc.team578.Robot;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

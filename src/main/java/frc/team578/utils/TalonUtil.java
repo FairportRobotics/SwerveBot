@@ -1,4 +1,4 @@
-package frc.team578.robot.utils;
+package frc.team578.utils;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;

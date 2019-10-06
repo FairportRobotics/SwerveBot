@@ -1,4 +1,4 @@
-package frc.team578.robot.subsystems.swerve;
+package frc.team578.subsystems.swerve;
 
 import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;

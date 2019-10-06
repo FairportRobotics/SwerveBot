@@ -1,4 +1,4 @@
-package frc.team578.robot.subsystems.swerve.math;
+package frc.team578.subsystems.swerve.math;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +42,7 @@ public class SwerveMath {
     private CentricMode centricMode = CentricMode.ROBOT;
 
     public void setModeField() {
-        centricMode = frc.team578.robot.subsystems.swerve.math.CentricMode.FIELD;
+        centricMode = frc.team578.subsystems.swerve.math.CentricMode.FIELD;
     }
 
     /**

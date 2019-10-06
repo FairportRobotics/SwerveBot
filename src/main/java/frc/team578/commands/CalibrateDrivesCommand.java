@@ -1,10 +1,10 @@
-package frc.team578.robot.commands;
+package frc.team578.commands;
 
 import edu.wpi.first.wpilibj.command.TimedCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.team578.robot.Robot;
-import frc.team578.robot.subsystems.interfaces.UpdateDashboard;
-import frc.team578.robot.utils.PIDFinished;
+import frc.team578.Robot;
+import frc.team578.subsystems.interfaces.UpdateDashboard;
+import frc.team578.utils.PIDFinished;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

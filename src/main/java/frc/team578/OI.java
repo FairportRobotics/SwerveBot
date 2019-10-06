@@ -1,11 +1,10 @@
-package frc.team578.robot;
+package frc.team578;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.team578.robot.commands.*;
-import frc.team578.robot.enums.ArmPositionEnum;
-import frc.team578.robot.subsystems.interfaces.Initializable;
-import frc.team578.robot.utils.Gamepad;
+import frc.team578.commands.*;
+import frc.team578.subsystems.interfaces.Initializable;
+import frc.team578.utils.Gamepad;
 
 public class OI implements Initializable {
 
@@ -25,30 +24,8 @@ public class OI implements Initializable {
 
     public void initialize() {
 
-        // Gamepad 1
 
-        // Arm buttons
 
-//        gp1.lb.whenPressed(new MoveArmPIDCommand(ArmPositionEnum.RETRACTED));
-//        gp1.rb.whenPressed(new MoveArmPIDCommand(ArmPositionEnum.MID_EXTEND));
-////        gp1.buttonX.whenPressed(new MoveArmPIDCommand(ArmPositionEnum.MID2_EXTEND));
-////        gp1.buttonY.whenPressed(new MoveArmPIDCommand(ArmPositionEnum.FULL_EXTEND));
-////        // Intake buttons
-////        gp1.lb.whileHeld(new IntakeSpinInwardCommand());
-////        gp1.rb.whileHeld(new IntakeSpinOutwardCommand());
-//        gp1.lt.whenPressed(new IntakeExtendCommand());
-//        gp1.rt.whenPressed(new IntakeRetractCommand());
-////
-////        // Gamepad 2
-////
-////        // Climber buttons
-//        gp1.buttonX.whenPressed(new ClimberExtendAllCommand());
-//        gp1.buttonY.whenPressed(new ClimberRetractAllCommand());
-//        gp1.buttonA.whenPressed(new ClimberRetractFrontCommand());
-//        gp1.buttonB.whenPressed(new ClimberRetractRearCommand());
-//
-//        gp1.start.whileHeld(new ClimberDriveForwardsCommand());
-//        gp1.back.whileHeld(new ClimberDriveReverseCommand());
 
         if(leftJoystick.getTrigger()) { new CalibrateDrivesCommand();}
 

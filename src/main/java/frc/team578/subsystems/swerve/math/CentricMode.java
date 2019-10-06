@@ -1,4 +1,4 @@
-package frc.team578.robot.subsystems.swerve.math;
+package frc.team578.subsystems.swerve.math;
 
 /**
  * The operation mode for the robot:

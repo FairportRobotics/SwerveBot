@@ -1,10 +1,10 @@
-package frc.team578.robot;
+package frc.team578;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import frc.team578.robot.subsystems.*;
+import frc.team578.subsystems.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,11 +18,7 @@ public class Robot extends TimedRobot {
     // Subsystems
     public static SwerveDriveSubsystem swerveDriveSubsystem;
     public static GyroSubsystem gyroSubsystem;
-    public static ArmSubsystem armSubsystem;
-    public static CargoIntakeSubsystem cargoIntakeSubsystem;
-    public static ElevatorSubsystem elevatorSubsystem;
     public static UsbCamera camera;
-    public static ClimberSubsystem climberSubsystem;
 
     public static final boolean useSwerveDrive = true;
 

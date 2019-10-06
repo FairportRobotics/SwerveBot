@@ -1,11 +1,11 @@
-package frc.team578.robot.subsystems;
+package frc.team578.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.team578.robot.commands.SwerveDriveCommand;
-import frc.team578.robot.subsystems.interfaces.Initializable;
-import frc.team578.robot.subsystems.interfaces.UpdateDashboard;
-import frc.team578.robot.subsystems.swerve.SwerveDrive;
+import frc.team578.commands.SwerveDriveCommand;
+import frc.team578.subsystems.interfaces.Initializable;
+import frc.team578.subsystems.interfaces.UpdateDashboard;
+import frc.team578.subsystems.swerve.SwerveDrive;
 
 public class SwerveDriveSubsystem extends Subsystem implements Initializable, UpdateDashboard {
 
