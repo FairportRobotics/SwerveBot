@@ -24,9 +24,6 @@ public class OI implements Initializable {
 
     public void initialize() {
 
-
-
-
         if(leftJoystick.getTrigger()) { new CalibrateDrivesCommand();}
 
     }
