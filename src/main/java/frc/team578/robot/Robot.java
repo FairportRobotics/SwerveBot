@@ -5,6 +5,8 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.team578.robot.subsystems.*;
+import frc.team578.robot.subsystems.swerve.motionProfiling.MotionProfilingSubsystem;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,6 +21,7 @@ public class Robot extends TimedRobot {
     public static SwerveDriveSubsystem swerveDriveSubsystem;
     public static GyroSubsystem gyroSubsystem;
     public static UsbCamera camera;
+    public static MotionProfilingSubsystem motionProfilingSubsystem;
 
     public static final boolean useSwerveDrive = true;
 
@@ -37,6 +40,10 @@ public class Robot extends TimedRobot {
             swerveDriveSubsystem = new SwerveDriveSubsystem();
             swerveDriveSubsystem.initialize();
             log.info("Swerve Drive Subsystem Initialized");
+
+            motionProfilingSubsystem = new MotionProfilingSubsystem();
+            motionProfilingSubsystem.initialize();
+            log.info("Motion Profiling Subsystem Initialized");
 
 //            climberSubsystem = new ClimberSubsystem();
 //            climberSubsystem.initialize();
