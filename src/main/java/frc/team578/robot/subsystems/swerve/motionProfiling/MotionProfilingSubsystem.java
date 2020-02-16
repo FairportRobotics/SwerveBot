@@ -39,9 +39,9 @@ public class MotionProfilingSubsystem extends Subsystem implements Initializable
         // used by the WPILib classes.
         var gyroAngle = Rotation2d.fromDegrees(-(Robot.gyroSubsystem.getHeading()));
         SwerveModuleState flState = Robot.swerveDriveSubsystem.swerveDrive.swerveEnclosureFL.getState();
-        SwerveModuleState frState = Robot.swerveDriveSubsystem.swerveDrive.swerveEnclosureFL.getState();
-        SwerveModuleState blState = Robot.swerveDriveSubsystem.swerveDrive.swerveEnclosureFL.getState();
-        SwerveModuleState brState = Robot.swerveDriveSubsystem.swerveDrive.swerveEnclosureFL.getState();
+        SwerveModuleState frState = Robot.swerveDriveSubsystem.swerveDrive.swerveEnclosureFR.getState();
+        SwerveModuleState blState = Robot.swerveDriveSubsystem.swerveDrive.swerveEnclosureBL.getState();
+        SwerveModuleState brState = Robot.swerveDriveSubsystem.swerveDrive.swerveEnclosureBR.getState();
         // Update the pose
         m_pose = m_odometry.update(gyroAngle, flState, frState,
                 blState, brState);

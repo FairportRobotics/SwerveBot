@@ -20,10 +20,10 @@ public class SwerveDrive implements UpdateDashboard {
     private static final Logger log = LogManager.getLogger(SwerveDrive.class);
 
     // Enclosures 1-4 are the drive/steer combos
-    public final TalonSwerveEnclosure swerveEnclosureFR;
-    public TalonSwerveEnclosure swerveEnclosureFL;
-    public final TalonSwerveEnclosure swerveEnclosureBL;
-    public final TalonSwerveEnclosure swerveEnclosureBR;
+    public static TalonSwerveEnclosure swerveEnclosureFR;
+    public static TalonSwerveEnclosure swerveEnclosureFL;
+    public static TalonSwerveEnclosure swerveEnclosureBL;
+    public static TalonSwerveEnclosure swerveEnclosureBR;
     private final frc.team578.robot.subsystems.swerve.math.SwerveMath swerveMath;
 
 
@@ -75,7 +75,6 @@ public class SwerveDrive implements UpdateDashboard {
     public void move(double fwd, double str, double rcw, Double gyroValue) {
         // Get the move command calculated
         List<SwerveDirective> swerveDirectives = swerveMath.move(fwd, str, rcw, gyroValue);
-        System.err.println("Move: " + fwd + "\nSteer: " + str + "\nRotate:" + rcw);
         //Reversed left and right for fun
         swerveEnclosureFL.move(swerveDirectives.get(0).getSpeed(), swerveDirectives.get(0).getAngle());
         swerveEnclosureFR.move(swerveDirectives.get(1).getSpeed(), swerveDirectives.get(1).getAngle());

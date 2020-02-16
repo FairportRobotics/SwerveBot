@@ -10,7 +10,7 @@ public class OI implements Initializable {
 
     public Joystick leftJoystick = new Joystick(2);
     public Joystick rightJoystick = new Joystick(3);
-    public GP gp1 = new GP(RobotMap.CONTROL_GAMEPAD_ID); // Elevator and arm functions
+    public GP gp1 = new GP(1); // Elevator and arm functions
     public GP gp2 = new GP(RobotMap.ELEVATOR_GAMEPAD_ID); // Climber functions
 //
 //

@@ -5,6 +5,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.team578.robot.subsystems.*;
+import frc.team578.robot.subsystems.swerve.FieldPosition;
 import frc.team578.robot.subsystems.swerve.motionProfiling.MotionProfilingSubsystem;
 
 import org.apache.logging.log4j.LogManager;
@@ -124,6 +125,7 @@ public class Robot extends TimedRobot {
 
         updateAllDashboards();
         Scheduler.getInstance().run();
+        FieldPosition.periodic();
 
     }
 

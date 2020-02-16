@@ -21,12 +21,12 @@ public class SwerveDriveCommand extends Command {
     @Override
     protected void execute() {
 
-        double fwd = Robot.oi.leftJoystick.getY();
+        double fwd = Robot.oi.gp1.getPadLeftY();
 
         // double str = Robot.oi.getStrafe();
-        double str = Robot.oi.leftJoystick.getX();
+        double str = Robot.oi.gp1.getPadLeftX();
 
-        double rot = Robot.oi.rightJoystick.getX();
+        double rot = Robot.oi.gp1.getPadRightX();
 
 //      fwd *= -1;
 //		str *= -1;
