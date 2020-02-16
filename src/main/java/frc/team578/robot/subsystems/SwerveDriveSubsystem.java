@@ -8,7 +8,7 @@ import frc.team578.robot.subsystems.swerve.SwerveDrive;
 
 public class SwerveDriveSubsystem extends Subsystem implements Initializable, UpdateDashboard {
 
-    private SwerveDrive swerveDrive;
+    public SwerveDrive swerveDrive;
 
     @Override
     protected void initDefaultCommand() {

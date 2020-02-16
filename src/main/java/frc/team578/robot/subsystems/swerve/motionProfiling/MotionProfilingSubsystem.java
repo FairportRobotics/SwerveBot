@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import frc.team578.robot.Robot;
 import frc.team578.robot.subsystems.interfaces.Initializable;
 
@@ -15,6 +16,7 @@ public class MotionProfilingSubsystem extends Subsystem implements Initializable
     Translation2d m_backLeftLocation = new Translation2d(-0.2794, 0.3048);
     Translation2d m_backRightLocation = new Translation2d(-0.2794, -0.3048);
     SwerveDriveOdometry m_odometry;
+    Pose2d m_pose;
 
     public void initialize() {
         // Creating my kinematics object using the module locations
@@ -36,10 +38,13 @@ public class MotionProfilingSubsystem extends Subsystem implements Initializable
         // values as the robot turns clockwise. This is not standard convention that is
         // used by the WPILib classes.
         var gyroAngle = Rotation2d.fromDegrees(-(Robot.gyroSubsystem.getHeading()));
-
+        SwerveModuleState flState = Robot.swerveDriveSubsystem.swerveDrive.swerveEnclosureFL.getState();
+        SwerveModuleState frState = Robot.swerveDriveSubsystem.swerveDrive.swerveEnclosureFL.getState();
+        SwerveModuleState blState = Robot.swerveDriveSubsystem.swerveDrive.swerveEnclosureFL.getState();
+        SwerveModuleState brState = Robot.swerveDriveSubsystem.swerveDrive.swerveEnclosureFL.getState();
         // Update the pose
-        m_pose = m_odometry.update(gyroAngle, m_frontLeftModule.getState(), m_frontRightModule.getState(),
-                m_backLeftModule.getState(), m_backRightModule.getState());
+        m_pose = m_odometry.update(gyroAngle, flState, frState,
+                blState, brState);
     }
 
     public void initDefaultCommand() {

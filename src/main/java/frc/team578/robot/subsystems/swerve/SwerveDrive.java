@@ -1,6 +1,7 @@
 package frc.team578.robot.subsystems.swerve;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import frc.team578.robot.RobotMap;
 import frc.team578.robot.subsystems.interfaces.UpdateDashboard;
 import frc.team578.robot.subsystems.swerve.math.SwerveDirective;
@@ -19,10 +20,10 @@ public class SwerveDrive implements UpdateDashboard {
     private static final Logger log = LogManager.getLogger(SwerveDrive.class);
 
     // Enclosures 1-4 are the drive/steer combos
-    private final TalonSwerveEnclosure swerveEnclosureFR;
-    private final TalonSwerveEnclosure swerveEnclosureFL;
-    private final TalonSwerveEnclosure swerveEnclosureBL;
-    private final TalonSwerveEnclosure swerveEnclosureBR;
+    public final TalonSwerveEnclosure swerveEnclosureFR;
+    public TalonSwerveEnclosure swerveEnclosureFL;
+    public final TalonSwerveEnclosure swerveEnclosureBL;
+    public final TalonSwerveEnclosure swerveEnclosureBR;
     private final frc.team578.robot.subsystems.swerve.math.SwerveMath swerveMath;
 
 
@@ -206,6 +207,4 @@ public class SwerveDrive implements UpdateDashboard {
         swerveEnclosureBL.updateDashboard();
         swerveEnclosureBR.updateDashboard();
     }
-
-    
 }

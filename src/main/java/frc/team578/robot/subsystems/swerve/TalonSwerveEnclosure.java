@@ -2,6 +2,8 @@ package frc.team578.robot.subsystems.swerve;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team578.robot.subsystems.interfaces.UpdateDashboard;
 
@@ -211,5 +213,9 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
 //        SmartDashboard.putNumber(name + ".drivet.CLT",driveTalon.getClosedLoopTarget());
 
 
+    }
+
+    public SwerveModuleState getState() {
+        return new SwerveModuleState(driveTalon.getSelectedSensorVelocity(), new Rotation2d(getSteerEncPosition()));
     }
 }
