@@ -3,10 +3,10 @@ package frc.team578.robot.subsystems.swerve;
 import edu.wpi.first.wpilibj.drive.Vector2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team578.robot.Robot;
-import frc.team578.robot.subsystems.interfaces.UpdateDashboard;
 
-public class FieldPosition implements UpdateDashboard{
+public class FieldPosition{
     private static Vector2d botPos, botSpeed;
+    private static long prevTime = 0;
     private static TalonSwerveEnclosure[] talonEnclosures = {
         SwerveDrive.swerveEnclosureFR,
         SwerveDrive.swerveEnclosureBR,
@@ -33,15 +33,23 @@ public class FieldPosition implements UpdateDashboard{
     public static double getBotYPosition(){
         return botPos.y;
     }  
-
+    public static double getBotYSpeed(){
+        return botSpeed.y;
+    }
+    public static double getBotXSpeed(){
+        return botSpeed.x;
+    }
     public static void periodic(){  
         botSpeed = getBotSpeedVect();
+        long currentTime = System.currentTimeMillis();
+        botPos = add(botPos, vectorScale(botSpeed, (currentTime - prevTime)));
+        prevTime = currentTime;
     }
     // returns vector 
     public static Vector2d getBotSpeedVect(){
         Vector2d sum = vectorScale(add(getWheelState().getVecs()), .25);
         sum.rotate(Robot.gyroSubsystem.getHeading());
-        return vectorScale(add(getWheelState().getVecs()), .25);
+        return sum;
     }
     
     private static WheelState getWheelState(){
@@ -75,9 +83,12 @@ public class FieldPosition implements UpdateDashboard{
         return new Vector2d(magnitude*Math.cos(angle), magnitude*Math.sin(angle));
     }
 
-    @Override
-    public void updateDashboard() {
-        SmartDashboard.putNumber("X Speed vec", botSpeed.x);
-        SmartDashboard.putNumber("Y Speed vec", botSpeed.y);
+    public static void updateDashboard() {
+        if(botSpeed != null && botPos != null){
+            SmartDashboard.putNumber("X Speed vec", botSpeed.x);
+            SmartDashboard.putNumber("Y Speed vec", botSpeed.y);
+            SmartDashboard.putNumber("X pos vec", botPos.x);
+            SmartDashboard.putNumber("Y pos vec", botPos.y);
+        }
     }
 }

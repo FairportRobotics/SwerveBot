@@ -23,9 +23,6 @@ public class OI implements Initializable {
 //    }
 
     public void initialize() {
-
-        if(leftJoystick.getTrigger()) { new CalibrateDrivesCommand();}
-
     }
 
     // This is here to make buttons persistant (i.e. Gamepad makes a new instance every request
@@ -62,7 +59,6 @@ public class OI implements Initializable {
             start = gamepad.getStartButton();
             boolean dpadLeft = gamepad.getDPadLeft();
         }
-
 
         public double getPadLeftX() {
             return gamepad.getLeftX();

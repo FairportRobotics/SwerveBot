@@ -4,6 +4,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team578.robot.subsystems.*;
 import frc.team578.robot.subsystems.swerve.FieldPosition;
 import frc.team578.robot.subsystems.swerve.motionProfiling.MotionProfilingSubsystem;
@@ -114,9 +115,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-
+        Robot.gyroSubsystem.reset();
         Robot.swerveDriveSubsystem.stop();
-
+        FieldPosition.init();
     }
 
     @Override
@@ -143,5 +144,7 @@ public class Robot extends TimedRobot {
         Robot.swerveDriveSubsystem.updateDashboard();
         Robot.gyroSubsystem.updateDashboard();
 //        Robot.climberSubsystem.updateDashboard();
+        FieldPosition.updateDashboard();
+        SmartDashboard.updateValues();;
     }
 }

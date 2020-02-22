@@ -64,5 +64,6 @@ public class GyroSubsystem extends Subsystem implements frc.team578.robot.subsys
     @Override
     public void updateDashboard() {
         SmartDashboard.putNumber("gyro.heading", getHeading());
+        
     }
 }
