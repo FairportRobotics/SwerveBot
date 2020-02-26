@@ -47,9 +47,7 @@ public class FieldPosition{
     }
     // returns vector 
     public static Vector2d getBotSpeedVect(){
-        Vector2d sum = vectorScale(add(getWheelState().getVecs()), .25);
-        sum.rotate(Robot.gyroSubsystem.getHeading());
-        return sum;
+        return vectorScale(add(getWheelState().getVecs()), .25);
     }
     
     private static WheelState getWheelState(){
@@ -63,7 +61,7 @@ public class FieldPosition{
 
     //returns speed vector of talon
     private static Vector2d getVectFromEnclosure(TalonSwerveEnclosure enclosure){
-        return createVect(angleRadians(enclosure), enclosure.getDriveTalon().getSelectedSensorVelocity());
+        return createVect(angleRadians(enclosure) - Math.toRadians(Robot.gyroSubsystem.getHeading()), enclosure.getDriveTalon().getSelectedSensorVelocity());
     }
     public static Vector2d add(Vector2d... vecs){
         double x = 0, y = 0;
