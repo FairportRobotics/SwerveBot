@@ -9,7 +9,9 @@ import org.apache.logging.log4j.Logger;
 public class SwerveDriveCommand extends Command {
 
     private static final Logger log = LogManager.getLogger(SwerveDriveCommand.class);
-
+    private double profilingPowerX = 0, profilingPowerY = 0;
+    private final double INPUT_FACTOR = .35;
+    
     public SwerveDriveCommand() {
         requires(Robot.swerveDriveSubsystem);
     }
@@ -21,19 +23,31 @@ public class SwerveDriveCommand extends Command {
     @Override
     protected void execute() {
 
-        double fwd = Robot.oi.gp1.getPadLeftY();
+        double fwd = INPUT_FACTOR*Robot.oi.gp1.getPadLeftY();
 
         // double str = Robot.oi.getStrafe();
-        double str = Robot.oi.gp1.getPadLeftX();
+        double str = INPUT_FACTOR*Robot.oi.gp1.getPadLeftX();
 
-        double rot = Robot.oi.gp1.getPadRightX();
+        double rot = INPUT_FACTOR*Robot.oi.gp1.getPadRightX();
+        
+        fwd += profilingPowerX;
+        str += profilingPowerY;
 
 //      fwd *= -1;
 //		str *= -1;
-
+        if(fwd > 1)
+            fwd = 1;
+        if(fwd < -1)
+            fwd = -1;
+        if(str > 1)
+            str = 1;
+        if(str < -1)
+            str = -1;
         double angleDeg = Robot.gyroSubsystem.getHeading();
-
-        Robot.swerveDriveSubsystem.move(deadband(fwd), deadband(str), deadband(rot), angleDeg);
+        if(Robot.useMotionProfiling)
+        Robot.swerveDriveSubsystem.move(fwd, str, deadband(rot), angleDeg);
+        else
+            Robot.swerveDriveSubsystem.move(deadband(fwd), deadband(str), deadband(rot), angleDeg);
 
         SmartDashboard.putNumber("swrv.fwd", fwd);
         SmartDashboard.putNumber("swrv.str", str);
@@ -57,7 +71,12 @@ public class SwerveDriveCommand extends Command {
         log.info("SwerveDriveCommand Interrupted");
 
     }
-
+    public void setProfilingPowerX(double x){
+        profilingPowerX = x;
+    }
+    public void setProfilingPowerY(double y){
+        profilingPowerY = y;
+    }
     final double DEADBAND = 0.2;
 
     private double deadband(double value) {

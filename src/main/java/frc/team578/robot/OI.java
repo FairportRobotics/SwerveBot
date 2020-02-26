@@ -23,6 +23,7 @@ public class OI implements Initializable {
 //    }
 
     public void initialize() {
+        gp1.buttonA.whenPressed(new ToggleUseMotionProfiling());
     }
 
     // This is here to make buttons persistant (i.e. Gamepad makes a new instance every request

@@ -1,12 +1,17 @@
-package frc.team578.robot.subsystems.swerve;
+package frc.team578.robot.subsystems.swerve.motionProfiling;
 
 import edu.wpi.first.wpilibj.drive.Vector2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.team578.robot.subsystems.swerve.SwerveDrive;
+import frc.team578.robot.subsystems.swerve.TalonSwerveEnclosure;
+import frc.team578.robot.subsystems.swerve.WheelState;
 import frc.team578.robot.Robot;
+
 
 public class FieldPosition{
     private static Vector2d botPos, botSpeed;
     private static long prevTime = 0;
+    private static final double LENGTH_CONSTANT = .00791727;
     private static TalonSwerveEnclosure[] talonEnclosures = {
         SwerveDrive.swerveEnclosureFR,
         SwerveDrive.swerveEnclosureBR,
@@ -16,10 +21,15 @@ public class FieldPosition{
     
     public static void init(){
         resetBotPosition();
+        resetBotSpeed();
     }
 
     public static void resetBotPosition(){
         botPos = new Vector2d(0, 0);
+    }
+
+    public static void resetBotSpeed(){
+        botSpeed = new Vector2d(0, 0);
     }
 
     public static Vector2d getBotPosition(){
@@ -32,7 +42,7 @@ public class FieldPosition{
 
     public static double getBotYPosition(){
         return botPos.y;
-    }  
+    }
     public static double getBotYSpeed(){
         return botSpeed.y;
     }
@@ -42,12 +52,12 @@ public class FieldPosition{
     public static void periodic(){  
         botSpeed = getBotSpeedVect();
         long currentTime = System.currentTimeMillis();
-        botPos = add(botPos, vectorScale(botSpeed, (currentTime - prevTime)));
+        botPos = add(botPos, vectorScale(botSpeed, ((double)(currentTime - prevTime))/1000));
         prevTime = currentTime;
     }
-    // returns vector 
+    // returns speed vector in meters per second
     public static Vector2d getBotSpeedVect(){
-        return vectorScale(add(getWheelState().getVecs()), .25);
+        return vectorScale(add(getWheelState().getVecs()), .25 * LENGTH_CONSTANT);
     }
     
     private static WheelState getWheelState(){
@@ -69,7 +79,7 @@ public class FieldPosition{
             x += vecs[i].x;
             y += vecs[i].y;
         }
-        return new Vector2d(x, y);
+        return new Vector2d(x, y); 
     }
     public static Vector2d vectorScale(Vector2d v, double scale){
         return new Vector2d(v.x*scale, v.y*scale);
