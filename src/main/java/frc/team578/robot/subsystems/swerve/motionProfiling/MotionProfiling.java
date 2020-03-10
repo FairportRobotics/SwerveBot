@@ -8,6 +8,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class MotionProfiling {
+    private double[] pathIn = Points.getTotalPoints();
     private Vector2d pos;
     private long prevTime;
     private ArrayList<Double> prevI = new ArrayList<Double>();
@@ -34,10 +35,10 @@ public class MotionProfiling {
         for(int j = 0; j < I_SIZE; j++)
                 prevI.add(0d);
     }
-    public MotionProfiling(double timeStepMillis){
+    public MotionProfiling(){
         readPts();
         prevTime = System.currentTimeMillis();
-        this.timeStepMillis = timeStepMillis;
+        this.timeStepMillis = (long)Points.curvesPerSec*1000;
         timeInit = prevTime;
         pos = new Vector2d(0,0);
         for(int j = 0; j < I_SIZE; j++)
@@ -87,8 +88,8 @@ public class MotionProfiling {
     public Vector2d getPos(){return pos;}
 
     private void readPts(){
-        botPath = new Vector2d[Points.points.length/2];
-        for(int i = 0; i < Points.points.length/2; i++)
-            botPath[i] = new Vector2d(Points.points[2*i], Points.points[2*i + 1]);
+        botPath = new Vector2d[pathIn.length/2];
+        for(int i = 0; i < pathIn.length/2; i++)
+            botPath[i] = new Vector2d(pathIn[2*i], pathIn[2*i + 1]);
     }
 }
