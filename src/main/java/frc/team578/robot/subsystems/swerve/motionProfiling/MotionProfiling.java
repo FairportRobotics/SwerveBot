@@ -15,10 +15,13 @@ public class MotionProfiling {
     private final int I_SIZE = 10;
     private long timeInit;
     private Vector2d[] botPath;
+    private double[] botRot;
     private double timeStepMillis;
+    private double angle;
     double iTotal;
 
     public MotionProfiling(Vector2d pos){
+        angle = 0;
         prevTime = System.currentTimeMillis();
         this.pos = pos;
         timeInit = prevTime;
@@ -27,6 +30,7 @@ public class MotionProfiling {
 
     }
     public MotionProfiling(Vector2d pos, Vector2d[] botPath, double timeStepMillis){
+        angle = 0;
         this.botPath = botPath;
         prevTime = System.currentTimeMillis();
         this.pos = pos;
@@ -36,6 +40,7 @@ public class MotionProfiling {
                 prevI.add(0d);
     }
     public MotionProfiling(){
+        angle = 0;
         readPts();
         prevTime = System.currentTimeMillis();
         this.timeStepMillis = (long)Points.curvesPerSec*1000;
@@ -47,7 +52,11 @@ public class MotionProfiling {
 
 
     public void periodic(){
-        managePos();
+        if(botPath != null){
+            int ind = (int)((System.currentTimeMillis() - timeInit)/timeStepMillis);
+            managePos(ind);
+            manageAngle(ind);
+        }
         long time = System.currentTimeMillis();
         double botX = FieldPosition.getBotXPosition();
         double botY = FieldPosition.getBotYPosition();
@@ -66,20 +75,23 @@ public class MotionProfiling {
         double i = 0;
         
         Vector2d power = new Vector2d(px*p + dx*d + iTotal*i/1.4142, py*p + dy*d + iTotal*i/1.4142);
+        double anglePower = angle%(2*Math.PI) - Math.toRadians(Robot.gyroSubsystem.getHeading())%(2*Math.PI);
 
-        setBotPower(power);
+        setBotPower(power, anglePower);
         prevTime = time;
     }
-    private void managePos(){
-        if(botPath != null){
-            int index = (int)((System.currentTimeMillis() - timeInit)/timeStepMillis);
-            if(index < botPath.length)
-                pos = botPath[index];
-        }
+    private void managePos(int ind){
+        if(ind < botPath.length)
+            pos = botPath[ind];
     }
-    private void setBotPower(Vector2d vec){
+    private void manageAngle(int ind){
+        if(ind < botPath.length)
+            angle = botRot[ind];
+    }
+    private void setBotPower(Vector2d vec, double angle){
         Robot.swerveDriveSubsystem.swerveDriveCommand.setProfilingPowerX(vec.x);
         Robot.swerveDriveSubsystem.swerveDriveCommand.setProfilingPowerY(vec.y);
+        Robot.swerveDriveSubsystem.swerveDriveCommand.setProfilingPowerA(angle);
     }
     public void restartTime(){
         timeInit = System.currentTimeMillis();
@@ -88,8 +100,11 @@ public class MotionProfiling {
     public Vector2d getPos(){return pos;}
 
     private void readPts(){
-        botPath = new Vector2d[pathIn.length/2];
-        for(int i = 0; i < pathIn.length/2; i++)
-            botPath[i] = new Vector2d(pathIn[2*i], pathIn[2*i + 1]);
+        botPath = new Vector2d[pathIn.length/3];
+        botRot = new double[pathIn.length/3];
+        for(int i = 0; i < pathIn.length/3; i++){
+            botPath[i] = new Vector2d(pathIn[3*i], pathIn[3*i + 1]);
+            botRot[i] = pathIn[3*i + 2];
+        }
     }
 }
