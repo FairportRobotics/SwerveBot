@@ -68,11 +68,13 @@ public class MotionProfiling {
         iTotal = il - prevI.remove(I_SIZE);
         double dx = FieldPosition.getBotXSpeed();
         double dy = FieldPosition.getBotYSpeed();
-        double dl = Math.sqrt(dx*dx + dy*dy);
+       
         
         double p = .8;
         double d = .1;
         double i = 0;
+
+        double dl = d*Math.sqrt(dx*dx + dy*dy);
         
         //Vector2d power = new Vector2d(px*p + dx*d + iTotal*i/1.4142, py*p + dy*d + iTotal*i/1.4142);
         Vector2d power = new Vector2d(px*p + iTotal*i/1.4142, py*p + iTotal*i/1.4142);
