@@ -46,7 +46,7 @@ public class Robot extends TimedRobot {
             swerveDriveSubsystem.initialize();
             
 
-            motionProfiling = new MotionProfiling(2);
+            motionProfiling = new MotionProfiling();
             //vectArray(0,0, 0,.5, .5,.5, .5,0, 0,0), 1000);
             
             log.info("Swerve Drive Subsystem Initialized");

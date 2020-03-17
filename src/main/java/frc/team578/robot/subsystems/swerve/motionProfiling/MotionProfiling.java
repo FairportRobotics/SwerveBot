@@ -68,16 +68,19 @@ public class MotionProfiling {
         iTotal = il - prevI.remove(I_SIZE);
         double dx = FieldPosition.getBotXSpeed();
         double dy = FieldPosition.getBotYSpeed();
-        
+        double dl = Math.sqrt(dx*dx + dy*dy);
         
         double p = .8;
         double d = .1;
         double i = 0;
         
-        Vector2d power = new Vector2d(px*p + dx*d + iTotal*i/1.4142, py*p + dy*d + iTotal*i/1.4142);
+        //Vector2d power = new Vector2d(px*p + dx*d + iTotal*i/1.4142, py*p + dy*d + iTotal*i/1.4142);
+        Vector2d power = new Vector2d(px*p + iTotal*i/1.4142, py*p + iTotal*i/1.4142);
+        double a = Math.atan2(power.y, power.x);
+        
         double anglePower = angle%(2*Math.PI) - Math.toRadians(Robot.gyroSubsystem.getHeading())%(2*Math.PI);
 
-        setBotPower(power, anglePower);
+        setBotPower(new Vector2d(power.x + dl*Math.cos(a), power.y + dl*Math.sin(a)), anglePower);
         prevTime = time;
     }
     private void managePos(int ind){

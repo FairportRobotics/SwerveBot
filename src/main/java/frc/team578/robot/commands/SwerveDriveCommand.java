@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 public class SwerveDriveCommand extends Command {
 
     private static final Logger log = LogManager.getLogger(SwerveDriveCommand.class);
-    private double profilingPowerX = 0, profilingPowerY = 0;
+    private double profilingPowerX = 0, profilingPowerY = 0, profilingPowerA = 0;
     private final double INPUT_FACTOR = .35;
     
     public SwerveDriveCommand() {
@@ -32,6 +32,7 @@ public class SwerveDriveCommand extends Command {
         
         fwd += profilingPowerX;
         str += profilingPowerY;
+        rot += profilingPowerA;
 
 //      fwd *= -1;
 //		str *= -1;
@@ -76,6 +77,9 @@ public class SwerveDriveCommand extends Command {
     }
     public void setProfilingPowerY(double y){
         profilingPowerY = y;
+    }
+    public void setProfilingPowerA(double a){
+        profilingPowerA = a;
     }
     final double DEADBAND = 0.2;
 
