@@ -2,9 +2,6 @@ package frc.team578.robot.subsystems.swerve.motionProfiling;
 
 import edu.wpi.first.wpilibj.drive.Vector2d;
 import frc.team578.robot.Robot;
-
-import java.io.File;
-import java.util.Scanner;
 import java.util.ArrayList;
 
 public class MotionProfiling {
@@ -29,21 +26,11 @@ public class MotionProfiling {
                 prevI.add(0d);
 
     }
-    public MotionProfiling(Vector2d pos, Vector2d[] botPath, double timeStepMillis){
-        angle = 0;
-        this.botPath = botPath;
-        prevTime = System.currentTimeMillis();
-        this.pos = pos;
-        this.timeStepMillis = timeStepMillis;
-        timeInit = prevTime;
-        for(int j = 0; j < I_SIZE; j++)
-                prevI.add(0d);
-    }
     public MotionProfiling(){
         angle = 0;
         readPts();
         prevTime = System.currentTimeMillis();
-        this.timeStepMillis = (long)Points.curvesPerSec*1000;
+        this.timeStepMillis = (long)Points.curvesPerSec*Points.pointsPerCurve;
         timeInit = prevTime;
         pos = new Vector2d(0,0);
         for(int j = 0; j < I_SIZE; j++)
@@ -80,8 +67,17 @@ public class MotionProfiling {
         Vector2d power = new Vector2d(px*p + iTotal*i/1.4142, py*p + iTotal*i/1.4142);
         double a = Math.atan2(power.y, power.x);
         
-        double anglePower = angle%(2*Math.PI) - Math.toRadians(Robot.gyroSubsystem.getHeading())%(2*Math.PI);
-
+        double anglePower =  Math.toRadians(Robot.gyroSubsystem.getHeading()) - angle;
+        anglePower %= 2*Math.PI;
+        if(anglePower > 0)
+             anglePower = (anglePower < Math.PI? anglePower: anglePower-2*Math.PI);
+        else if(anglePower < 0)
+             anglePower = (anglePower > -Math.PI? anglePower: -anglePower-2*Math.PI);
+        if(anglePower > 1)
+            anglePower= 1;
+        else if(anglePower < -1)
+            anglePower = -1;
+        
         setBotPower(new Vector2d(power.x + dl*Math.cos(a), power.y + dl*Math.sin(a)), anglePower);
         prevTime = time;
     }
