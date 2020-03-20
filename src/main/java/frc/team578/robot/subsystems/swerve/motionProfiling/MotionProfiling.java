@@ -1,5 +1,7 @@
 package frc.team578.robot.subsystems.swerve.motionProfiling;
 
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.drive.Vector2d;
 import frc.team578.robot.Robot;
 import java.util.ArrayList;
@@ -13,9 +15,11 @@ public class MotionProfiling {
     private long timeInit;
     private Vector2d[] botPath;
     private double[] botRot;
-    private double timeStepMillis;
-    private double angle;
+    private double timeStepMillis, angle;
+    private Points.TimedCommand[] commands;
+    private int commInd;
     double iTotal;
+    private static CommandGroup commGroup = new CommandGroup();
 
     public MotionProfiling(Vector2d pos){
         angle = 0;
@@ -32,7 +36,9 @@ public class MotionProfiling {
         prevTime = System.currentTimeMillis();
         this.timeStepMillis = (long)Points.curvesPerSec*Points.pointsPerCurve;
         timeInit = prevTime;
+        commands = Points.commands;
         pos = new Vector2d(0,0);
+        commInd = 0;
         for(int j = 0; j < I_SIZE; j++)
                 prevI.add(0d);
     }
@@ -43,6 +49,7 @@ public class MotionProfiling {
             int ind = (int)((System.currentTimeMillis() - timeInit)/timeStepMillis);
             managePos(ind);
             manageAngle(ind);
+            manageCommands();
         }
         long time = System.currentTimeMillis();
         double botX = FieldPosition.getBotXPosition();
@@ -89,6 +96,16 @@ public class MotionProfiling {
         if(ind < botPath.length)
             angle = botRot[ind];
     }
+    private void manageCommands(){
+        if(commInd != commands.length && System.currentTimeMillis() > commands[commInd].getT()){
+            try{
+                commGroup.addSequential((Command)Class.forName("frc.team578.robot.commands." + commands[commInd].getName()).getDeclaredConstructor().newInstance());
+                commInd++;
+            }catch (Exception e){
+                System.err.println("Command class " + commands[commInd].getName() + " does not exist");
+            }
+        }
+    }
     private void setBotPower(Vector2d vec, double angle){
         Robot.swerveDriveSubsystem.swerveDriveCommand.setProfilingPowerX(vec.x);
         Robot.swerveDriveSubsystem.swerveDriveCommand.setProfilingPowerY(vec.y);
@@ -96,6 +113,7 @@ public class MotionProfiling {
     }
     public void restartTime(){
         timeInit = System.currentTimeMillis();
+        commInd = 0;
     }
     public void setPos(Vector2d pos){this.pos = pos;}
     public Vector2d getPos(){return pos;}
