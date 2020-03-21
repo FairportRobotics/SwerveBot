@@ -76,14 +76,10 @@ public class MotionProfiling {
         
         double anglePower =  Math.toRadians(Robot.gyroSubsystem.getHeading()) - angle;
         anglePower %= 2*Math.PI;
-        if(anglePower > 0)
-             anglePower = (anglePower < Math.PI? anglePower: anglePower-2*Math.PI);
-        else if(anglePower < 0)
-             anglePower = (anglePower > -Math.PI? anglePower: -anglePower-2*Math.PI);
-        if(anglePower > 1)
-            anglePower= 1;
-        else if(anglePower < -1)
-            anglePower = -1;
+        if(Math.abs(anglePower) > Math.PI)
+            anglePower += 2*Math.PI*(anglePower<0? 1: -1);
+        if(Math.abs(anglePower) > 1)
+            anglePower= (anglePower<0? -1: 1);
         
         setBotPower(new Vector2d(power.x + dl*Math.cos(a), power.y + dl*Math.sin(a)), anglePower);
         prevTime = time;
