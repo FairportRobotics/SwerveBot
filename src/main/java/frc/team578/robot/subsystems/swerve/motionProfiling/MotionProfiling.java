@@ -64,9 +64,9 @@ public class MotionProfiling {
         double dy = FieldPosition.getBotYSpeed();
        
         
-        double p = .8;
-        double d = .1;
-        double i = 0;
+        double p = Points.pidValues[0];
+        double i = 0;  // not functional
+        double d = Points.pidValues[2];
 
         double dl = d*Math.sqrt(dx*dx + dy*dy);
         
@@ -79,7 +79,7 @@ public class MotionProfiling {
         if(Math.abs(anglePower) > Math.PI)
             anglePower += 2*Math.PI*(anglePower<0? 1: -1);
         if(Math.abs(anglePower) > 1)
-            anglePower= (anglePower<0? -1: 1);
+            anglePower = (anglePower<0? -1: 1);
         
         setBotPower(new Vector2d(power.x + dl*Math.cos(a), power.y + dl*Math.sin(a)), anglePower);
         prevTime = time;
