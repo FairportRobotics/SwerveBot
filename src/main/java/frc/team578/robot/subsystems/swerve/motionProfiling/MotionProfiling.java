@@ -31,13 +31,13 @@ public class MotionProfiling {
 
     }
     public MotionProfiling(){
-        angle = 0;
         readPts();
         prevTime = System.currentTimeMillis();
         this.timeStepMillis = (long)Points.curvesPerSec*Points.pointsPerCurve;
         timeInit = prevTime;
         commands = Points.commands;
-        pos = new Vector2d(0,0);
+        pos = botPath[0];
+        angle = botRot[0];
         commInd = 0;
         for(int j = 0; j < I_SIZE; j++)
                 prevI.add(0d);
