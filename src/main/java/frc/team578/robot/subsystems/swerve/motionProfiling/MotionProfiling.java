@@ -7,6 +7,9 @@ import frc.team578.robot.Robot;
 import java.util.ArrayList;
 
 public class MotionProfiling {
+
+    private double angDeriv = 10;
+
     private double[] pathIn = Points.getTotalPoints();
     private Vector2d pos;
     private long prevTime;
@@ -15,7 +18,7 @@ public class MotionProfiling {
     private long timeInit;
     private Vector2d[] botPath;
     private double[] botRot;
-    private double timeStepMillis, angle;
+    private double timeStepMillis, angle, prevHeading;
     private Points.TimedCommand[] commands;
     private int commInd;
     double iTotal;
@@ -23,6 +26,7 @@ public class MotionProfiling {
 
     public MotionProfiling(Vector2d pos){
         angle = 0;
+        prevHeading = Robot.gyroSubsystem.getHeading();
         prevTime = System.currentTimeMillis();
         this.pos = pos;
         timeInit = prevTime;
@@ -38,6 +42,7 @@ public class MotionProfiling {
         commands = Points.commands;
         pos = botPath[0];
         angle = botRot[0];
+        prevHeading = Robot.gyroSubsystem.getHeading();
         commInd = 0;
         for(int j = 0; j < I_SIZE; j++)
                 prevI.add(0d);
@@ -74,15 +79,19 @@ public class MotionProfiling {
         Vector2d power = new Vector2d(px*p + iTotal*i/1.4142, py*p + iTotal*i/1.4142);
         double a = Math.atan2(power.y, power.x);
         
-        double anglePower =  Math.toRadians(Robot.gyroSubsystem.getHeading()) - angle;
+        double heading = Math.toRadians(Robot.gyroSubsystem.getHeading());
+        double anglePower =  heading - angle;
         anglePower %= 2*Math.PI;
         if(Math.abs(anglePower) > Math.PI)
             anglePower += 2*Math.PI*(anglePower<0? 1: -1);
         if(Math.abs(anglePower) > 1)
             anglePower = (anglePower<0? -1: 1);
+        double angSpeed = (heading-prevHeading)/(time-prevTime)*angDeriv;
+        anglePower -= angSpeed;
         
         setBotPower(new Vector2d(power.x + dl*Math.cos(a), power.y + dl*Math.sin(a)), anglePower);
         prevTime = time;
+        prevHeading = heading;
     }
     private void managePos(int ind){
         if(ind < botPath.length)
@@ -107,9 +116,11 @@ public class MotionProfiling {
         Robot.swerveDriveSubsystem.swerveDriveCommand.setProfilingPowerY(vec.y);
         Robot.swerveDriveSubsystem.swerveDriveCommand.setProfilingPowerA(angle);
     }
-    public void restartTime(){
+    public void restart(){
         timeInit = System.currentTimeMillis();
         commInd = 0;
+        pos = botPath[0];
+        angle = botRot[0];
     }
     public void setPos(Vector2d pos){this.pos = pos;}
     public Vector2d getPos(){return pos;}

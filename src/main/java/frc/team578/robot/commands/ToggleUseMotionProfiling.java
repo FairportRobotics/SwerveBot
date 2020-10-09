@@ -16,7 +16,7 @@ public class ToggleUseMotionProfiling extends Command {
         Robot.useMotionProfiling = !Robot.useMotionProfiling;
         Robot.swerveDriveSubsystem.swerveDriveCommand.setProfilingPowerX(0);
         Robot.swerveDriveSubsystem.swerveDriveCommand.setProfilingPowerY(0);
-        Robot.motionProfiling.restartTime();
+        Robot.motionProfiling.restart();
         FieldPosition.resetBotPosition();
     }
 
