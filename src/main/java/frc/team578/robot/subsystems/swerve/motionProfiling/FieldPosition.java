@@ -11,7 +11,7 @@ import frc.team578.robot.Robot;
 public class FieldPosition{
     private static Vector2d botPos, botSpeed;
     private static long prevTime = 0;
-    private static final double LENGTH_CONSTANT = .00791727;
+    private static final double LENGTH_CONSTANT = 0.0259752961; // inversly preporional to length
     private static TalonSwerveEnclosure[] talonEnclosures = {
         SwerveDrive.swerveEnclosureFR,
         SwerveDrive.swerveEnclosureBR,
