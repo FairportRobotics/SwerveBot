@@ -59,7 +59,7 @@ public class FieldPosition{
     public static Vector2d getBotSpeedVect(){
         return vectorScale(add(getWheelState().getVecs()), .25 * LENGTH_CONSTANT);
     }
-    
+
     private static WheelState getWheelState(){
         return new WheelState(
             getVectFromEnclosure(talonEnclosures[0]),

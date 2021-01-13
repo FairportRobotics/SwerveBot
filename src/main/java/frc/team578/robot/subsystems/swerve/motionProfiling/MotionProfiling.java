@@ -1,6 +1,7 @@
 package frc.team578.robot.subsystems.swerve.motionProfiling;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.drive.Vector2d;
 import frc.team578.robot.Robot;
@@ -51,14 +52,14 @@ public class MotionProfiling {
 
     public void periodic(){
         if(botPath != null){
-            int ind = (int)((System.currentTimeMillis() - timeInit)/timeStepMillis);
+            int ind = (int)((System.currentTimeMillis() - timeInit)*timeStepMillis/1000);
             managePos(ind);
             manageAngle(ind);
             manageCommands();
         }
         long time = System.currentTimeMillis();
-        double botX = FieldPosition.getBotXPosition();
-        double botY = FieldPosition.getBotYPosition();
+        double botX = FieldPosition.getBotXPosition() + botPath[0].x;
+        double botY = FieldPosition.getBotYPosition() + botPath[0].y;
 
         double px = botX - pos.x;
         double py = botY - pos.y;
@@ -73,8 +74,8 @@ public class MotionProfiling {
         double i = 0;  // not functional
         double d = Points.pidValues[2];
 
-        double dl = d*Math.sqrt(dx*dx + dy*dy);
-        
+        double dl = d*Math.sqrt(dx*dx + dy*dy); 
+
         //Vector2d power = new Vector2d(px*p + dx*d + iTotal*i/1.4142, py*p + dy*d + iTotal*i/1.4142);
         Vector2d power = new Vector2d(px*p + iTotal*i/1.4142, py*p + iTotal*i/1.4142);
         double a = Math.atan2(power.y, power.x);
@@ -89,7 +90,7 @@ public class MotionProfiling {
         double angSpeed = (heading-prevHeading)/(time-prevTime)*angDeriv;
         anglePower -= angSpeed;
         
-        setBotPower(new Vector2d(power.x + dl*Math.cos(a), power.y + dl*Math.sin(a)), anglePower);
+        setBotPower(new Vector2d(power.x + dl*Math.cos(a), power.y + dl*Math.sin(a)), 0*anglePower);
         prevTime = time;
         prevHeading = heading;
     }
@@ -112,9 +113,14 @@ public class MotionProfiling {
         }
     }
     private void setBotPower(Vector2d vec, double angle){
+        vec = new Vector2d(vec.x/vec.magnitude()/2, vec.y/vec.magnitude()/2);  // normalizing
+
+        if(vec.magnitude() > .5)
+            vec = new Vector2d(vec.x/vec.magnitude()/2, vec.y/vec.magnitude()/2);  // normalizing
         Robot.swerveDriveSubsystem.swerveDriveCommand.setProfilingPowerX(vec.x);
         Robot.swerveDriveSubsystem.swerveDriveCommand.setProfilingPowerY(vec.y);
         Robot.swerveDriveSubsystem.swerveDriveCommand.setProfilingPowerA(angle);
+       // System.out.println("pts: " + pos.x + "    " +  pos.y);
     }
     public void restart(){
         timeInit = System.currentTimeMillis();

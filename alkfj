@@ -1,0 +1,535 @@
+[33mcommit a94c13c779dac426761657ef7cd055b5b7d2486b[m[33m ([m[1;36mHEAD -> [m[1;32mmotion_profiling_test[m[33m, [m[1;31morigin/motion_profiling_test[m[33m)[m
+Author: Gregeg <bigg700753700120@gmail.com>
+Date:   Fri Oct 9 11:43:51 2020 -0400
+
+    length constant for feet instead of meters
+
+[33mcommit 2c325c83304bc982cf528c732e6d0594d4abea09[m
+Author: Gregeg <bigg700753700120@gmail.com>
+Date:   Fri Oct 9 11:40:02 2020 -0400
+
+    deriv pid value for angle
+
+[33mcommit c5e195a2b2e57019a43d66bb58bf5c710f0bf8d3[m
+Author: Gregeg <commandred100@gmail.com>
+Date:   Thu Oct 8 19:09:38 2020 -0400
+
+    test points for bot
+
+[33mcommit 7ace1b3c90bb251c9e073d4e8615d23b41a5511b[m
+Author: Gregeg <bigg700753700120@gmail.com>
+Date:   Wed Mar 25 10:42:47 2020 -0400
+
+    botPos initialized to beginning of pursuit path
+
+[33mcommit ab7a893468022f0aea0495c9b38ab707efef2afb[m
+Author: Gregeg <bigg700753700120@gmail.com>
+Date:   Tue Mar 24 11:08:27 2020 -0400
+
+    sample of improved Points.java
+
+[33mcommit 57c8e31f025765e72ee482c1e03181a22913b251[m
+Author: Gregeg <bigg700753700120@gmail.com>
+Date:   Mon Mar 23 11:40:56 2020 -0400
+
+    interprets pid values from Points.java
+
+[33mcommit a8a043d2662c4b336445e937bccd2d73f41ecf03[m
+Author: Gregeg <bigg700753700120@gmail.com>
+Date:   Fri Mar 20 21:33:17 2020 -0400
+
+    fixed rotation bug
+
+[33mcommit 93a92db27cda625b57fb2200606558713e47da4a[m
+Author: Gregeg <bigg700753700120@gmail.com>
+Date:   Fri Mar 20 16:21:35 2020 -0400
+
+    created command instance from string
+
+[33mcommit 885d90899dfe3b092f6b058d9b09b9bf8e4aa689[m
+Author: Gregeg <bigg700753700120@gmail.com>
+Date:   Wed Mar 18 18:45:07 2020 -0400
+
+    bugfixed pointsPerCurve and improved anglePower
+
+[33mcommit a5576fcc75b6d00d57721eb3fd80ae24e2532702[m
+Author: Gregeg <bigg700753700120@gmail.com>
+Date:   Tue Mar 17 14:20:48 2020 -0400
+
+    minor bug fix
+
+[33mcommit f88875bcd7685531b0f5ebf34d7176d4e5599eed[m
+Author: Gregeg <bigg700753700120@gmail.com>
+Date:   Mon Mar 16 22:15:33 2020 -0400
+
+    possible improvements to pid derivative, could fix sinusoidal oscillations during operation
+
+[33mcommit cc4776391455516fea7c97f91d3f83efef0ae3ad[m
+Author: Gregeg <bigg700753700120@gmail.com>
+Date:   Sun Mar 15 16:42:18 2020 -0400
+
+    added fuctionallity for angle
+
+[33mcommit 8ba3ad8ee05275f2cce1a81fd2513187939db4bb[m
+Author: Gregeg <commandred100@gmail.com>
+Date:   Mon Mar 9 21:56:41 2020 -0400
+
+    now functional with program:
+
+[33mcommit 771f645d8d341f2258843bef63d0e500b95d0f30[m
+Author: Gregeg <commandred100@gmail.com>
+Date:   Tue Feb 25 19:50:21 2020 -0500
+
+    Major improvements
+
+[33mcommit e9761c89a817fb65eb8281ab0290f75be21dccdc[m
+Author: Gregeg <commandred100@gmail.com>
+Date:   Tue Feb 25 19:48:13 2020 -0500
+
+    functioning location :)
+
+[33mcommit 93004a2c10cb0f587bff2f23531034952782d964[m
+Author: Gregeg <commandred100@gmail.com>
+Date:   Sat Feb 22 18:47:41 2020 -0500
+
+    functioning a bit better than last commit
+
+[33mcommit 009456adb4c7db1d5bf62fd7bc30d4f9ae64c86b[m
+Author: Y-it <56704165+wmortimer64@users.noreply.github.com>
+Date:   Sat Feb 15 21:21:41 2020 -0800
+
+    turns out all states were defined with front left
+
+[33mcommit ce558571da62082eeddde8bb740ae5103a5c5117[m
+Author: Y-it <56704165+wmortimer64@users.noreply.github.com>
+Date:   Sat Feb 15 19:42:56 2020 -0800
+
+    added getState functions to all enclosures
+
+[33mcommit fd98af3d6ad5510110aff8bf9f3dff3c5cdebcb6[m
+Author: Gregeg <commandred100@gmail.com>
+Date:   Sat Feb 15 13:43:47 2020 -0500
+
+    initializing it
+
+[33mcommit eae050706eb84772f5400f6087a1c777ec39f15a[m
+Author: Y-it <thatsjustwyatt@icloud.com>
+Date:   Sat Feb 15 12:07:17 2020 -0500
+
+    imported liberaries and fill out vars
+
+[33mcommit b7113b345c9cebfb6aff0773ad61f55f890f5ed3[m
+Author: Gregeg <commandred100@gmail.com>
+Date:   Sat Feb 15 12:30:10 2020 -0500
+
+    basic stuuf
+
+[33mcommit 922c968a4a332cd1b0e0f369331775b7bf1d426c[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Kevin <h1d3m3@yahoo.com>
+Date:   Sat Feb 8 10:29:32 2020 -0500
+
+    Fixed to use field centric mode
+
+[33mcommit b3bf993975d4a6635ddd76c46e2af693bfb3be9d[m
+Author: Kevin <h1d3m3@yahoo.com>
+Date:   Thu Feb 6 19:29:35 2020 -0500
+
+    updating code to 2020 dependencies
+
+[33mcommit 626cb33a670541db326f70e59cfbec0f00a81e1d[m
+Author: Kevin <h1d3m3@yahoo.com>
+Date:   Thu Oct 24 19:05:24 2019 -0400
+
+    fixed the package issues so that JackJack now sees the robot code
+
+[33mcommit b1a363cf27cc4a62dece7bc0c2585923694ec04d[m
+Author: mnik22 <kembling32@fairport.org>
+Date:   Sat Oct 5 20:59:51 2019 -0400
+
+    Updated all the packages and imports because IntelliJ didn't tell me that there were errors until I opened each class individually. IntelliJ sucks, yes I said it Dan
+
+[33mcommit 426f4b1c43f6878f138921ca7d27d90a0765c1bc[m
+Author: mnik22 <kembling32@fairport.org>
+Date:   Sat Oct 5 20:36:49 2019 -0400
+
+    Added the code from when we had Jack Jack working at Penfield. The libraries may be outdated but the code should be alright
+
+[33mcommit e4c36d7544b062673aa1075efcde3e4d69622977[m
+Author: Kevin <h1d3m3@yahoo.com>
+Date:   Fri Feb 15 17:44:57 2019 -0500
+
+    Update README.md
+
+[33mcommit d4a090574e37e03da5988fce25945793a2ac4897[m
+Author: Kevin <h1d3m3@yahoo.com>
+Date:   Tue Feb 12 17:18:52 2019 -0500
+
+    Update README.md
+
+[33mcommit aa3fb232d3da6f2303acaa3d3048b8e29349f27c[m
+Author: Kevin <h1d3m3@yahoo.com>
+Date:   Fri Feb 8 21:19:24 2019 -0500
+
+    Update README.md
+
+[33mcommit 220ebd6b52c43bb7753d2c59905f1d1621b76b65[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sun Dec 23 15:13:13 2018 -0500
+
+    Added Motion Profiling Examples.
+
+[33mcommit bea2baf9289fce70abfc3ca8644142a37edb827d[m[33m ([m[1;31morigin/4048_test[m[33m)[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Thu Dec 20 21:45:30 2018 -0500
+
+    Set field centric default. Fixed pigeon degrees calc. Org imports.
+
+[33mcommit 8017c40666bc8e8061da0e665fa590443f12a120[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sun Dec 16 10:54:21 2018 -0500
+
+    Fixed up some of the gyro code. Removed dead code. Added more debugging.
+
+[33mcommit b2d9fcd7dff018e8b9eb0d056429bd985900431e[m
+Author: Kevin Stussman <h1d3m3@yahoo.com>
+Date:   Thu Dec 13 20:41:46 2018 -0500
+
+    Fixed a few bugs
+
+[33mcommit a1fc7128d2bed0a21a9eff2a544e2b7c7d6f3da0[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sun Nov 18 21:12:22 2018 -0500
+
+    Fixed drive assignments. Added centric mode switcher.
+
+[33mcommit 182dd480687d514de62580efe376335ada5f4d03[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sun Nov 18 18:08:31 2018 -0500
+
+    Initial version using 4048 code
+
+[33mcommit 15ebc658a953d4549d02aaa290b9836d237f0463[m
+Author: Kevin Stussman <h1d3m3@yahoo.com>
+Date:   Thu Nov 15 20:40:41 2018 -0500
+
+    Working Initial Version
+
+[33mcommit 0fc2f7b1bc7e7968fd3c136de175f64eeb355dbf[m
+Author: Kevin <h1d3m3@yahoo.com>
+Date:   Sun Oct 28 17:26:32 2018 -0400
+
+    Update README.md
+    
+    Added additional reference
+
+[33mcommit 729c4ecdecb1877b8f6b992466378c3dedbfa480[m
+Merge: b48b092 528cffa
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Oct 13 21:24:57 2018 -0400
+
+    Merge branch 'master' of https://github.com/FairportRobotics/SwerveBot
+
+[33mcommit b48b09265cf594c3a81fa69a665d8492f26cf4d8[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Oct 13 17:03:10 2018 -0400
+
+    Good place to stop. Most things are dialed in for the next round of testing.
+
+[33mcommit 528cffa397f4fa00e2e9614fb89a46192e4c25cd[m
+Author: Kevin <h1d3m3@yahoo.com>
+Date:   Sat Oct 13 18:58:22 2018 -0400
+
+    Update README.md
+    
+    added another todo
+
+[33mcommit d93e943db5898589a4f57b5866fae803fee0a57e[m
+Author: Kevin <h1d3m3@yahoo.com>
+Date:   Sat Oct 13 17:19:32 2018 -0400
+
+    Update README.md
+    
+    More updates to README
+
+[33mcommit fe5e8403272d8dbfe5c1801b044d6797e889f235[m
+Author: Kevin <h1d3m3@yahoo.com>
+Date:   Sat Oct 13 17:09:37 2018 -0400
+
+    Update README.md
+    
+    Fixed README
+
+[33mcommit e3e0b8900ca1aae1be87abe3ee3d0d2472269eaf[m
+Author: Kevin <h1d3m3@yahoo.com>
+Date:   Sat Oct 13 17:08:34 2018 -0400
+
+    Update README.md
+    
+    Updated state.
+
+[33mcommit a0d43f63ea3f8699561f18f7654724b5fe6e8e17[m[33m ([m[1;31morigin/enc-test-two[m[33m)[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Oct 13 12:16:25 2018 -0400
+
+    Things are dialed in for a test. Need a better compass overflow rotate option.
+
+[33mcommit 98ec2f8832f15bd78de263a38525caff325d1068[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Oct 13 11:33:16 2018 -0400
+
+    Angles are working non-fancy. Need to correct direction and other details.
+
+[33mcommit bc5fb8c533badda1b55414d6bb704925094d6d6a[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Oct 13 10:36:59 2018 -0400
+
+    Added shuffleboard. Tweaking angle values.
+
+[33mcommit f7d2f79a0aa3c8e2d67a5b73a54533cc70d4c6d7[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Fri Oct 12 21:55:07 2018 -0400
+
+    Testing with human drive.
+
+[33mcommit df396bc281563e38a19ea9cd1a6a821835f48380[m[33m ([m[1;31morigin/enc-test-one[m[33m)[m
+Author: unknown <h1d3m3@yahoo.com>
+Date:   Fri Oct 12 21:33:49 2018 -0400
+
+    Nice first tuning point.
+
+[33mcommit 3ad129b097cc2ed6a497fa5889d295dad81e8e49[m
+Author: unknown <h1d3m3@yahoo.com>
+Date:   Fri Oct 12 20:52:26 2018 -0400
+
+    Wheels turning in unison now.
+
+[33mcommit b7e54617576ce0d5e719be66f998db6b7f76542a[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Fri Oct 12 18:36:26 2018 -0400
+
+    Init routines
+
+[33mcommit 1de9829fbba1929eef214cb6e10790b2084144b3[m
+Merge: 08d4a33 a24c8ce
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Fri Oct 12 17:53:11 2018 -0400
+
+    Merge branch 'master' of https://github.com/FairportRobotics/SwerveBot
+
+[33mcommit 08d4a33be552a6e310068124a0fe9bd610712534[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Fri Oct 12 17:51:59 2018 -0400
+
+    Starting to log to shuffleboard
+
+[33mcommit a24c8cef45754a2eb64c6ac450141367c35877e3[m
+Author: Kevin <h1d3m3@yahoo.com>
+Date:   Sun Sep 30 17:10:14 2018 -0400
+
+    Update README.md
+    
+    Updated readme todo
+
+[33mcommit ba34af37e295cc114aa0d443db564153debe334f[m
+Author: Kevin <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 20:37:17 2018 -0400
+
+    Update README.md
+    
+    comments
+
+[33mcommit f61575518ea20ac63d4aca88cc2d7b17fc8b6882[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 19:44:27 2018 -0400
+
+    Updated todo list.
+
+[33mcommit c6efabcefb84c87e4d8184c588b5c3a19b3bb118[m
+Author: Drivers Station <ds@fairportrobotics.org>
+Date:   Sat Sep 29 19:37:54 2018 -0400
+
+    Good place to stop. Pid needs adjusting but gets close. Need to figure out setting 0. Details.
+
+[33mcommit 979fd0f17d5c5d5df6ec2f6dcce4bc4b04ff4bd5[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 17:42:43 2018 -0400
+
+    Even more debugging.
+
+[33mcommit 75b5b23c0a49bba50189c0f11e901333044f61e4[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 16:31:58 2018 -0400
+
+    more debugging
+
+[33mcommit acd40fe7b1fca2d2198e78ceaa6d8b9ffc518110[m
+Author: Kevin <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 15:34:27 2018 -0400
+
+    Update README.md
+    
+    Formatting
+
+[33mcommit b2fcf17a77126e439947e3cd2f7a72711a60d9b6[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 15:33:14 2018 -0400
+
+    Added docs, normalized class names.
+
+[33mcommit 1c289a981730beffcd6d6698f0582414b6ffab6e[m
+Merge: 118f80f 7b7ccdb
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 15:07:00 2018 -0400
+
+    Merge branch 'chilly_test'
+
+[33mcommit 7b7ccdb7c3e208619f2f19073a168959a0942da6[m[33m ([m[1;31morigin/chilly_test[m[33m)[m
+Author: Drivers Station <ds@fairportrobotics.org>
+Date:   Sat Sep 29 15:02:01 2018 -0400
+
+    Debugging.
+
+[33mcommit 118f80f5f6b907895f10204d3dfcdc1e9b5d5572[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 15:00:15 2018 -0400
+
+    refactored for 578
+
+[33mcommit bdddfc868f563d514746e9b6647382c111814e3b[m
+Merge: aaeb609 cedfacb
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 14:53:54 2018 -0400
+
+    Merged from test
+
+[33mcommit cedfacb2866b1bed9fc78061a8e3b07b15d325bd[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 11:59:03 2018 -0400
+
+    organizing feedback
+
+[33mcommit 454074f18abd96997f1d35610b4e677330cb237c[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 10:55:29 2018 -0400
+
+    format fix
+
+[33mcommit 121014ed711f4a3909eecff5baf3a8a486c35fce[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 10:53:15 2018 -0400
+
+    Setting feedback to analog
+
+[33mcommit a96b1ab61f59ea4e5ce76a42b78be5cec2251318[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 10:39:57 2018 -0400
+
+    Added turning debugging
+
+[33mcommit 2d1dac79203758e65e0cc4102cedb6055d973392[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 10:10:44 2018 -0400
+
+    Hard coding rotation angles.
+
+[33mcommit acd9d8067ac926540116ad35314be37a7d1120a0[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 09:57:24 2018 -0400
+
+    bad config
+
+[33mcommit 31c451c128243525b39dcb9b08965c536562207b[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 09:50:40 2018 -0400
+
+    Added logging properties
+
+[33mcommit 01cd1bb0151cef91ebad4e1c44fa2247c7fec218[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Sat Sep 29 09:39:38 2018 -0400
+
+    Added log4j. Using WPI talon now. Focus on drive first.
+
+[33mcommit ee828b36c4ae808538bdf21653d45e94650d1f4f[m
+Author: Drivers Station <ds@fairportrobotics.org>
+Date:   Fri Sep 28 21:54:51 2018 -0400
+
+    Start working on wheel angle sensors / pid loops.
+
+[33mcommit 91ab7c828a3bd4adfe86317682f395a18a557153[m
+Author: Drivers Station <ds@fairportrobotics.org>
+Date:   Fri Sep 28 21:36:07 2018 -0400
+
+    Got rid of clean code. Fixed up pigeon calls.
+
+[33mcommit 1998319d156b69e9418e5921d09963ee1e99027e[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Fri Sep 28 21:16:39 2018 -0400
+
+    Now using pigeon gyro
+
+[33mcommit 5e46c8a1f64b5ad2b7187380d6f7a667e277134d[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Fri Sep 28 21:06:59 2018 -0400
+
+    Fixed joysticks
+
+[33mcommit 014ac044b7f14042c3cc3c2e94f02fe173b93c01[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Fri Sep 28 21:00:15 2018 -0400
+
+    Removed Pathfinder Code
+
+[33mcommit cab036cfd389063996942d37bceffc59f3093f92[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Fri Sep 28 20:57:30 2018 -0400
+
+    Getting basics together for joystick and pigeon tests.
+
+[33mcommit 12490b7ed28cb8f9678905a81f8a45f5cda6ac37[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Fri Sep 21 17:33:46 2018 -0400
+
+    Chilly Swerve Reference
+
+[33mcommit aaeb6098f1a295f1299c4145eae1e96abdf130b0[m
+Author: Kevin S <h1d3m3@yahoo.com>
+Date:   Fri Sep 21 17:27:47 2018 -0400
+
+    Added Chilly Examples
+
+[33mcommit dfc93937b8277a74f791153f74c4f92f8e4dddc8[m
+Author: Kevin S <kevins@VALIS.localdomain>
+Date:   Fri Sep 21 16:59:18 2018 -0400
+
+    Added log4j. Working through rotation motors.
+
+[33mcommit 1b4a77881e7ee822625b1cbe84a98fdfbf567cf3[m
+Author: Kevin S <kevins@VALIS.localdomain>
+Date:   Sat Sep 15 11:13:52 2018 -0400
+
+    Added references. More rotate code stubs.
+
+[33mcommit 62c0107cbc6cca90a9d20676c0b3f68978c6d9bb[m
+Author: Drivers Station <ds@fairportrobotics.org>
+Date:   Fri Sep 14 22:40:52 2018 -0400
+
+    Created Pigeon gyro. Prepped Test Gyro Class.
+
+[33mcommit 7c47c8d921b1c1ddf04d0bdbf6a778bdbf4ab309[m
+Author: Drivers Station <ds@fairportrobotics.org>
+Date:   Fri Sep 14 19:19:49 2018 -0400
+
+    Added stubbed IMU code. Updated gradle and gradlerio to latest. Added comments.
+
+[33mcommit b4b473ac0582799840fb67587a75863e806fa703[m
+Author: Drivers Station <ds@fairportrobotics.org>
+Date:   Fri Sep 14 16:10:16 2018 -0400
+
+    Fixed up gradle framework. Version that spins drive wheels. Things mostly commented out.
+
+[33mcommit 936f8ec59f778ddc8b16e0327e2324d14c68b032[m
+Author: drivestation <team578@fairport.org>
+Date:   Thu Jul 26 20:17:08 2018 -0400
+
+    Initial version of swerve drive. Doesn't work yet

@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-
+        
         try {
 
             log.info("Starting Robot Init");
@@ -121,6 +121,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        System.out.println("update teleopinit");
         useMotionProfiling = false;
         Robot.gyroSubsystem.reset();
         Robot.swerveDriveSubsystem.stop();
