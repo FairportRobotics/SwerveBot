@@ -38,7 +38,7 @@ public class MotionProfiling {
     public MotionProfiling(){
         readPts();
         prevTime = System.currentTimeMillis();
-        this.timeStepMillis = (long)Points.curvesPerSec*Points.pointsPerCurve;
+        this.timeStepMillis = ((double)Points.curvesPerSec)*((double)Points.pointsPerCurve);
         timeInit = prevTime;
         commands = Points.commands;
         pos = botPath[0];
@@ -113,14 +113,13 @@ public class MotionProfiling {
         }
     }
     private void setBotPower(Vector2d vec, double angle){
-        vec = new Vector2d(vec.x/vec.magnitude()/2, vec.y/vec.magnitude()/2);  // normalizing
 
         if(vec.magnitude() > .5)
             vec = new Vector2d(vec.x/vec.magnitude()/2, vec.y/vec.magnitude()/2);  // normalizing
         Robot.swerveDriveSubsystem.swerveDriveCommand.setProfilingPowerX(vec.x);
         Robot.swerveDriveSubsystem.swerveDriveCommand.setProfilingPowerY(vec.y);
         Robot.swerveDriveSubsystem.swerveDriveCommand.setProfilingPowerA(angle);
-       // System.out.println("pts: " + pos.x + "    " +  pos.y);
+
     }
     public void restart(){
         timeInit = System.currentTimeMillis();
