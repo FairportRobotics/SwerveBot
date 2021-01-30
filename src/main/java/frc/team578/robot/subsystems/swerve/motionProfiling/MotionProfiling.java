@@ -74,8 +74,7 @@ public class MotionProfiling {
         double i = 0;  // not functional
         double d = Points.pidValues[2];
 
-        double dl = d*Math.sqrt(dx*dx + dy*dy); 
-
+        double dl = d*Math.sqrt(dx*dx + dy*dy);
         //Vector2d power = new Vector2d(px*p + dx*d + iTotal*i/1.4142, py*p + dy*d + iTotal*i/1.4142);
         Vector2d power = new Vector2d(px*p + iTotal*i/1.4142, py*p + iTotal*i/1.4142);
         double a = Math.atan2(power.y, power.x);
@@ -90,7 +89,7 @@ public class MotionProfiling {
         double angSpeed = (heading-prevHeading)/(time-prevTime)*angDeriv;
         anglePower -= angSpeed;
         
-        setBotPower(new Vector2d(power.x + dl*Math.cos(a), power.y + dl*Math.sin(a)), 0*anglePower);
+        setBotPower(new Vector2d(power.x - dl*Math.cos(a), power.y - dl*Math.sin(a)), 0*anglePower);
         prevTime = time;
         prevHeading = heading;
     }
