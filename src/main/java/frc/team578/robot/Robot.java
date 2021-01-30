@@ -25,10 +25,12 @@ public class Robot extends TimedRobot {
     public static SwerveDriveSubsystem swerveDriveSubsystem;
     public static GyroSubsystem gyroSubsystem;
     public static UsbCamera camera;
-    public static MotionProfiling motionProfiling;
+    public static MotionProfiling motionProfiling;              //
+    public static boolean useMotionProfiling = false;           // initial motion profiling variables
+
 
     public static final boolean useSwerveDrive = true;
-    public static boolean useMotionProfiling = false;
+    
 
 
     @Override
@@ -46,7 +48,7 @@ public class Robot extends TimedRobot {
             swerveDriveSubsystem.initialize();
             
 
-            motionProfiling = new MotionProfiling();
+            motionProfiling = new MotionProfiling();                                    // initialize motion profiling
             //vectArray(0,0, 0,.5, .5,.5, .5,0, 0,0), 1000);
             
             log.info("Swerve Drive Subsystem Initialized");
@@ -116,13 +118,13 @@ public class Robot extends TimedRobot {
     public void autonomousPeriodic() {
 
         updateAllDashboards();
-        Scheduler.getInstance().run();
+        Scheduler.getInstance().run();                 
     }
 
     @Override
     public void teleopInit() {
         System.out.println("update teleopinit");
-        useMotionProfiling = false;
+        useMotionProfiling = false;                     // ensures motionprofiling disabled when starting teleop
         Robot.gyroSubsystem.reset();
         Robot.swerveDriveSubsystem.stop();
         FieldPosition.init();
@@ -137,7 +139,7 @@ public class Robot extends TimedRobot {
         
         FieldPosition.periodic();
         if(useMotionProfiling){
-            motionProfiling.periodic();
+            motionProfiling.periodic();               // periodic motion profiling command  (will go in autonomous periodic for actual robot)
         }
     }
 
