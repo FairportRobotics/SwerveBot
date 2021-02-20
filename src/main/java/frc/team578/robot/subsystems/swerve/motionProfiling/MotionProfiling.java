@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class MotionProfiling {
 
-    private final double ANG_D = 10;
-    private final double ANG_P = 1;
+    private final double ANG_D = 40;      // pid variables for the angle
+    private final double ANG_P = .8;
 
     private double[] pathIn = Points.getTotalPoints();
     private Vector2d pos;
@@ -21,6 +21,7 @@ public class MotionProfiling {
     private long timeInit;
     private Vector2d[] botPath;
     private double[] botRot;
+    private double angOff;
     private double timeStepMillis, angle, prevHeading;
     private Points.TimedCommand[] commands;
     private int commInd;
@@ -29,7 +30,7 @@ public class MotionProfiling {
 
     public MotionProfiling(Vector2d pos){
         angle = 0;
-        prevHeading = Robot.gyroSubsystem.getHeading();
+        prevHeading = Math.toRadians(Robot.gyroSubsystem.getHeading());
         prevTime = System.currentTimeMillis();
         this.pos = pos;
         timeInit = prevTime;
@@ -45,7 +46,7 @@ public class MotionProfiling {
         commands = Points.commands;
         pos = botPath[0];
         angle = botRot[0];
-        prevHeading = Robot.gyroSubsystem.getHeading();
+        prevHeading = Math.toRadians(Robot.gyroSubsystem.getHeading());
         commInd = 0;
         for(int j = 0; j < I_SIZE; j++)
                 prevI.add(0d);
@@ -82,13 +83,14 @@ public class MotionProfiling {
         double a = Math.atan2(power.y, power.x);
         
         double heading = Math.toRadians(Robot.gyroSubsystem.getHeading());
-        double anglePower =  angle - heading;
+        double anglePower = (angle-botRot[0]) - (heading-angOff);
         anglePower %= 2*Math.PI;
         if(Math.abs(anglePower) > Math.PI)
             anglePower += 2*Math.PI*(anglePower<0? 1: -1);  // if angle is higher than pi, then rotate opposite direction
-        if(Math.abs(anglePower) > 1)      
-            anglePower = (anglePower<0? -1: 1);   // capped between 1 and -1
+        SmartDashboard.putNumber("Angle Power", anglePower);
         anglePower *= ANG_P;
+        if(Math.abs(anglePower) > 1)      
+            anglePower = (anglePower<0? -1: .1);   // capped between 1 and -1
         double angSpeed = (heading-prevHeading)/(time-prevTime)*ANG_D;
         anglePower -= angSpeed;
         
@@ -128,6 +130,7 @@ public class MotionProfiling {
         commInd = 0;
         pos = botPath[0];
         angle = botRot[0];
+        angOff = Math.toRadians(Robot.gyroSubsystem.getHeading());
     }
     public void setPos(Vector2d pos){this.pos = pos;}
     public Vector2d getPos(){return pos;}

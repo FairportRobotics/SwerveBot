@@ -149,6 +149,7 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
         if (speed != 0.0) {
             moveToSteerAngle(angle);
         }
+        SmartDashboard.putNumber(name + "angle to move to", angle);
     }
 
     public String getName() {
