@@ -1,5 +1,6 @@
 package frc.team578.robot.subsystems.swerve.motionProfiling;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -9,7 +10,8 @@ import java.util.ArrayList;
 
 public class MotionProfiling {
 
-    private double angDeriv = 10;
+    private final double ANG_D = 10;
+    private final double ANG_P = 1;
 
     private double[] pathIn = Points.getTotalPoints();
     private Vector2d pos;
@@ -80,16 +82,17 @@ public class MotionProfiling {
         double a = Math.atan2(power.y, power.x);
         
         double heading = Math.toRadians(Robot.gyroSubsystem.getHeading());
-        double anglePower =  heading - angle;
+        double anglePower =  angle - heading;
         anglePower %= 2*Math.PI;
         if(Math.abs(anglePower) > Math.PI)
-            anglePower += 2*Math.PI*(anglePower<0? 1: -1);
-        if(Math.abs(anglePower) > 1)
-            anglePower = (anglePower<0? -1: 1);
-        double angSpeed = (heading-prevHeading)/(time-prevTime)*angDeriv;
+            anglePower += 2*Math.PI*(anglePower<0? 1: -1);  // if angle is higher than pi, then rotate opposite direction
+        if(Math.abs(anglePower) > 1)      
+            anglePower = (anglePower<0? -1: 1);   // capped between 1 and -1
+        anglePower *= ANG_P;
+        double angSpeed = (heading-prevHeading)/(time-prevTime)*ANG_D;
         anglePower -= angSpeed;
         
-        setBotPower(new Vector2d(power.x - dl*Math.cos(a), power.y - dl*Math.sin(a)), 0*anglePower);
+        setBotPower(new Vector2d(power.x - dl*Math.cos(a), power.y - dl*Math.sin(a)), anglePower);
         prevTime = time;
         prevHeading = heading;
     }
