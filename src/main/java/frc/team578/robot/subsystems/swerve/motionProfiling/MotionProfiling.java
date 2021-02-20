@@ -38,7 +38,7 @@ public class MotionProfiling {
     public MotionProfiling(){
         readPts();
         prevTime = System.currentTimeMillis();
-        this.timeStepMillis = ((double)Points.curvesPerSec)*((double)Points.pointsPerCurve);
+        this.timeStepMillis = ((double)Points.CURVES_PER_SECOND)*((double)Points.POINTS_PER_CURVE);
         timeInit = prevTime;
         commands = Points.commands;
         pos = botPath[0];
