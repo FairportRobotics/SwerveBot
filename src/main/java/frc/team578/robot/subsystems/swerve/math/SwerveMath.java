@@ -85,68 +85,59 @@ public class SwerveMath {
      * @return List of wheel movement directives. The list indices correspond to the wheel numbering scheme as above, zero-based.
      */
     public List<SwerveDirective> move(double fwd, double str, double rcw, Double gyroValue) {
-
-        if ((gyroValue == null) && centricMode.equals(CentricMode.FIELD)) {
-            throw new IllegalStateException("Cannot use field centric mode without a Gyro value");
-        }
-
-        //Adjust for Gyro (if wanted)
+        
         if (isFieldCentric()) {
-
-            //Convert the gyro angle (in degrees) to radians.
-            double gyro = (gyroValue * Math.PI) / 180;
-
-            double temp = fwd * Math.cos(gyro) - str * Math.sin(gyro);
-            str = fwd * Math.sin(gyro) + str * Math.cos(gyro);
+            
+            if (gyroValue == null) {
+                throw new IllegalStateException("Cannot use field centric mode without a Gyro value");
+            
+            double gyro = Math.toRadians(gyroValue);
+            double s = Math.sin(gyro), c = Math.cos(gyro);
+            double temp = fwd * c - str * s
+            str = fwd * s + str * c;
             fwd = temp;
         }
 
-        //These 4 variables are used in the swerve drive calculations.
         double a = str - rcw * (length / diagonal);
         double b = str + rcw * (length / diagonal);
         double c = fwd - rcw * (width / diagonal);
         double d = fwd + rcw * (width / diagonal);
-
-        //These are the equations for the wheel speed, for motors 1-4.
-        double ws1 = Math.sqrt(Math.pow(b, 2) + Math.pow(c, 2));
-        double ws2 = Math.sqrt(Math.pow(b, 2) + Math.pow(d, 2));
-        double ws3 = Math.sqrt(Math.pow(a, 2) + Math.pow(d, 2));
-        double ws4 = Math.sqrt(Math.pow(a, 2) + Math.pow(c, 2));
-
-        //These are the equations for the wheel angle, for motors 1-4
-        double wa1 = Math.atan2(b, c) + Math.PI;
-        double wa2 = Math.atan2(b, d) + Math.PI;
-        double wa3 = Math.atan2(a, d) + Math.PI;
-        double wa4 = Math.atan2(a, c) + Math.PI;
-
-        //This is to normalize the speed (if the largest speed is greater than 1, change accordingly).
-        double max = ws1;
-        if (ws2 > max) max = ws2;
-        if (ws3 > max) max = ws3;
-        if (ws4 > max) max = ws4;
-        if (max > 1) {
-            ws1 /= max;
-            ws2 /= max;
-            ws3 /= max;
-            ws4 /= max;
-        }
-
-        //Used to scale the movement speeds for testing (so you don't crash into walls)
-        ws1 *= SCALE_SPEED;
-        ws2 *= SCALE_SPEED;
-        ws3 *= SCALE_SPEED;
-        ws4 *= SCALE_SPEED;
-
-        SwerveDirective d1 = new SwerveDirective(wa1, ws1);
-        SwerveDirective d2 = new SwerveDirective(wa2, ws2);
-        SwerveDirective d3 = new SwerveDirective(wa3, ws3);
-        SwerveDirective d4 = new SwerveDirective(wa4, ws4);
-
-        return Arrays.asList(d1, d2, d3, d4);
+        
+        Vector2D[] vecs = {new Vector2D(c, b), new Vector2D(d, b), new Vector2D(d, a), new Vector2D(c, a)};
+        
+        List<SwerveDirective> sd = new List<SwerveDirective>();
+        double max = Vector2D.max(vecs);
+        for(int i = 0; i < 4; i++)
+            sd.add(new SwerveDirective(vecs[i].magnitude()/max, vecs[i].heading()));
+            
+        return sd;
     }
-
+        
     private boolean isFieldCentric() {
         return centricMode.equals(CentricMode.FIELD);
     }
-
+    
+        
+    class Vector2D{
+        double x, y;
+        
+        Vector2D(double x, double y){
+            this.x = x;
+            this.y = y;
+        }
+        
+        double magnitude(){ return Math.sqrt(x*x + y*y);}
+        double heading(){ return Math.atan2(y, x);}
+        
+        // max magnitude
+        static double max(Vector2D[] vecs){
+            double max = vecs[0].magnitude();
+            for(int i = 1; i < vecs.length; i++){
+                int t = vecs[i].magnitude();
+                if(max < m)
+                   max = m;
+            }
+            return max;
+        }
+    }
 }
