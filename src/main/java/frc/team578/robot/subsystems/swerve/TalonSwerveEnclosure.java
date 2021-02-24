@@ -141,16 +141,16 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
         // if (speed != 0.0) {
         //     moveToSteerAngle(angle);
         // }
-        angle *= 512/Math.PI;
+        angle = angle*512/Math.PI;
+        double encDiff = (angle - getSteerEncPosition())%1024;
+
         setDriveSpeed(speed);
-        double encDiff = (getSteerEncPosition() - angle)%1024;
-        if(encDiff < 0);
-            encDiff += 1024;
+        
 
         steerTalon.set(ControlMode.Position, encDiff + getSteerEncPosition());
 
 
-        SmartDashboard.putNumber(name + "bl encoder diff", encDiff);
+        SmartDashboard.putNumber(name + "angle to turn to", angle);
     }
 
     public String getName() {
