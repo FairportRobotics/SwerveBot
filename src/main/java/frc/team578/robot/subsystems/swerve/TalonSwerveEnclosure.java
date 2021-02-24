@@ -132,7 +132,7 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
         }
         
         setDriveSpeed(speed);
-        steerTalon.set(ControlMode.Position, diffff + getSteerEncPosition());
+        steerTalon.set(ControlMode.Position, diff + getSteerEncPosition());
     }
 
     public String getName() {

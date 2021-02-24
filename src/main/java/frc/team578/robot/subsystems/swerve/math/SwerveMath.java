@@ -1,7 +1,7 @@
 package frc.team578.robot.subsystems.swerve.math;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * This is the main class for the swerveDrive library.
@@ -90,10 +90,10 @@ public class SwerveMath {
             
             if (gyroValue == null) {
                 throw new IllegalStateException("Cannot use field centric mode without a Gyro value");
-            
+            }
             double gyro = Math.toRadians(gyroValue);
             double s = Math.sin(gyro), c = Math.cos(gyro);
-            double temp = fwd * c - str * s
+            double temp = fwd * c - str * s;
             str = fwd * s + str * c;
             fwd = temp;
         }
@@ -105,8 +105,8 @@ public class SwerveMath {
         
         Vector2D[] vecs = {new Vector2D(c, b), new Vector2D(d, b), new Vector2D(d, a), new Vector2D(c, a)};
         
-        List<SwerveDirective> sd = new List<SwerveDirective>();
-        double max = Vector2D.max(vecs);
+        List<SwerveDirective> sd = new ArrayList<SwerveDirective>();
+        double max = vecs[0].max(vecs);
         for(int i = 0; i < 4; i++)
             sd.add(new SwerveDirective(vecs[i].magnitude()/max, vecs[i].heading()));
             
@@ -130,10 +130,10 @@ public class SwerveMath {
         double heading(){ return Math.atan2(y, x);}
         
         // max magnitude
-        static double max(Vector2D[] vecs){
+        double max(Vector2D[] vecs){
             double max = vecs[0].magnitude();
             for(int i = 1; i < vecs.length; i++){
-                int t = vecs[i].magnitude();
+                double m = vecs[i].magnitude();
                 if(max < m)
                    max = m;
             }
