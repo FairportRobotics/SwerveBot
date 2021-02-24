@@ -114,10 +114,10 @@ public class SwerveMath {
         double ws4 = Math.sqrt(Math.pow(a, 2) + Math.pow(c, 2));
 
         //These are the equations for the wheel angle, for motors 1-4
-        double wa1 = Math.atan2(b, c) * 180 / Math.PI;
-        double wa2 = Math.atan2(b, d) * 180 / Math.PI;
-        double wa3 = Math.atan2(a, d) * 180 / Math.PI;
-        double wa4 = Math.atan2(a, c) * 180 / Math.PI;
+        double wa1 = Math.atan2(b, c) + Math.PI;
+        double wa2 = Math.atan2(b, d) + Math.PI;
+        double wa3 = Math.atan2(a, d) + Math.PI;
+        double wa4 = Math.atan2(a, c) + Math.PI;
 
         //This is to normalize the speed (if the largest speed is greater than 1, change accordingly).
         double max = ws1;
@@ -130,12 +130,6 @@ public class SwerveMath {
             ws3 /= max;
             ws4 /= max;
         }
-
-        //Wheel angle was in the range of -180 to 180. Now its -.5 to .5
-        wa1 /= 360;
-        wa2 /= 360;
-        wa3 /= 360;
-        wa4 /= 360;
 
         //Used to scale the movement speeds for testing (so you don't crash into walls)
         ws1 *= SCALE_SPEED;

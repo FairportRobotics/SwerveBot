@@ -46,7 +46,7 @@ public class SwerveDriveCommand extends Command {
             str = -1;
         double angleDeg = Robot.gyroSubsystem.getHeading();
         if(Robot.useMotionProfiling)
-        Robot.swerveDriveSubsystem.move(fwd, str, deadband(rot), angleDeg);
+            Robot.swerveDriveSubsystem.move(fwd, str, rot, angleDeg);
         else
             Robot.swerveDriveSubsystem.move(deadband(fwd), deadband(str), deadband(rot), angleDeg);
 

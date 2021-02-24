@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class MotionProfiling {
 
-    private final double ANG_D = 40;      // pid variables for the angle
-    private final double ANG_P = .8;
+    private final double ANG_D = 80;      // pid variables for the angle
+    private final double ANG_P = 1.5;
 
     private double[] pathIn = Points.getTotalPoints();
     private Vector2d pos;

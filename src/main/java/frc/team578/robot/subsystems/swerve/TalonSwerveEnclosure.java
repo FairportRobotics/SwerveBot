@@ -57,15 +57,6 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
 
     // ------------ Steer Related
 
-    /**
-     * Set the angle for the steer motor
-     *
-     * @param angle the angle value: -0.5 - counterclockwise 180 degrees, 0 - forward 180 degrees, +0.5 - 180 degrees clockwise
-     */
-    public void moveToSteerAngle(double angle) {
-        steerTalon.set(ControlMode.Position, angle * SwerveConstants.MAX_ENC_VAL * (reverseSteer ? -1 : 1));
-    }
-
     public void moveSteerToEncoderPosition(int encPos) {
         steerTalon.set(ControlMode.Position, encPos);
     }
@@ -131,25 +122,35 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
      * @param angle: the angle to turn the wheel, 0 being forward, -1.0 being full turn counterclockwise, +1.0 being full turn clockwise
      */
     public void move(double speed, double angle) {
-        int encPosition = getSteerEncPosition();
+        // int encPosition = getSteerEncPosition();
 
-        angle = convertAngle(angle, encPosition);
+        // angle = convertAngle(angle, encPosition);
 
-        if (shouldReverse(angle, encPosition)) {
-            if (angle < 0)
-                angle += 0.5;
-            else
-                angle -= 0.5;
 
-            speed *= -1.0;
-        }
+        // if (shouldReverse(angle, encPosition)) {
+        //     if (angle < 0)
+        //         angle += 0.5;
+        //     else
+        //         angle -= 0.5;
 
+        //     speed *= -1.0;
+        // }
+
+        // setDriveSpeed(speed);
+
+        // if (speed != 0.0) {
+        //     moveToSteerAngle(angle);
+        // }
+        angle *= 512/Math.PI;
         setDriveSpeed(speed);
+        double encDiff = (getSteerEncPosition() - angle)%1024;
+        if(encDiff < 0);
+            encDiff += 1024;
 
-        if (speed != 0.0) {
-            moveToSteerAngle(angle);
-        }
-        SmartDashboard.putNumber(name + "angle to move to", angle);
+        steerTalon.set(ControlMode.Position, encDiff + getSteerEncPosition());
+
+
+        SmartDashboard.putNumber(name + "bl encoder diff", encDiff);
     }
 
     public String getName() {
