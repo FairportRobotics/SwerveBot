@@ -48,10 +48,7 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
     public void orientSensor()
     {
         int where = this.steerTalon.getSensorCollection().getAnalogInRaw()-trueNorthEncoderOffset;
-        if(where<0) {
-            where += 1024;
-        }
-        where%=1024;
+        where=((where%1024)+1024)%1024;
         this.steerTalon.setSelectedSensorPosition(where);
     }
 
@@ -144,8 +141,7 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
         angle *= 512/Math.PI;
         setDriveSpeed(speed);
         double encDiff = (getSteerEncPosition() - angle)%1024;
-        if(encDiff < 0);
-            encDiff += 1024;
+        encDiff = ((encDiff%1024)+1024)%1024;
 
         steerTalon.set(ControlMode.Position, encDiff + getSteerEncPosition());
 
