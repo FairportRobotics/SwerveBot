@@ -139,42 +139,7 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
         return name;
     }
 
-
-    private boolean shouldReverse(double wa, double encoderValue) {
-
-        double ea = SwerveUtils.convertEncoderValue(encoderValue);
-
-        //Convert the next wheel angle, which is from -.5 to .5, to 0 to 1
-        if (wa < 0) wa += 1;
-
-        //Find the difference between the two (not sure if the conversion from (-0.5 to 0.5) to (0 to 1) above is needed)
-        //Difference between the two points. May be anything between -1 to 1, but we are looking for a number between -.5 to .5
-        double longDifference = Math.abs(wa - ea);
-
-        //finds shortest distance (0 to 0.5), always positive though (which is what we want)
-        double difference = Math.min(longDifference, 1.0 - longDifference);
-
-        //If the difference is greater than 1/4, then return true (aka it is easier for it to turn around and go backwards than go forward)
-        return difference > 0.25;
-    }
-
-    private double convertAngle(double angle, double encoderValue) {
-        //angles are between -.5 and .5
-        //This is to allow the motors to rotate in continuous circles (pseudo code on the Team 4048 forum)
-        double encPos = encoderValue / SwerveConstants.MAX_ENC_VAL;
-
-        double temp = angle;
-        temp += (int) encPos;
-
-        encPos = encPos % 1;
-
-        if ((angle - encPos) > 0.5) temp -= 1;
-
-        if ((angle - encPos) < -0.5) temp += 1;
-
-        return temp;
-    }
-
+    
     @Override
     public void updateDashboard() {
         SmartDashboard.putData(steerTalon);
