@@ -119,34 +119,20 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
      * @param angle: the angle to turn the wheel, 0 being forward, -1.0 being full turn counterclockwise, +1.0 being full turn clockwise
      */
     public void move(double speed, double angle) {
-        // int encPosition = getSteerEncPosition();
-
-        // angle = convertAngle(angle, encPosition);
-
-
-        // if (shouldReverse(angle, encPosition)) {
-        //     if (angle < 0)
-        //         angle += 0.5;
-        //     else
-        //         angle -= 0.5;
-
-        //     speed *= -1.0;
-        // }
-
-        // setDriveSpeed(speed);
-
-        // if (speed != 0.0) {
-        //     moveToSteerAngle(angle);
-        // }
         angle = angle*512/Math.PI;
-        double encDiff = (angle - getSteerEncPosition())%1024;
-
-        setDriveSpeed(speed);
         
-        steerTalon.set(ControlMode.Position, encDiff + getSteerEncPosition());
-
-
-        SmartDashboard.putNumber(name + "angle to turn to", angle);
+        double diff = (angle - getSteerEncPosition())%1024;
+        
+        if(diff > 512) diff-=1024;          // go other way if greater than 180 degrees (512 angle units)
+        if(diff < -512) diff += 1024;
+        
+        if(Math.abs(diff) > 256){           // if better to reverse motor direciton
+            speed *= -1;
+            diff += (diff>0 ? -512: 512);   // moves in other direction
+        }
+        
+        setDriveSpeed(speed);
+        steerTalon.set(ControlMode.Position, diffff + getSteerEncPosition());
     }
 
     public String getName() {
