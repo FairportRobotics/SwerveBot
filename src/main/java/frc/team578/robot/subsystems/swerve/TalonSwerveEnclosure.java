@@ -18,6 +18,7 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
     private boolean reverseEncoder = false;
     private boolean reverseSteer = false;
     private int trueNorthEncoderOffset;
+    private int outputAngleTest = 0;
 
     TalonSwerveEnclosure(String name, WPI_TalonSRX driveMotor, WPI_TalonSRX steerMotor, int trueNorth) {
 
@@ -25,7 +26,7 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
         this.driveTalon = driveMotor;
         this.steerTalon = steerMotor;
         trueNorthEncoderOffset = trueNorth;
-        driveTalon.setNeutralMode(NeutralMode.Brake);
+        driveMotor.setNeutralMode(NeutralMode.Brake);
     }
 
     public WPI_TalonSRX getDriveTalon() {
@@ -131,12 +132,11 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
             diff += (diff>0 ? -512: 512);   // moves in other direction
         }
 
-
-        if(speed == 0){
-            driveTalon.stopMotor();
-        }else{
-            setDriveSpeed(speed);
-            steerTalon.set(ControlMode.Position, diff + getSteerEncPosition());
+        setDriveSpeed(speed);
+        if(speed != 0){
+            System.out.println(diff + "      " + angle + "       " + speed);
+            steerTalon.set(ControlMode.Position, (diff + getSteerEncPosition()));
+            outputAngleTest = (int)(diff + getSteerEncPosition());
         }
     }
 
@@ -149,6 +149,8 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
     public void updateDashboard() {
         SmartDashboard.putData(steerTalon);
         SmartDashboard.putData(driveTalon);
+
+        SmartDashboard.putNumber(name + ".ultimateangle", outputAngleTest);
 
 
         SmartDashboard.putNumber(name + ".steert.araw", steerTalon.getSensorCollection().getAnalogInRaw());

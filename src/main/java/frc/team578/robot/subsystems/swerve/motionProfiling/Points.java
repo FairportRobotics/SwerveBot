@@ -1,12 +1,11 @@
 package frc.team578.robot.subsystems.swerve.motionProfiling;
 
 import java.util.ArrayList;
-import frc.team578.robot.commands.*;
 
 public class Points{
 	public static final double CURVES_PER_SECOND = 0.4;
 	public static final int POINTS_PER_CURVE = 30;
-	public static final double[] pidValues = {0, 0.0, 0};;
+	public static final double[] pidValues = {1, 0.0, .15};
 
 	protected static class TimedCommand{
 		public String name;

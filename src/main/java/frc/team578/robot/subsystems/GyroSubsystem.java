@@ -27,7 +27,8 @@ public class GyroSubsystem extends Subsystem implements frc.team578.robot.subsys
 
         try {
             navx = new AHRS(SPI.Port.kMXP);
-
+            navx.enableBoardlevelYawReset(true);
+            navx.enableLogging(true);
             this.setToZero();
         } catch (RuntimeException ex) {
             log.error("Error instantiating navX-MXP:  " + ex.getMessage(),ex);
@@ -64,6 +65,5 @@ public class GyroSubsystem extends Subsystem implements frc.team578.robot.subsys
     @Override
     public void updateDashboard() {
         SmartDashboard.putNumber("gyro.heading", getHeading());
-        
     }
 }

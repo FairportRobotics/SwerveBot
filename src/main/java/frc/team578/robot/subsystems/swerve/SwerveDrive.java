@@ -1,13 +1,10 @@
 package frc.team578.robot.subsystems.swerve;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import frc.team578.robot.RobotMap;
 import frc.team578.robot.subsystems.interfaces.UpdateDashboard;
 import frc.team578.robot.subsystems.swerve.math.SwerveDirective;
 import frc.team578.robot.subsystems.swerve.math.SwerveMath;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -16,8 +13,6 @@ import java.util.List;
  * of controlling the swerve drive.
  */
 public class SwerveDrive implements UpdateDashboard {
-
-    private static final Logger log = LogManager.getLogger(SwerveDrive.class);
 
     // Enclosures 1-4 are the drive/steer combos
     public static TalonSwerveEnclosure swerveEnclosureFR;
@@ -30,18 +25,17 @@ public class SwerveDrive implements UpdateDashboard {
     public SwerveDrive(TalonSwerveEnclosure swerveEnclosureFL, TalonSwerveEnclosure swerveEnclosureFR,
                        TalonSwerveEnclosure swerveEnclosureBL, TalonSwerveEnclosure swerveEnclosureBR, double width, double length) {
 
-        this.swerveEnclosureFR = swerveEnclosureFR;
-        this.swerveEnclosureFL = swerveEnclosureFL;
-        this.swerveEnclosureBL = swerveEnclosureBL;
-        this.swerveEnclosureBR = swerveEnclosureBR;
-
+        SwerveDrive.swerveEnclosureFR = swerveEnclosureFR;
+        SwerveDrive.swerveEnclosureFL = swerveEnclosureFL;
+        SwerveDrive.swerveEnclosureBL = swerveEnclosureBL;
+        SwerveDrive.swerveEnclosureBR = swerveEnclosureBR;
         // instantiate the swerve library with a gyro provider using pigeon1
         this.swerveMath = new SwerveMath(width, length);
 
-        this.swerveEnclosureFR.orientSensor();
-        this.swerveEnclosureFL.orientSensor();
-        this.swerveEnclosureBL.orientSensor();
-        this.swerveEnclosureBR.orientSensor();
+        SwerveDrive.swerveEnclosureFR.orientSensor();
+        SwerveDrive.swerveEnclosureFL.orientSensor();
+        SwerveDrive.swerveEnclosureBL.orientSensor();
+        SwerveDrive.swerveEnclosureBR.orientSensor();
     }
 
     /**

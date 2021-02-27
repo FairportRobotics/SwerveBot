@@ -62,19 +62,19 @@ public class OI implements Initializable {
         }
 
         public double getPadLeftX() {
-            return gamepad.getLeftX();
+            return leftJoystick.getX();
         }
 
         public double getPadLeftY() {
-            return gamepad.getLeftY();
+            return leftJoystick.getY();
         }
 
         public double getPadRightX() {
-            return gamepad.getRightX();
+            return rightJoystick.getX();
         }
 
         public double getPadRightY() {
-            return gamepad.getRightY();
+            return rightJoystick.getY();
         }
     }
 }

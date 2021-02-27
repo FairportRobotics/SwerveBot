@@ -10,7 +10,7 @@ public class SwerveDriveCommand extends Command {
 
     private static final Logger log = LogManager.getLogger(SwerveDriveCommand.class);
     private double profilingPowerX = 0, profilingPowerY = 0, profilingPowerA = 0;
-    private final double INPUT_FACTOR = .35;
+    private final double INPUT_FACTOR = 1;
     
     public SwerveDriveCommand() {
         requires(Robot.swerveDriveSubsystem);
@@ -45,10 +45,17 @@ public class SwerveDriveCommand extends Command {
         if(str < -1)
             str = -1;
         double angleDeg = Robot.gyroSubsystem.getHeading();
+
+        double mag = Math.sqrt(fwd*fwd + str*str);
+        double ratio = 0;
+        if(mag > .0001){
+            ratio = deadband(mag)/mag;     //  deadband scalar for each component
+        }
+        
         if(Robot.useMotionProfiling)
             Robot.swerveDriveSubsystem.move(fwd, str, rot, angleDeg);
         else
-            Robot.swerveDriveSubsystem.move(deadband(fwd), deadband(str), deadband(rot), angleDeg);
+            Robot.swerveDriveSubsystem.move(ratio*fwd, ratio*str, deadband(rot), angleDeg);
 
         SmartDashboard.putNumber("swrv.fwd", fwd);
         SmartDashboard.putNumber("swrv.str", str);
@@ -85,7 +92,7 @@ public class SwerveDriveCommand extends Command {
 
     private double deadband(double value) {
         if (Math.abs(value) < DEADBAND) return 0.0;
-        return value;
+        return (1/(1-DEADBAND) - DEADBAND/(1-DEADBAND)/Math.abs(value))*value;
     }
 
 }
