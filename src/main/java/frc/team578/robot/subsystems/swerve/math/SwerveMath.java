@@ -107,8 +107,10 @@ public class SwerveMath {
         
         List<SwerveDirective> sd = new ArrayList<SwerveDirective>();
         double max = vecs[0].max(vecs);
+        if(max < 1)
+            max = 1;
         for(int i = 0; i < 4; i++)
-            sd.add(new SwerveDirective(vecs[i].magnitude()/max, vecs[i].heading()));
+            sd.add(new SwerveDirective(vecs[i].heading(), vecs[i].magnitude()/max*SCALE_SPEED));
             
         return sd;
     }

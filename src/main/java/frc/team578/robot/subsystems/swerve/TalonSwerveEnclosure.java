@@ -1,6 +1,7 @@
 package frc.team578.robot.subsystems.swerve;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
@@ -23,9 +24,8 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
         this.name = name;
         this.driveTalon = driveMotor;
         this.steerTalon = steerMotor;
-
         trueNorthEncoderOffset = trueNorth;
-
+        driveTalon.setNeutralMode(NeutralMode.Brake);
     }
 
     public WPI_TalonSRX getDriveTalon() {
@@ -104,7 +104,7 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
     public void setDriveSpeed(double speed) {
         driveTalon.set(ControlMode.PercentOutput, speed);
     }
-
+    
     public double getDriveCLT(int id) {
         return this.driveTalon.getClosedLoopTarget(id);
     }
@@ -130,9 +130,14 @@ public class TalonSwerveEnclosure implements UpdateDashboard {
             speed *= -1;
             diff += (diff>0 ? -512: 512);   // moves in other direction
         }
-        
-        setDriveSpeed(speed);
-        steerTalon.set(ControlMode.Position, diff + getSteerEncPosition());
+
+
+        if(speed == 0){
+            driveTalon.stopMotor();
+        }else{
+            setDriveSpeed(speed);
+            steerTalon.set(ControlMode.Position, diff + getSteerEncPosition());
+        }
     }
 
     public String getName() {
